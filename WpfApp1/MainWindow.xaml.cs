@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace SoftwareDesign_2017
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -23,6 +23,9 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            FuncPaint funcPaint = new FuncPaint();
+            //tabItem1_grid.Children.Add(funcPaint.DrawCoordinate(new Point(10, 400), new Point(500, 400), new Point(10, 10)));//笛卡尔坐标系
+            tabItem1_grid.Children.Add(funcPaint.DrawSin());
         }
     }
 }

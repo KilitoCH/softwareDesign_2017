@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio 15
+# Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{28BA6D81-7551-4E34-8AF8-386FCA260577}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareDesign_2017", "WpfApp1\SoftwareDesign_2017.csproj", "{28BA6D81-7551-4E34-8AF8-386FCA260577}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
