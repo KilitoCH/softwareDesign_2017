@@ -1,0 +1,15 @@
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\bin\Debug\WpfApp1.exe.config
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\bin\Debug\WpfApp1.exe
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\bin\Debug\WpfApp1.pdb
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.csprojResolveAssemblyReference.cache
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\MainWindow.g.cs
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\App.g.cs
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1_MarkupCompile.cache
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1_MarkupCompile.lref
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\MainWindow.baml
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.g.resources
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.Properties.Resources.resources
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.csproj.GenerateResource.Cache
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.csproj.CoreCompileInputs.cache
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.exe
+G:\grade3\2017软件课设\新建文件夹\WpfApp1\WpfApp1\obj\Debug\WpfApp1.pdb
