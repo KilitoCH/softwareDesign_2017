@@ -24,10 +24,10 @@ namespace SoftwareDesign_2017
         {
             InitializeComponent();
             Paint paint = new Paint();
-            Save save = new Save();
-            //tabItem1_grid.Children.Add(funcPaint.DrawCoordinate(new Point(10, 400), new Point(500, 400), new Point(10, 10)));//笛卡尔坐标系
-            tabItem1_canvas.Children.Add(paint.DrawSin());
-            save.SaveVisual(tabItem1_canvas, (int)tabItem1_grid.Width, (int)tabItem1_grid.Height);
+            //tabItem2_canvas.AddVisual(paint.Draw(paint.TestSinSequence,true,false,Type.Line));
+            SavePic savePic = new SavePic();
+            savePic.SaveVisual(paint.Draw(paint.TestSinSequence, true, false, Type.Line));
+            //tabItem2_grid.Children.Add(paint.DrawCoordinate(new Point(10, 400), new Point(500, 400), new Point(10, 10)));//笛卡尔坐标系
         }
     }
 }

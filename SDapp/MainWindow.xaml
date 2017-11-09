@@ -18,21 +18,25 @@
         <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="552">
             <TabItem  Header="TabItem">
                 <Grid x:Name="tabItem1_grid" Width="500" Height="400" Background="#FFECE8E8" Margin="0,0,48,40">
-                    <Canvas x:Name="tabItem1_canvas" Background="#FFFFFF" Width="500" Height="300">
-                        <Canvas.Children>
+                    <local:DrawingCanvas x:Name="tabItem1_canvas" Background="#FFFFFF" Width="500" Height="300">
+                        <local:DrawingCanvas.Children>
                             <Line X1="10" Y1="300" X2="450" Y2="300" Stroke="Black" />
                             <Line X1="10" Y1="300" X2="10" Y2="10" Stroke="Black" />                        
-                        </Canvas.Children>
-                    </Canvas>
+                        </local:DrawingCanvas.Children>
+                    </local:DrawingCanvas>
                 </Grid>
             </TabItem>
             <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5" x:Name="tabItem2_grid" Width="500" Height="400" Margin="0,0,48,40">
+                    <local:DrawingCanvas x:Name="tabItem2_canvas" Background="#FFFFFF" Width="500" Height="300">
+                        <local:DrawingCanvas.Children>
+                            <Line X1="10" Y1="300" X2="450" Y2="300" Stroke="Black" />
+                            <Line X1="10" Y1="300" X2="10" Y2="10" Stroke="Black" />
+                        </local:DrawingCanvas.Children>
+                    </local:DrawingCanvas>
+                </Grid>
             </TabItem>
         </TabControl>
         <Label HorizontalAlignment="Left" Height="139" Margin="19,300,0,0" VerticalAlignment="Top" Width="100" BorderBrush="Black" BorderThickness="2px" Content=""/>
-
-
-
     </Grid>
 </Window>

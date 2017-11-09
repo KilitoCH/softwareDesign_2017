@@ -28,3 +28,4 @@ G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\Softwar
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.csproj.CoreCompileInputs.cache
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.exe
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.pdb
+G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\GeneratedInternalTypeHelper.g.cs
