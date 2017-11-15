@@ -73,8 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Context.cs" />
     <Compile Include="DrawingCanvas.cs" />
     <Compile Include="SavePic.cs" />
+    <Compile Include="Sin_Sequence_Generate.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

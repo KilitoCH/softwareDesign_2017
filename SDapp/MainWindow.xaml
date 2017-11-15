@@ -11,28 +11,25 @@
             <ColumnDefinition Width="20*"/>
             <ColumnDefinition Width="69*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="para_input" Content="请输入参数" 
-               HorizontalAlignment="Left" Height="27" Margin="19,38,0,0" BorderBrush="Black" VerticalAlignment="Top" Width="118" Grid.RowSpan="11" FontFamily="YouYuan" Background="White"/>
         <GridSplitter x:Name="mainSplitter" HorizontalAlignment="Left" Margin="149,0,0,0" Width="1" Background="Black"/>
-        <TextBox HorizontalAlignment="Left" Height="32" Margin="19,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" BorderBrush="#FF060606" SelectionBrush="#FF0662AC"/>
         <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="552">
             <TabItem  Header="TabItem">
                 <Grid x:Name="tabItem1_grid" Width="500" Height="400" Background="#FFECE8E8" Margin="0,0,48,40">
-                    <local:DrawingCanvas x:Name="tabItem1_canvas" Background="#FFFFFF" Width="500" Height="300">
-                        <local:DrawingCanvas.Children>
-                            <Line X1="10" Y1="300" X2="450" Y2="300" Stroke="Black" />
-                            <Line X1="10" Y1="300" X2="10" Y2="10" Stroke="Black" />                        
-                        </local:DrawingCanvas.Children>
-                    </local:DrawingCanvas>
+                    <Border BorderBrush="Black" BorderThickness="1px" Width="482" Height="302">
+                        <local:DrawingCanvas x:Name="tabItem1_canvas" Background="#FFFFFF" Width="480" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    </Border>
+                    <Button x:Name="tabItem1_Button1" Content="提交" HorizontalAlignment="Left" Margin="303,362,0,0" VerticalAlignment="Top" Width="75" Click="tabItem1_Button1_Click"/>
+                    <Button x:Name="tabItem1_Button2" Content="保存" HorizontalAlignment="Left" Margin="415,362,0,0" VerticalAlignment="Top" Width="75" Click="tabItem1_Button2_Click"/>
+                    <TextBox x:Name="tabItem1_TextBox1" HorizontalAlignment="Left" Height="23" Margin="71,358,0,0" TextWrapping="Wrap" Text="请输入相关频率" VerticalAlignment="Top" 
+                             Width="120" 
+                             TextChanged="tabItem1_TextBox1_TextChanged" GotFocus="tabItem1_TextBox1_GotFocus" PreviewMouseLeftButtonDown="tabItem1_TextBox1_PreviewMouseLeftButtonDown" />
+                    <Label Content="频率f：" HorizontalAlignment="Left" Margin="21,358,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5" x:Name="tabItem2_grid" Width="500" Height="400" Margin="0,0,48,40">
                     <local:DrawingCanvas x:Name="tabItem2_canvas" Background="#FFFFFF" Width="500" Height="300">
-                        <local:DrawingCanvas.Children>
-                            <Line X1="10" Y1="300" X2="450" Y2="300" Stroke="Black" />
-                            <Line X1="10" Y1="300" X2="10" Y2="10" Stroke="Black" />
-                        </local:DrawingCanvas.Children>
+                        <local:DrawingCanvas.Children />
                     </local:DrawingCanvas>
                 </Grid>
             </TabItem>
