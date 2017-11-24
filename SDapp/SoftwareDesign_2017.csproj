@@ -52,6 +52,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>bitbug_favicon %281%29.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -73,6 +76,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BOC_Sequence_Generate.cs" />
+    <Compile Include="BPSK_Sequence_Generate.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="DrawingCanvas.cs" />
     <Compile Include="SavePic.cs" />
@@ -131,6 +136,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bitbug_favicon %281%29.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

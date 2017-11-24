@@ -28,32 +28,41 @@ namespace SoftwareDesign_2017
         /// <returns></returns>
         private Geometry DrawGeometry(List<Point> values, bool isFilled, bool isClosed,Type type)
         {
-            StreamGeometry geometry = new StreamGeometry();
-
-            using (StreamGeometryContext ctx = geometry.Open())
+            try
             {
-                ctx.BeginFigure(values[0], isFilled /* is filled */, isClosed /* is closed */);
+                StreamGeometry geometry = new StreamGeometry();
 
-                //画出一系列线段并且连接成曲线
-                if (type == Type.Line)
+                using (StreamGeometryContext ctx = geometry.Open())
                 {
-                    for (int i = 1; i < values.Count && values[i].X <= 480; i++)
+                    ctx.BeginFigure(values[0], isFilled /* is filled */, isClosed /* is closed */);
+
+                    //画出一系列线段并且连接成曲线
+                    if (type == Type.Line)
                     {
-                        ctx.LineTo(values[i], true, false);
+                        for (int i = 1; i < values.Count && values[i].X <= 480; i++)
+                        {
+                            ctx.LineTo(values[i], true, false);
+                        }
+                    }
+                    //使用bezier曲线进行连接
+                    else if (type == Type.Bezier)
+                    {
+                        Bezier bezier = new Bezier(values, 0.7);
+                        for (int i = 1; i < values.Count; i++)
+                        {
+                            ctx.BezierTo(bezier.controlPointCollection[2 * i - 2], bezier.controlPointCollection[2 * i - 1], values[i], true, false);
+                        }
                     }
                 }
-                //使用bezier曲线进行连接
-                else if (type == Type.Bezier)
-                {
-                    Bezier bezier = new Bezier(values, 0.7);
-                    for (int i = 1; i < values.Count; i++)
-                    {
-                        ctx.BezierTo(bezier.controlPointCollection[2 * i - 2], bezier.controlPointCollection[2 * i - 1], values[i], true, false);
-                    }
-                }
+
+                return geometry;
             }
-
-            return geometry;
+            catch (Exception)
+            {
+                MessageBox.Show("请先输入频率");
+                return null;
+            }
+            
         }
 
         /// <summary>
