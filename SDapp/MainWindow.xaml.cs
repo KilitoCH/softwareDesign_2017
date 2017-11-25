@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Win32;
 
 namespace SoftwareDesign_2017
 {
@@ -15,43 +16,36 @@ namespace SoftwareDesign_2017
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Context context = new Context();
+        private Context context = new Context();        
 
         public MainWindow()
         {
+            DataContext = context;
             InitializeComponent();
-        }
+        }        
 
-#region tabItem1的事件
-        //选项卡1中的文本框的内容发生改变时触发的事件
-        private void tabItem1_TextBox1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var control = sender as TextBox;
-            Sin_Sequence_Generate sin_Sequence_Generate = new Sin_Sequence_Generate();
-            try
-            {
-                this.context.pointsForTabItem1 = sin_Sequence_Generate.Sin_Sequence(Convert.ToDouble(control.Text));
-            }
-            catch (Exception)
-            {
-                if (control.Text == "请输入相关频率") ;
-                else
-                    MessageBox.Show("输入浮点数");
-            }            
-        }
-
+#region tabItem1的事件        
         //选项卡1中的提交按钮（tabItem1_Button1）被点击时触发的事件
         private void tabItem1_Button1_Click(object sender, RoutedEventArgs e)
         {
             Paint paint = new Paint();
-            if (context.pointsForTabItem1 != null)
+            BPSK_Sequence_Generate bpsk_Sequence_Generate = new BPSK_Sequence_Generate();
+            try
             {
-                context.visualForTabItem1 = paint.DrawVisual(this.context.pointsForTabItem1, true, false, Type.Line);
-                tabItem1_canvas.RemoveAll();
-                tabItem1_canvas.AddVisual(context.visualForTabItem1);
+                context.pointsForTabItem1 = bpsk_Sequence_Generate.BPSK_PSD_Sequence(Convert.ToDouble(context.Frequence),context.FrequenceUnit);//利用TextBox中输入的频率值和频率的单位获取一个序列
+                if (context.pointsForTabItem1 != null)//如果正确获取了该序列，则将其绘图
+                {
+                    context.visualForTabItem1 = paint.DrawVisual(this.context.pointsForTabItem1, true, false, Type.Bezier);
+                    tabItem1_canvas.RemoveAll();
+                    tabItem1_canvas.AddVisual(context.visualForTabItem1);
+                }
+                else
+                    MessageBox.Show("请先输入参数再画图", "提示");
             }
-            else
-                MessageBox.Show("请先输入参数再画图", "提示");
+            catch (Exception)
+            {
+                MessageBox.Show("输入浮点数");
+            }            
         }
 
         //选项卡1中的文本框获取焦点时触发的事件
@@ -72,11 +66,18 @@ namespace SoftwareDesign_2017
 
         //选项卡1中的保存图片按钮被按下时触发的事件
         private void tabItem1_Button2_Click(object sender, RoutedEventArgs e)
-        {
-            SavePic savePic = new SavePic();
-            savePic.SaveVisual(context.visualForTabItem1);
-        }
-        #endregion
+        {            
+            string url;//将要保存文件的路径
+            
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPG格式(*.jpg)|*.jpg|JPEG格式(*.jpeg)|*.jpg|PNG格式(*.png)|*.png";
+            saveFileDialog.InitialDirectory = "C:\\";
+            saveFileDialog.ShowDialog();
+            url = saveFileDialog.FileName;
 
+            SavePic savePic = new SavePic();
+            savePic.SaveVisual(context.visualForTabItem1, url);
+        }        
+        #endregion
     }
 }
