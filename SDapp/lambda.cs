@@ -11,11 +11,13 @@ namespace SoftwareDesign_2017
     {
         static public double getLambda(List<Point> points)
         {
-            const double beta = 24000000;
             double lambda = 0;
             foreach (var point in points)
             {
-                lambda += point.Y * 0.01;
+                if (point.X >= -12000000 && point.X <= 12000000)
+                {
+                    lambda += point.Y * 1000;
+                }                
             }
             return lambda;
         }
