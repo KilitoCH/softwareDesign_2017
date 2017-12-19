@@ -76,12 +76,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BeginWindow.xaml.cs">
+      <DependentUpon>BeginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BOC_Sequence_Generate.cs" />
     <Compile Include="BPSK_Sequence_Generate.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="DrawingCanvas.cs" />
+    <Compile Include="Lambda.cs" />
     <Compile Include="SavePic.cs" />
     <Compile Include="Sin_Sequence_Generate.cs" />
+    <Page Include="BeginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Sa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\hui.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

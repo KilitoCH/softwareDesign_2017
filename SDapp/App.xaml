@@ -3,7 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SoftwareDesign_2017"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+  <Application.Resources>
+
+    <LinearGradientBrush x:Key="linearBrushBlue" EndPoint="1,1" StartPoint="0,0">
+      <GradientStop Color="#FF618BFF" Offset="0"/>
+      <GradientStop Color="#FF4FE1FF" Offset="0.5"/>
+      <GradientStop Color="#FFAAA3FD" Offset="1"/>
+    </LinearGradientBrush>
+
+    <ControlTemplate TargetType="Button" x:Key="ringButton">
+      <Grid MinWidth="20" MinHeight="20">
+        <Rectangle Name="mainRectangle" RadiusX="10" RadiusY="10" Fill="{TemplateBinding Button.Background}" />
+        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+      </Grid>
+      <!--定义触发器-->
+      <ControlTemplate.Triggers>
+        <Trigger  Property="Button.IsMouseOver"  Value="True">
+          <Setter Property="Button.Background" Value="red" />
+        </Trigger>
+      </ControlTemplate.Triggers>
+      <!--定义触发器_End-->
+    </ControlTemplate>
+
+  </Application.Resources>
 </Application>

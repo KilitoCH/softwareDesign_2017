@@ -6,38 +6,47 @@
         xmlns:local="clr-namespace:SoftwareDesign_2017"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="720">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="69*"/>
-        </Grid.ColumnDefinitions>
-        <GridSplitter x:Name="mainSplitter" HorizontalAlignment="Left" Margin="149,0,0,0" Width="1" Background="Black"/>
-        <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="552">
-            <TabItem  Header="TabItem">
-                <Grid x:Name="tabItem1_grid" Width="500" Height="400" Background="#FFECE8E8" Margin="0,0,48,40">
-                    <Border BorderBrush="Black" BorderThickness="1px" Width="482" Height="302">
-                        <local:DrawingCanvas x:Name="tabItem1_canvas" Background="#FFFFFF" Width="480" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </Border>
-                    <Button x:Name="tabItem1_Button1" Content="提交" HorizontalAlignment="Left" Margin="303,362,0,0" VerticalAlignment="Top" Width="75" Click="tabItem1_Button1_Click"/>
-                    <Button x:Name="tabItem1_Button2" Content="保存" HorizontalAlignment="Left" Margin="415,362,0,0" VerticalAlignment="Top" Width="75" Click="tabItem1_Button2_Click"/>
-                    <TextBox x:Name="tabItem1_TextBox1" HorizontalAlignment="Left" Height="23" Margin="71,358,0,0" TextWrapping="Wrap" Text="{Binding Path=Frequence}" VerticalAlignment="Top" 
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="20*"/>
+      <ColumnDefinition Width="69*"/>
+    </Grid.ColumnDefinitions>
+    <GridSplitter x:Name="mainSplitter" HorizontalAlignment="Left" Margin="149,0,0,0" Width="1" Background="Black"/>
+    <TabControl Grid.Column="1" HorizontalAlignment="Left" Height="469" VerticalAlignment="Top" Width="552">
+      <TabItem Header="BPSK">
+        <Grid x:Name="tabItem1_grid" Width="500" Height="400" Background="#FFECE8E8" Margin="0,0,48,40">
+          <Border BorderBrush="Black" BorderThickness="1px" Width="482" Height="302">
+            <local:DrawingCanvas x:Name="tabItem1_canvas" Background="#FFFFFF" Width="480" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" />
+          </Border>
+          <Button x:Name="BpskSubmmit_Button" Content="提交" HorizontalAlignment="Left" Margin="303,362,0,0" VerticalAlignment="Top" Width="75" Click="Submmit_Button_Click"/>
+          <Button x:Name="tabItem1_Button2" Content="保存" HorizontalAlignment="Left" Margin="415,362,0,0" VerticalAlignment="Top" Width="75" Click="SavePic_Button_Click"/>
+          <TextBox x:Name="tabItem1_TextBox1" HorizontalAlignment="Left" Height="23" Margin="71,358,0,0" TextWrapping="Wrap" Text="{Binding Path=FrequenceBpsk}" VerticalAlignment="Top" 
                              Width="120" 
                              GotFocus="tabItem1_TextBox1_GotFocus" PreviewMouseLeftButtonDown="tabItem1_TextBox1_PreviewMouseLeftButtonDown" />
-                    <Label Content="频率f：" HorizontalAlignment="Left" Margin="21,358,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="tabItem1_ComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Margin="196,358,0,0" Height="23" RenderTransformOrigin="-0.64,0.478" SelectedIndex="{Binding Path=FrequenceUnit}">
-                        <ComboBoxItem>Hz</ComboBoxItem>
-                        <ComboBoxItem>KHz</ComboBoxItem>
-                        <ComboBoxItem>MHz</ComboBoxItem>
-                    </ComboBox>
-                </Grid>
-            </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5" x:Name="tabItem2_grid" Width="500" Height="400" Margin="0,0,48,40">
-                    <local:DrawingCanvas x:Name="tabItem2_canvas" Background="#FFFFFF" Width="500" Height="300">
-                        <local:DrawingCanvas.Children />
-                    </local:DrawingCanvas>
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+          <Label Content="频率f：" HorizontalAlignment="Left" Margin="21,358,0,0" VerticalAlignment="Top"/>
+          <ComboBox x:Name="tabItem1_ComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Margin="196,358,0,0" Height="23" RenderTransformOrigin="-0.64,0.478" SelectedIndex="{Binding Path=FrequenceUnit}">
+            <ComboBoxItem>Hz</ComboBoxItem>
+            <ComboBoxItem>KHz</ComboBoxItem>
+            <ComboBoxItem>MHz</ComboBoxItem>
+          </ComboBox>
+        </Grid>
+      </TabItem>
+      <TabItem Header="BOC">
+        <Grid x:Name="tabItem2_grid" Width="500" Height="400" Background="#FFECE8E8" Margin="0,0,48,40">
+          <Border BorderBrush="Black" BorderThickness="1px" Width="482" Height="302">
+            <local:DrawingCanvas x:Name="tabItem2_canvas" Background="#FFFFFF" Width="480" Height="300" HorizontalAlignment="Left" VerticalAlignment="Top" />
+          </Border>
+          <Button x:Name="BocSubmmit_Button" Content="提交" HorizontalAlignment="Left" Margin="303,362,0,0" VerticalAlignment="Top" Width="75" Click="Submmit_Button_Click"/>
+          <Button x:Name="tabItem2_Button2" Content="保存" HorizontalAlignment="Left" Margin="415,362,0,0" VerticalAlignment="Top" Width="75" Click="SavePic_Button_Click"/>
+          <TextBox x:Name="tabItem2_TextBox1" HorizontalAlignment="Left" Height="23" Width="40" Margin="48,361,0,0" TextWrapping="Wrap" Text="{Binding Path=Alpha}" VerticalAlignment="Top"
+                             GotFocus="tabItem1_TextBox1_GotFocus" PreviewMouseLeftButtonDown="tabItem1_TextBox1_PreviewMouseLeftButtonDown" />
+          <Label Content="α：" HorizontalAlignment="Left" Margin="21,358,0,0" VerticalAlignment="Top"/>
+          <TextBox x:Name="tabItem2_TextBox2" HorizontalAlignment="Left" Height="23" Width="40" Margin="127,361,0,0" TextWrapping="Wrap" Text="{Binding Path=Beta}" VerticalAlignment="Top"
+                             GotFocus="tabItem1_TextBox1_GotFocus" PreviewMouseLeftButtonDown="tabItem1_TextBox1_PreviewMouseLeftButtonDown" />
+          <Label Content="β：" HorizontalAlignment="Left" Margin="100,358,0,0" VerticalAlignment="Top"/>
+        </Grid>
+      </TabItem>
+    </TabControl>
+    <Image HorizontalAlignment="Left" Height="376" Margin="0,20,0,0" VerticalAlignment="Top" Width="144" Grid.Column="0" Source="./images/sa.png"/>
+  </Grid>
 </Window>

@@ -15,16 +15,16 @@ namespace SoftwareDesign_2017
     class Context:INotifyPropertyChanged
     {
 #region 字段
-        public List<Point> pointsForTabItem1 = new List<Point>();//选项卡1的图片的点阵
-        public List<Point> pointsForTabItem2 = new List<Point>();//选项卡2的图片的点阵
-        public List<Point> pointsForTabItem3 = new List<Point>();//选项卡3的图片的点阵
+        public List<Point> pointsForBpsk = new List<Point>();//选项卡1的图片的点阵
+        public List<Point> pointsForBoc = new List<Point>();//选项卡2的图片的点阵
 
-        public Visual visualForTabItem1;//选项卡1的图片的Visual格式字段
-        public Visual visualForTabItem2;//选项卡2的图片的Visual格式字段
-        public Visual visualForTabItem3;//选项卡3的图片的Visual格式字段
+        public Visual visualForBpsk;//选项卡1的图片的Visual格式字段
+        public Visual visualForBoc;//选项卡2的图片的Visual格式字段
 
         private int frequenceUnit = 2;
-        private int frequence = 0;
+        private double frequenceBpsk = 0;
+        private int alpha = 0;
+        private int beta = 0;
 
         public int FrequenceUnit
         {
@@ -39,18 +39,45 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public int Frequence
+        public double FrequenceBpsk
         {
             get
             {
-                return frequence;
+                return frequenceBpsk;
             }
             set
             {
-                frequence = value;
-                OnPropertyChanged("Frequence");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+                frequenceBpsk = value;
+                OnPropertyChanged("FrequenceBpsk");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
             }
         }
+
+        public int Alpha
+        {
+            get
+            {
+                return alpha;
+            }
+            set
+            {
+                alpha = value;
+                OnPropertyChanged("Alpha");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public int Beta
+        {
+            get
+            {
+                return beta;
+            }
+            set
+            {
+                beta = value;
+                OnPropertyChanged("Beta");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
         #endregion
         #region 方法
         public event PropertyChangedEventHandler PropertyChanged;
