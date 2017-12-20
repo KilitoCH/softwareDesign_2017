@@ -86,7 +86,7 @@ namespace SoftwareDesign_2017
             return drawingVisual;
         }
 
-        #region 测试用代码        
+#region 测试用代码        
         private Path DrawLine(Point startPoint, Point endPoint)
         {
             LineGeometry lineGeometry = new LineGeometry();

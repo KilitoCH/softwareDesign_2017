@@ -7,18 +7,79 @@
         mc:Ignorable="d"
         Title="BeginWindow" Height="320" Width="450" ResizeMode="CanMinimize">
   <Window.Resources>
-    
+    <Style TargetType="Button" x:Key="buttonStyle">
+      <Setter Property="Background" Value="#FF58DEC0"/>
+      <Setter Property="Foreground" Value="Black"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Grid MinWidth="20" MinHeight="20">
+              <Rectangle Name="mainRectangle" RadiusX="10" RadiusY="10" Fill="{TemplateBinding Background}" />
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <!--定义触发器-->
+      <Style.Triggers>
+        <!--该按钮的触发器，实现功能包括鼠标放在上面时候按钮的外观变化；不可见时控件不可用-->
+        <Trigger  Property="Button.IsMouseOver"  Value="True">
+          <Setter Property="Background" Value="#FF21AAA6" />
+          <Setter Property="Foreground" Value="White" />
+        </Trigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+          <EventTrigger.Actions>
+            <BeginStoryboard>
+              <Storyboard>
+                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Button.Width)"  To="130"></DoubleAnimation>
+              </Storyboard>
+            </BeginStoryboard>
+          </EventTrigger.Actions>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+          <EventTrigger.Actions>
+            <BeginStoryboard>
+              <Storyboard>
+                <DoubleAnimation Duration="0:0:0.5" Storyboard.TargetProperty="(Button.Width)" To="120"></DoubleAnimation>
+              </Storyboard>
+            </BeginStoryboard>
+          </EventTrigger.Actions>
+        </EventTrigger>
+      </Style.Triggers>
+      <!--定义触发器_End-->
+    </Style>
   </Window.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="55*" />
-      <RowDefinition Height="45*" />
-    </Grid.RowDefinitions>
-    <Grid Grid.Row="0" x:Name="background" Background ="{StaticResource linearBrushBlue}" >
-      <Image HorizontalAlignment="Left" Height="100" Margin="175,110,0,-50" VerticalAlignment="Top" Width="100" Source="images/hui.jpg"/>
-    </Grid>
-    <Canvas Grid.Row="1">
-      <Button Content="开始使用" Canvas.Left="165" Canvas.Top="73" Width="120" Height="30" Template="{StaticResource ringButton}" Background="#FF58DEC0" Foreground="Black" Click="Button_Click" />      
-    </Canvas>
+  <Grid x:Name="mainGrid">
+    <Rectangle x:Name="backgroundField" VerticalAlignment="Top" Height="160" Fill="{StaticResource linearBrushBlue}" />
+    <Image x:Name="image" Height="100" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Source="images/hui.jpg"/>
+    <Button Content="开始使用" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,35"  Width="120" Height="30" Click="Button_Click" IsDefault="True">
+      <Button.Style>
+        <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}">
+          <!--定义触发器-->
+          <Style.Triggers>
+            <!--该按钮的触发器，实现功能包括鼠标放在上面时候按钮的外观变化；不可见时控件不可用-->
+            <Trigger Property="Button.IsVisible" Value="False">
+              <Setter Property="IsEnabled" Value="False" />
+            </Trigger>
+            <EventTrigger RoutedEvent="Click">
+              <EventTrigger.Actions>
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation Duration="0:0:1" BeginTime="0:0:0.6"  Storyboard.TargetProperty="(Button.Opacity)" To="0"/>
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger.Actions>
+            </EventTrigger>
+          </Style.Triggers>
+          <!--定义触发器_End-->
+        </Style>
+      </Button.Style>
+    </Button>
+    <Label Content="GNSS信号BPSK、BOC调制性能分析" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontFamily="KaiTi" FontSize="20"/>
+
+    <TextBox x:Name="bpskFreqTextBox" HorizontalAlignment="Center" Height="23" Margin="0,187,0,0" Text="TextBox" VerticalAlignment="Top" Width="69" BorderBrush="#FF21AAA6" Opacity="0"/>
+    <Label x:Name="bpskFreqLabel" Content="f:" HorizontalAlignment="Left" Margin="162,187,0,0" VerticalAlignment="Top" Height="23" Width="26" Opacity="0"/>
+    <Button Content="提交" HorizontalAlignment="Left" Margin="102,242,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource buttonStyle}"/>
+    <Button Content="保存" HorizontalAlignment="Left" Margin="270,242,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource buttonStyle}"/>
   </Grid>
 </Window>

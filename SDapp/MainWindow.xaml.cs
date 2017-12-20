@@ -42,7 +42,7 @@ namespace SoftwareDesign_2017
                     context.pointsForBpsk = bpskSequenceGenerate.GetPsdSequenceForView;
                     if (context.pointsForBpsk != null)//如果正确获取了该序列，则将其绘图
                     {
-                        context.visualForBpsk = paint.DrawVisual(context.pointsForBpsk, true, false, Type.Bezier);
+                        context.visualForBpsk = paint.DrawVisual(context.pointsForBpsk, true, false, Type.Line);
                         tabItem1_canvas.RemoveAll();
                         tabItem1_canvas.AddVisual(context.visualForBpsk);
                     }
@@ -104,7 +104,7 @@ namespace SoftwareDesign_2017
         }
 
         //选项卡1中的保存图片按钮被按下时触发的事件
-        
+
         #endregion
     }
 }
