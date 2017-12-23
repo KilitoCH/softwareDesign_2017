@@ -80,7 +80,7 @@ namespace SoftwareDesign_2017
 
             using (var pic = drawingVisual.RenderOpen())
             {
-                pic.DrawGeometry(Brushes.White, new Pen(Brushes.Black, 1), geometry);
+                pic.DrawGeometry(Brushes.Black, new Pen(Brushes.Green, 1.2), geometry);
             }
 
             return drawingVisual;

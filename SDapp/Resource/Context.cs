@@ -15,16 +15,19 @@ namespace SoftwareDesign_2017
     class Context:INotifyPropertyChanged
     {
 #region 字段
-        public List<Point> pointsForBpsk = new List<Point>();//选项卡1的图片的点阵
-        public List<Point> pointsForBoc = new List<Point>();//选项卡2的图片的点阵
+        public List<Point> points = new List<Point>();//BpskPSD点阵
 
         public Visual visualForBpsk;//选项卡1的图片的Visual格式字段
         public Visual visualForBoc;//选项卡2的图片的Visual格式字段
 
         private int frequenceUnit = 2;
         private double frequenceBpsk = 0;
+        private bool whichMode = true;
         private int alpha = 0;
         private int beta = 0;
+        private bool timeDomain = false;
+        private bool psd = true;
+        private bool autocorrelation = false;
 
         public int FrequenceUnit
         {
@@ -75,6 +78,58 @@ namespace SoftwareDesign_2017
             {
                 beta = value;
                 OnPropertyChanged("Beta");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool WhichMode
+        {
+            get
+            {
+                return whichMode;
+            }
+            set
+            {
+                whichMode = value;
+                OnPropertyChanged("WhichMode");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool TimeDomain
+        {
+            get
+            {
+                return timeDomain;
+            }
+            set
+            {
+                timeDomain = value;
+                OnPropertyChanged("TimeDomain");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool Psd
+        {
+            get
+            {
+                return psd;
+            }
+            set
+            {
+                psd = value;
+                OnPropertyChanged("Psd");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool Autocorrelation
+        {
+            get
+            {
+                return autocorrelation;
+            }
+            set
+            {
+                autocorrelation = value;
+                OnPropertyChanged("Autocorrelation");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
             }
         }
 

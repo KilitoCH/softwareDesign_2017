@@ -45,7 +45,7 @@ namespace SoftwareDesign_2017
                 _visuals.RemoveAt(0);
             }
         }
-
+        
         #endregion
 
         #region 构造

@@ -12,9 +12,11 @@ namespace SoftwareDesign_2017
 #region 字段
         private const int boundWidth = 30000000;//接收机的前端带宽
         private List<Point> psdSequenceReal = new List<Point>();
+        private List<Point> psdSequenceRealDb = new List<Point>();
         private List<Point> psdSequenceForView = new List<Point>();
+        private List<Point> autocorrelationSequence;
         #endregion
-#region 构造函数
+        #region 构造函数
         /// <summary>
         /// 输入参数alpha，beta，画布大小以获取用来绘图的序列
         /// </summary>
@@ -24,10 +26,29 @@ namespace SoftwareDesign_2017
         /// <param name="height">画布的高</param>
         public BOC_Sequence_Generate(int alpha, int beta, double width, double height)
         {
-            psdSequenceReal = BOCPSDGenerate(alpha,beta);
-            psdSequenceForView = CoordinateTransform(psdSequenceReal, width, height);
+            if ((alpha != 0) && (beta != 0))
+            {
+                psdSequenceReal = BOCPSDGenerate(alpha, beta);
+                psdSequenceForView = CoordinateTransform(psdSequenceReal, width, height);
+                autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
+            }            
         }
-#endregion
+
+        /// <summary>
+        /// 输入参数alpha，beta，画布大小以获取用来绘图的序列
+        /// </summary>
+        /// <param name="alpha">参数alpha</param>
+        /// <param name="beta">参数beta</param>
+        public BOC_Sequence_Generate(int alpha, int beta)
+        {
+            if ((alpha != 0) && (beta != 0))
+            {
+                psdSequenceReal = BOCPSDGenerate(alpha, beta);
+                psdSequenceRealDb = ChangeToDb(psdSequenceReal);
+                autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
+            }
+        }
+        #endregion
 #region 方法
         /// <summary>
         /// 返回一个双极性NRZ调制信号,注：这个函数尚未完成修改
@@ -57,7 +78,7 @@ namespace SoftwareDesign_2017
             Point point = new Point();//用于添加新点的临时变量
             if(((2 * alpha / beta) % 2) == 0)//若2*alpha/beta等于偶数
             {
-                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += 1000)
+                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += 100000)
                 {
                     deltaI = i + 1;
                     point.X = i;
@@ -67,7 +88,7 @@ namespace SoftwareDesign_2017
             }
             else//若2*alpha/beta等于奇数
             {
-                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += 1000)
+                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += 100000)
                 {
                     deltaI = i + 1;
                     point.X = i;
@@ -127,8 +148,38 @@ namespace SoftwareDesign_2017
             }
             return pointsRealDb;
         }
+
+        private List<Point> AutocorrelationSequenceGenerate(List<Point> psdSequence)
+        {
+            double lambda = 0;
+            List<Point> rs = new List<Point>();//Rs(t)
+            foreach (var point in psdSequence)
+            {
+                if (point.X >= -12000000 && point.X <= 12000000)  ///带宽β选择24MHz
+                {
+                    lambda += point.Y * 100000;
+                }
+            }
+            for (double i = -0.000001; i <= 0.0000010001; i += 0.000000002)
+            {
+                double tempVal1 = 0;
+                double tempVal2 = 0;
+                double tempVal3 = 0;
+                for (int j = 30; j <= 270; j++)
+                {
+                    tempVal1 += psdSequence[j].Y * Math.Cos(2 * Math.PI * psdSequence[j].X * i) * 100000;
+                }
+                for (int j = 30; j <= 270; j++)
+                {
+                    tempVal2 += psdSequence[j].Y * Math.Sin(2 * Math.PI * psdSequence[j].X * i) * 100000;
+                }
+                tempVal3 = Math.Sqrt(Math.Pow(tempVal1, 2) + Math.Pow(tempVal2, 2)) / lambda;
+                rs.Add(new Point(i, tempVal3));
+            }
+            return rs;
+        }
         #endregion
-#region 属性
+        #region 属性
         /// <summary>
         /// 获取一个未经过坐标变换的BOC信号的功率谱密度点序列
         /// </summary>
@@ -139,12 +190,30 @@ namespace SoftwareDesign_2017
         }
 
         /// <summary>
+        /// 获取一个未经过坐标变换的BOC信号的自相关函数点序列
+        /// </summary>
+        public List<Point> GetAutocorrelationSequence
+        {
+            get { return autocorrelationSequence; }
+            set { autocorrelationSequence = value; }
+        }
+
+        /// <summary>
         /// 获取一个坐标变换后，适合画布大小的BOC信号的功率谱密度点序列
         /// </summary>
         public List<Point> GetPsdSequenceForView
         {
             get { return psdSequenceForView; }
             set { psdSequenceForView = value; }
+        }
+
+        /// <summary>
+        /// 获取一个经过Db计算的BOC信号的功率谱密度Db点序列
+        /// </summary>
+        public List<Point> GetPsdSequenceRealDb
+        {
+            get { return psdSequenceRealDb; }
+            set { psdSequenceRealDb = value; }
         }
         #endregion
     }
