@@ -11,10 +11,12 @@ namespace SoftwareDesign_2017
     {
 #region 字段
         private const int boundWidth = 30000000;//接收机的前端带宽
-        private List<Point> psdSequenceReal = new List<Point>();
-        private List<Point> psdSequenceRealDb = new List<Point>();
-        private List<Point> psdSequenceForView = new List<Point>();
+        private List<Point> psdSequenceReal;
+        private List<Point> psdSequenceRealDb;
+        private List<Point> psdSequenceForView;
         private List<Point> autocorrelationSequence;
+
+        private const int stepLength = 10000;
         #endregion
         #region 构造函数
         /// <summary>
@@ -29,8 +31,7 @@ namespace SoftwareDesign_2017
             if ((alpha != 0) && (beta != 0))
             {
                 psdSequenceReal = BOCPSDGenerate(alpha, beta);
-                psdSequenceForView = CoordinateTransform(psdSequenceReal, width, height);
-                autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
+                psdSequenceForView = CoordinateTransform(psdSequenceReal, width, height);                
             }            
         }
 
@@ -44,8 +45,7 @@ namespace SoftwareDesign_2017
             if ((alpha != 0) && (beta != 0))
             {
                 psdSequenceReal = BOCPSDGenerate(alpha, beta);
-                psdSequenceRealDb = ChangeToDb(psdSequenceReal);
-                autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
+                psdSequenceRealDb = ChangeToDb(psdSequenceReal);                
             }
         }
         #endregion
@@ -58,7 +58,7 @@ namespace SoftwareDesign_2017
         private List<Point> BOC_Sequence(Double frequence)
         {
             List<Point> points = new List<Point>();
-            for (int i = -15000000; i <= (boundWidth / 2); i+=1000)
+            for (int i = -15000000; i <= (boundWidth / 2); i+= stepLength)
             {
                 points.Add(new Point(10 + i * 10 * frequence, i % 2 * 20 + 100));
                 points.Add(new Point(10 + (i + 1) * 10 * frequence, i % 2 * 20 + 100));
@@ -78,7 +78,7 @@ namespace SoftwareDesign_2017
             Point point = new Point();//用于添加新点的临时变量
             if(((2 * alpha / beta) % 2) == 0)//若2*alpha/beta等于偶数
             {
-                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += 100000)
+                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += stepLength)
                 {
                     deltaI = i + 1;
                     point.X = i;
@@ -88,7 +88,7 @@ namespace SoftwareDesign_2017
             }
             else//若2*alpha/beta等于奇数
             {
-                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += 100000)
+                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += stepLength)
                 {
                     deltaI = i + 1;
                     point.X = i;
@@ -157,7 +157,7 @@ namespace SoftwareDesign_2017
             {
                 if (point.X >= -12000000 && point.X <= 12000000)  ///带宽β选择24MHz
                 {
-                    lambda += point.Y * 100000;
+                    lambda += point.Y * stepLength;
                 }
             }
             for (double i = -0.000001; i <= 0.0000010001; i += 0.000000002)
@@ -165,13 +165,13 @@ namespace SoftwareDesign_2017
                 double tempVal1 = 0;
                 double tempVal2 = 0;
                 double tempVal3 = 0;
-                for (int j = 30; j <= 270; j++)
+                for (int j = 300; j <= 2700; j++)
                 {
-                    tempVal1 += psdSequence[j].Y * Math.Cos(2 * Math.PI * psdSequence[j].X * i) * 100000;
+                    tempVal1 += psdSequence[j].Y * Math.Cos(2 * Math.PI * psdSequence[j].X * i) * stepLength;
                 }
-                for (int j = 30; j <= 270; j++)
+                for (int j = 300; j <= 2700; j++)
                 {
-                    tempVal2 += psdSequence[j].Y * Math.Sin(2 * Math.PI * psdSequence[j].X * i) * 100000;
+                    tempVal2 += psdSequence[j].Y * Math.Sin(2 * Math.PI * psdSequence[j].X * i) * stepLength;
                 }
                 tempVal3 = Math.Sqrt(Math.Pow(tempVal1, 2) + Math.Pow(tempVal2, 2)) / lambda;
                 rs.Add(new Point(i, tempVal3));
@@ -186,7 +186,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceReal
         {
             get { return psdSequenceReal; }
-            set { psdSequenceReal = value; }
         }
 
         /// <summary>
@@ -194,8 +193,13 @@ namespace SoftwareDesign_2017
         /// </summary>
         public List<Point> GetAutocorrelationSequence
         {
-            get { return autocorrelationSequence; }
-            set { autocorrelationSequence = value; }
+            get
+            {
+                if (autocorrelationSequence == null)
+                    return autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
+                else
+                    return autocorrelationSequence;
+            }
         }
 
         /// <summary>
@@ -204,7 +208,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceForView
         {
             get { return psdSequenceForView; }
-            set { psdSequenceForView = value; }
         }
 
         /// <summary>
@@ -213,7 +216,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceRealDb
         {
             get { return psdSequenceRealDb; }
-            set { psdSequenceRealDb = value; }
         }
         #endregion
     }

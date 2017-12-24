@@ -91,6 +91,10 @@
     <Compile Include="Resource\GraphicContext.cs" />
     <Compile Include="PaintAndSavePic\SavePic.cs" />
     <Compile Include="Resource\NewThread.cs" />
+    <Compile Include="Resource\ViewParaContext.cs" />
+    <Compile Include="ViewPara.xaml.cs">
+      <DependentUpon>ViewPara.xaml</DependentUpon>
+    </Compile>
     <Page Include="BeginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +109,10 @@
     </Compile>
     <Compile Include="PaintAndSavePic\Bezier.cs" />
     <Compile Include="PaintAndSavePic\Paint.cs" />
+    <Page Include="ViewPara.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

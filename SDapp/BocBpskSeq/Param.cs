@@ -9,17 +9,31 @@ namespace SoftwareDesign_2017
 {
     class Param
     {
+        private string name;
+        private double frequenceDelta;
         private double lambda;
         private double betaSq;
         private double betaRect;
-        private double kls;
-        
-        public Param(List<Point> signalPoints,List<Point> noisePoints)
+        private double klsWithSelf;
+        private double klsWithBpsk;
+        private double klsWithBoc;
+
+        private int stepLength = 10000;
+
+
+        public Param(string name,List<Point> signalPoints)
         {
+            BPSK_Sequence_Generate bpsk = new BPSK_Sequence_Generate(1.023, 2);
+            BOC_Sequence_Generate boc = new BOC_Sequence_Generate(10, 5);
+            frequenceDelta = GetFrequenceDelta(signalPoints);
             lambda = LambdaGet(signalPoints);
             betaSq = RMS(signalPoints);
             betaRect = Bandwidth(signalPoints);
-            kls = KLS(signalPoints,noisePoints);
+            klsWithSelf = KLS(signalPoints,signalPoints);
+            klsWithBpsk = KLS(signalPoints, bpsk.GetPsdSequenceReal);
+            klsWithBoc = KLS(signalPoints, boc.GetPsdSequenceReal);
+
+            this.name = name;
         }
 
         /// <summary>
@@ -35,7 +49,7 @@ namespace SoftwareDesign_2017
             {
                 if(point.X >= -12000000 && point.X <= 12000000)  ///带宽β选择24MHz
                 {
-                    lambda += point.Y * 100000;
+                    lambda += point.Y * stepLength;
                 }
             }
             return lambda;
@@ -56,10 +70,10 @@ namespace SoftwareDesign_2017
                 if (point.X >= -12000000 && point.X <= 12000000)  ///带宽β选择24MHz
                 {
                     G = point.Y / lambda;
-                    betaSq = betaSq + point.X * point.X * G * 100000;
+                    betaSq = betaSq + point.X * point.X * G * stepLength;
                 }
             }
-            return Math.Sqrt(betaSq);
+            return Math.Sqrt(betaSq) / 1000000;
         }
 
         /// <summary>
@@ -83,7 +97,7 @@ namespace SoftwareDesign_2017
                 }
             }
             betaRect = lambda / Gmax;
-            return betaRect;
+            return betaRect / 1000000;
         }
 
         /// <summary>
@@ -96,11 +110,12 @@ namespace SoftwareDesign_2017
         private double KLS(List<Point> points1, List<Point> points2)
         {
             double kls = 0;
-            for (int i = 30; i < 270; i ++)     ///带宽βr选择24MHz,每个点间隔为1000
+            var jam_sum = Jam_sum(points2);
+            for (int i = 300; i <= 2700; i ++)     ///带宽βr选择24MHz,每个点间隔为1000
             {
-                kls = kls + points1[i].Y * points2[i].Y / jam_sum(points2);
+                kls = kls + points1[i].Y * points2[i].Y * stepLength / jam_sum;
             }
-            kls = -10 * Math.Log10(kls);  ///取对数使之对应单位为db
+            kls = 10 * Math.Log10(kls);  ///取对数使之对应单位为db
             return kls;
         }
 
@@ -109,14 +124,14 @@ namespace SoftwareDesign_2017
         /// </summary>
         /// <param name="points2">干扰的功率谱密度采样点集合</param>
         /// <returns="Pl">噪声在有限带宽中的总功率Pl</returns>
-        private double jam_sum(List<Point> points2)    
+        private double Jam_sum(List<Point> points2)    
         {
             double Pl = 0;
             foreach (var point2 in points2)           
             {
                 if (point2.X >= -12000000 && point2.X <= 12000000)   ///带宽βr选择24MHz(可变)
                 {
-                    Pl += point2.Y * 100000;
+                    Pl += point2.Y * stepLength;
                 }
             }
             return Pl;
@@ -138,9 +153,42 @@ namespace SoftwareDesign_2017
             get { return betaSq;}
         }
 
-        public double Kls
+        public double KlsWithSelf
         {
-            get { return kls;}
-        }  
+            get { return klsWithSelf; }
+        }
+
+        public double KlsWithBpsk
+        {
+            get { return klsWithBpsk; }
+        }
+        
+        public double KlsWithBoc
+        {
+            get { return klsWithBoc; }
+        }
+        
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public double FrequenceDelta
+        {
+            get { return frequenceDelta; }
+        }
+
+        private double GetFrequenceDelta(List<Point> points)
+        {
+            double yMax = 0;
+            double delta = 0;
+            foreach (var point in points)
+            {
+                if (point.Y >= yMax)
+                    delta = point.X;
+            }
+            return Math.Abs(delta);
+        }
     }
 }

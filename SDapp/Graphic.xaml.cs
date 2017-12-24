@@ -9,8 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace SoftwareDesign_2017
 {
@@ -20,6 +19,7 @@ namespace SoftwareDesign_2017
     public partial class Graphic : Window
     {
         private GraphicContext graphicContext = new GraphicContext();
+        private Visual visual;
         private double yMax = 0;
         private double yMin = 0;
         private double xMin = 0;
@@ -29,15 +29,14 @@ namespace SoftwareDesign_2017
         public Graphic(List<Point> points,string yLabel)
         {
             Paint paint = new Paint();
-            Visual visual;
             DataContext = graphicContext;
             InitializeComponent();
             if(yLabel.Equals("bpskPsd") || yLabel.Equals("bocPsd"))
-                visual = paint.DrawVisual(CoordinateTransformDb(points), true, false, Type.Line);
+                visual = paint.DrawVisual(CoordinateTransformDb(points), true, false, Type.Bezier);
             else if(yLabel.Equals("bpskAutocorrelation") || yLabel.Equals("bocAutocorrelation"))
-                visual = paint.DrawVisual(CoordinateTransformRs(points), true, false, Type.Line);
+                visual = paint.DrawVisual(CoordinateTransformRs(points), true, false, Type.Bezier);
             else
-                visual = paint.DrawVisual(CoordinateTransformDb(points), true, false, Type.Line);
+                visual = paint.DrawVisual(CoordinateTransformDb(points), true, false, Type.Bezier);
             drawingCanvas.RemoveAll();
             drawingCanvas.AddVisual(visual);
             graphicContext.LabelX_0 = xMin;
@@ -112,6 +111,21 @@ namespace SoftwareDesign_2017
             }
             
             return pointsForView;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string url;//将要保存文件的路径
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPG格式(*.jpg)|*.jpg|JPEG格式(*.jpeg)|*.jpg|PNG格式(*.png)|*.png";
+            saveFileDialog.InitialDirectory = "C:\\";
+            saveFileDialog.ShowDialog();
+            url = saveFileDialog.FileName;
+
+            SavePic savePic = new SavePic();
+            var control = test as Control;
+            savePic.SaveVisual(control, url);            
         }
     }
 }

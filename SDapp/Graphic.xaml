@@ -6,36 +6,41 @@
         xmlns:local="clr-namespace:SoftwareDesign_2017"
         mc:Ignorable="d"
         Title="Graphic" Height="300" Width="480" ResizeMode="CanResize">
-  <Viewbox Stretch="Fill">
-    <Grid Background="Black">
-      <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" Height="255" BorderBrush="White" BorderThickness="1" Margin="40,5,10,35" Padding="0,5,0,0">
-        <local:DrawingCanvas x:Name="drawingCanvas" Width="428" Height="248" Background="Black"/>
-      </Border>
-      <Label Content="{Binding Path=LabelX_0}" Foreground="White" HorizontalAlignment="Left" Margin="40,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelX_1}" Foreground="White" HorizontalAlignment="Left" Margin="105,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelX_2}" Foreground="White" HorizontalAlignment="Left" Margin="183,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelX_3}" Foreground="White" HorizontalAlignment="Left" Margin="265,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelX_4}" Foreground="White" HorizontalAlignment="Left" Margin="338,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelX_5}" Foreground="White" HorizontalAlignment="Left" Margin="413,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelX_6}" Foreground="White" HorizontalAlignment="Left" Margin="475,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      
-      <Label Content="{Binding Path=LabelY_0}" Foreground="White" HorizontalAlignment="Left" Margin="20,241,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_1}" Foreground="White" HorizontalAlignment="Left" Margin="25,213.75,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_2}" Foreground="White" HorizontalAlignment="Left" Margin="25,183.5,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_3}" Foreground="White" HorizontalAlignment="Left" Margin="25,151.25,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_4}" Foreground="White" HorizontalAlignment="Left" Margin="25,120,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_5}" Foreground="White" HorizontalAlignment="Left" Margin="25,88.75,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_6}" Foreground="White" HorizontalAlignment="Left" Margin="25,60.5,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_7}" Foreground="White" HorizontalAlignment="Left" Margin="25,28.25,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label Content="{Binding Path=LabelY_8}" Foreground="White" HorizontalAlignment="Left" Margin="25,-2,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-      <Label x:Name="xLabel" Content="{Binding Path=xLabel}" HorizontalAlignment="Left" Height="30" Margin="155,264,0,-4" VerticalAlignment="Top" Width="228" Foreground="#FFA2FF00" HorizontalContentAlignment="Center" FontSize="16"/>
-      <Label x:Name="yLabel" Content="{Binding Path=yLabel}" HorizontalAlignment="Left" Height="30" Margin="-105,112,0,0" VerticalAlignment="Top" Width="242" Foreground="#FFA2FF00" HorizontalContentAlignment="Center" FontSize="16" RenderTransformOrigin="0.5,0.5">
-        <Label.RenderTransform>
-          <TransformGroup>
-            <RotateTransform Angle="-90"/>
-          </TransformGroup>
-        </Label.RenderTransform>
+  <Grid>
+    <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Width="30" Height="20" Content="save" Background="White" Foreground="Black" Panel.ZIndex="1" Click="Button_Click"/>
+    <Viewbox x:Name="viewBox" Stretch="UniformToFill">
+      <Label x:Name="test" Padding="0" >
+        <Grid Background="Black" x:Name="graphic">
+          <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" Height="255" BorderBrush="White" BorderThickness="1" Margin="40,5,10,35" Padding="0,5,0,0">
+            <local:DrawingCanvas x:Name="drawingCanvas" Width="428" Height="248" Background="Black"/>
+          </Border>
+          <Label Content="{Binding Path=LabelX_0}" Foreground="White" HorizontalAlignment="Left" Margin="40,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelX_1}" Foreground="White" HorizontalAlignment="Left" Margin="105,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelX_2}" Foreground="White" HorizontalAlignment="Left" Margin="183,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelX_3}" Foreground="White" HorizontalAlignment="Left" Margin="265,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelX_4}" Foreground="White" HorizontalAlignment="Left" Margin="338,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelX_5}" Foreground="White" HorizontalAlignment="Left" Margin="413,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelX_6}" Foreground="White" HorizontalAlignment="Left" Margin="475,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+
+          <Label Content="{Binding Path=LabelY_0}" Foreground="White" HorizontalAlignment="Left" Margin="20,241,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_1}" Foreground="White" HorizontalAlignment="Left" Margin="25,213.75,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_2}" Foreground="White" HorizontalAlignment="Left" Margin="25,183.5,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_3}" Foreground="White" HorizontalAlignment="Left" Margin="25,151.25,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_4}" Foreground="White" HorizontalAlignment="Left" Margin="25,120,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_5}" Foreground="White" HorizontalAlignment="Left" Margin="25,88.75,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_6}" Foreground="White" HorizontalAlignment="Left" Margin="25,60.5,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_7}" Foreground="White" HorizontalAlignment="Left" Margin="25,28.25,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label Content="{Binding Path=LabelY_8}" Foreground="White" HorizontalAlignment="Left" Margin="25,-2,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+          <Label x:Name="xLabel" Content="{Binding Path=xLabel}" HorizontalAlignment="Left" Height="30" Margin="155,264,0,-4" VerticalAlignment="Top" Width="228" Foreground="#FFA2FF00" HorizontalContentAlignment="Center" FontSize="16"/>
+          <Label x:Name="yLabel" Content="{Binding Path=yLabel}" HorizontalAlignment="Left" Height="30" Margin="-105,112,0,0" VerticalAlignment="Top" Width="242" Foreground="#FFA2FF00" HorizontalContentAlignment="Center" FontSize="16" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+              <TransformGroup>
+                <RotateTransform Angle="-90"/>
+              </TransformGroup>
+            </Label.RenderTransform>
+          </Label>
+        </Grid>
       </Label>
-    </Grid>
-  </Viewbox>
+    </Viewbox>
+  </Grid>
 </Window>

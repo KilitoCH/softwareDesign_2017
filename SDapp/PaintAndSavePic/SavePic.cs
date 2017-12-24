@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Controls;
 using System.Windows;
 
 namespace SoftwareDesign_2017
@@ -21,7 +22,7 @@ namespace SoftwareDesign_2017
         {
             try
             {
-                RenderTargetBitmap bmp = new RenderTargetBitmap(500, 400, 96, 96, PixelFormats.Default);
+                RenderTargetBitmap bmp = new RenderTargetBitmap(428, 248, 96, 96, PixelFormats.Default);
                 bmp.Render(visual);
                 BitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(bmp));
@@ -35,6 +36,34 @@ namespace SoftwareDesign_2017
             {
                 return false;
             }            
+        }
+
+        public bool SaveControl(Control control,string url)
+        {
+            try
+            {
+                DrawingVisual drawingVisual = new DrawingVisual();
+                using (DrawingContext context = drawingVisual.RenderOpen())
+                {
+                    VisualBrush brush = new VisualBrush(control) { Stretch = Stretch.None };
+                    context.DrawRectangle(brush, null, new Rect(0, 0, control.Width, control.Height));
+                    context.Close();
+                }
+
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)control.ActualWidth + 50, (int)control.ActualHeight + 50, 96, 96, PixelFormats.Default);
+                bmp.Render(drawingVisual);
+                BitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bmp));
+
+                FileStream fileStream = new FileStream(url, FileMode.Create, FileAccess.ReadWrite);
+                encoder.Save(fileStream);
+                fileStream.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

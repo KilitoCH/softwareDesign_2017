@@ -7,9 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace SoftwareDesign_2017
 {
@@ -34,11 +32,11 @@ namespace SoftwareDesign_2017
             storyboard.Begin(this);
         }
 
-        private void paintButton_Click(object sender, RoutedEventArgs e)
+        private void PaintButton_Click(object sender, RoutedEventArgs e)
         {
             BPSK_Sequence_Generate bpskSequenceGenerate = new BPSK_Sequence_Generate(Convert.ToDouble(context.FrequenceBpsk), 2);//利用TextBox中输入的参数获取一个序列
             BOC_Sequence_Generate bocSequenceGenerate = new BOC_Sequence_Generate(Convert.ToInt32(context.Alpha), Convert.ToInt32(context.Beta));//利用TextBox中输入的参数获取一个序列
-            NewThread newThread = new NewThread();            
+            NewThread newThread = new NewThread();
 
             if (context.WhichMode)
             {
@@ -94,15 +92,21 @@ namespace SoftwareDesign_2017
                 else
                     MessageBox.Show("请先输入频率", "错误");
             }
-
-            Param param = new Param(bpskSequenceGenerate.GetPsdSequenceReal, bpskSequenceGenerate.GetPsdSequenceReal);
         }
 
-        /*private void StartThread(object arg)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            Graphic graphic = new Graphic((arg as List<Point>));
-            graphic.ShowDialog();
-        }*/
+            string url;//将要保存文件的路径
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JPG格式(*.jpg)|*.jpg|JPEG格式(*.jpeg)|*.jpg|PNG格式(*.png)|*.png";
+            saveFileDialog.InitialDirectory = "C:\\";
+            saveFileDialog.ShowDialog();
+            url = saveFileDialog.FileName;
+
+            SavePic savePic = new SavePic();
+            //savePic.SaveVisual(, url);
+        }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -137,15 +141,31 @@ namespace SoftwareDesign_2017
             //输入控件的动画            
             DoubleAnimation aniBpskGrid = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(1)));
             aniBpskGrid.BeginTime = TimeSpan.FromSeconds(1);
-            Storyboard.SetTargetName(aniBpskGrid, bpskGrid.Name);
+            Storyboard.SetTargetName(aniBpskGrid, controlGrid.Name);
             Storyboard.SetTargetProperty(aniBpskGrid, new PropertyPath(OpacityProperty));
 
 
-             storyboard.Children.Add(animationBackground);
+            storyboard.Children.Add(animationBackground);
             storyboard.Children.Add(animationImage);
             storyboard.Children.Add(aniBpskGrid);
         }
 
-        
+        private void Psd_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void ViewPara_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var thread = new Thread(threadStart);
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+        }
+
+        private void threadStart()
+        {
+            var viewPara = new ViewPara();
+            viewPara.ShowDialog();
+        }
     }    
 }

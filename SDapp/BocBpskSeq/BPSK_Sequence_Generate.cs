@@ -15,6 +15,8 @@ namespace SoftwareDesign_2017
         private List<Point> psdSequenceRealDb;
         private List<Point> psdSequenceForView;
         private List<Point> autocorrelationSequence;
+
+        private int stepLength = 10000;
         #endregion
         #region 构造函数
         /// <summary>
@@ -45,7 +47,6 @@ namespace SoftwareDesign_2017
                 }
                 psdSequenceReal = BPSKPSDGenerate(frequence);
                 psdSequenceForView = CoordinateTransform(psdSequenceReal, width, height);
-                autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
             }            
         }
         /// <summary>
@@ -74,7 +75,6 @@ namespace SoftwareDesign_2017
                 }
                 psdSequenceReal = BPSKPSDGenerate(frequence);
                 psdSequenceRealDb = ChangeToDb(psdSequenceReal);
-                autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
             }            
         }
         #endregion
@@ -104,11 +104,11 @@ namespace SoftwareDesign_2017
         {
             List<Point> points = new List<Point>();
             Point point = new Point();
-            for (int deltaI/*deltaI是为了避免零除点*/,i = -15000000; i <= (boundWidth / 2); i += 100000)
+            for (int deltaI/*deltaI是为了避免零除点*/,i = -15000000; i <= (boundWidth / 2); i += stepLength)
             {
                 deltaI = i + 1;
                 point.X = i;
-                point.Y = Math.Pow(((Math.Sin(Math.PI * deltaI / (2 * frequence))) / (Math.PI * deltaI / (2 * frequence))), 2);
+                point.Y = Math.Pow(((Math.Sin(Math.PI * deltaI / frequence)) / (Math.PI * deltaI / frequence)), 2) / frequence;
                 points.Add(point);
             }
             return points;
@@ -172,7 +172,7 @@ namespace SoftwareDesign_2017
             {
                 if (point.X >= -12000000 && point.X <= 12000000)  ///带宽β选择24MHz
                 {
-                    lambda += point.Y * 100000;
+                    lambda += point.Y * stepLength;
                 }
             }
             for (double i = -0.000001; i <= 0.000001001; i += 0.00000001)
@@ -180,13 +180,13 @@ namespace SoftwareDesign_2017
                 double tempVal1 = 0;
                 double tempVal2 = 0;
                 double tempVal3 = 0;
-                for (int j = 30;j <= 270;j++)
+                for (int j = 300;j <= 2700;j++)
                 {
-                    tempVal1 += psdSequence[j].Y * Math.Cos(2 * Math.PI * psdSequence[j].X * i) * 100000;
+                    tempVal1 += psdSequence[j].Y * Math.Cos(2 * Math.PI * psdSequence[j].X * i) * stepLength;
                 }
-                for (int j = 30; j <= 270; j++)
+                for (int j = 300; j <= 2700; j++)
                 {
-                    tempVal2 += psdSequence[j].Y * Math.Sin(2 * Math.PI * psdSequence[j].X * i) * 100000;
+                    tempVal2 += psdSequence[j].Y * Math.Sin(2 * Math.PI * psdSequence[j].X * i) * stepLength;
                 }
                 tempVal3 = Math.Sqrt(Math.Pow(tempVal1, 2) + Math.Pow(tempVal2, 2)) / lambda;
                 rs.Add(new Point(i, tempVal3));
@@ -201,7 +201,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceReal
         {
             get { return psdSequenceReal; }
-            set { psdSequenceReal = value; }
         }
 
         /// <summary>
@@ -209,8 +208,13 @@ namespace SoftwareDesign_2017
         /// </summary>
         public List<Point> GetAutocorrelationSequence
         {
-            get { return autocorrelationSequence; }
-            set { autocorrelationSequence = value; }
+            get
+            {
+                if (autocorrelationSequence == null)
+                    return autocorrelationSequence = AutocorrelationSequenceGenerate(psdSequenceReal);
+                else
+                    return autocorrelationSequence;
+            }
         }
 
         /// <summary>
@@ -219,7 +223,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceRealDb
         {
             get { return psdSequenceRealDb; }
-            set { psdSequenceRealDb = value; }
         }
 
         /// <summary>
@@ -228,7 +231,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceForView
         {
             get { return psdSequenceForView; }
-            set { psdSequenceForView = value; }
         }
         #endregion
     }

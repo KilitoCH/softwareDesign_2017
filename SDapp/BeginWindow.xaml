@@ -7,29 +7,7 @@
         mc:Ignorable="d"
         Title="GNSS信号BPSK、BOC调制性能分析" Height="320" Width="450" ResizeMode="CanMinimize">
   <Window.Resources>
-    <Style TargetType="Button" x:Key="buttonStyle">
-      <Setter Property="Background" Value="#FF58DEC0"/>
-      <Setter Property="Foreground" Value="Black"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="Button">
-            <Grid MinWidth="20" MinHeight="20">
-              <Rectangle Name="mainRectangle" RadiusX="10" RadiusY="10" Fill="{TemplateBinding Background}" />
-              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Grid>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-      <!--定义触发器-->
-      <Style.Triggers>
-        <!--该按钮的触发器，实现功能包括鼠标放在上面时候按钮的外观变化；不可见时控件不可用-->
-        <Trigger  Property="Button.IsMouseOver"  Value="True">
-          <Setter Property="Background" Value="#FF21AAA6" />
-          <Setter Property="Foreground" Value="White" />
-        </Trigger>
-      </Style.Triggers>
-      <!--定义触发器_End-->
-    </Style>
+    
   </Window.Resources>
   <Grid x:Name="mainGrid">
     <Rectangle x:Name="backgroundField" VerticalAlignment="Top" Height="160" Fill="{StaticResource linearBrushBlue}" />
@@ -59,29 +37,33 @@
       </Button.Style>
     </Button>
     <!--" Label Content="GNSS信号BPSK、BOC调制性能分析" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontFamily="KaiTi" FontSize="20" Foreground="White"/-->
-    <Grid x:Name="bpskGrid" Opacity="0">
+    <Grid x:Name="controlGrid" Opacity="1">
       <RadioButton x:Name="bpskRB" GroupName="mode" Content="BPSK" HorizontalAlignment="Left" Margin="105,82,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=WhichMode}" IsThreeState="False" FontSize="20"/>
       <RadioButton x:Name="bocRB" GroupName="mode" Content="BOC" HorizontalAlignment="Left" Margin="276,82,0,0" VerticalAlignment="Top" IsThreeState="False" FontSize="20"/>
-      <Button x:Name="submmitButton" Content="画图" Width="75" Style="{StaticResource buttonStyle}" Click="paintButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,246,248,0"/>
-      <Button x:Name="saveButton" Content="保存" Width="75" Style="{StaticResource buttonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,246,93,0"/>
-      <RadioButton GroupName="wave" Content="时域波形" BorderBrush="#FF21AAA6" BorderThickness="1" IsThreeState="False" IsChecked="{Binding Path=TimeDomain}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="77,0,0,121" />
-      <RadioButton GroupName="wave" Content="功率谱密度" IsThreeState="False" IsChecked="{Binding Path=Psd}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="77,0,0,102" />
-      <RadioButton GroupName="wave" Content="自相关函数" IsThreeState="False" IsChecked="{Binding Path=Autocorrelation}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="77,0,0,83" />
+      <Button x:Name="submmitButton" Content="画图" Width="75" Style="{StaticResource buttonStyle}" Click="PaintButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,246,248,0"/>
+      <Button x:Name="saveButton" Content="保存" Width="75" Style="{StaticResource buttonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,246,93,0" Click="SaveButton_Click"/>
+      <RadioButton GroupName="wave" Content="时域波形" BorderBrush="#FF21AAA6" BorderThickness="1" IsThreeState="False" IsChecked="{Binding Path=TimeDomain}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="21,0,0,243.946" />
+      <RadioButton GroupName="wave" Content="功率谱密度" IsThreeState="False" IsChecked="{Binding Path=Psd}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="21,0,0,224.946" />
+      <RadioButton GroupName="wave" Content="自相关函数" IsThreeState="False" IsChecked="{Binding Path=Autocorrelation}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="21,0,0,205.946" />
       <Canvas x:Name="bpskCanvas" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="140" Opacity="{Binding ElementName=bpskRB, Path=IsChecked}" IsEnabled="{Binding ElementName=bpskRB, Path=IsChecked}">
         <TextBox x:Name="bpskFreqTextBox" Height="23" Text="{Binding Path=FrequenceBpsk}" Width="75" BorderBrush="#FF21AAA6" 
-             GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Canvas.Left="323" Canvas.Top="24" />
-        <Label x:Name="bpskFreqLabel" Content="f:" Height="23" Width="26" Canvas.Left="297" Canvas.Top="24" />
-        <Label BorderBrush="#FF21AAA6" BorderThickness="1" Content="请输入BPSK扩频码速率" Width="152" Canvas.Left="277" Canvas.Top="-3"/>
+             GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Canvas.Left="186" Canvas.Top="-6" />
+        <Label x:Name="bpskFreqLabel" Content="f:" Height="23" Width="26" Canvas.Left="155" Canvas.Top="-6" />
+        <!--Label BorderBrush="#FF21AAA6" BorderThickness="1" Content="请输入BPSK扩频码速率" Width="152" Canvas.Left="277" Canvas.Top="-3"/-->
       </Canvas>
       <Canvas x:Name="BocCanvas" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="140" Opacity="{Binding ElementName=bocRB,Path=IsChecked}" IsEnabled="{Binding ElementName=bocRB, Path=IsChecked}">
         <TextBox x:Name="alphaTextBox" Height="23" Text="{Binding Path=Alpha}" Width="75" BorderBrush="#FF21AAA6" 
-             GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Canvas.Left="326" Canvas.Top="27" />
-        <Label x:Name="alphaLabel" Content="α:" Height="23" Width="26" Canvas.Left="168" Canvas.Top="73" />
-        <Label BorderBrush="#FF21AAA6" BorderThickness="1" Content="请输入BOC扩频码速率和亚载波频率" Width="152" Canvas.Left="140" Canvas.Top="23" />
+             GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Canvas.Left="186" Canvas.Top="22.24" />
+        <Label x:Name="alphaLabel" Content="α:" Height="23" Width="26" Canvas.Left="155" Canvas.Top="22" />
+        <!--Label BorderBrush="#FF21AAA6" BorderThickness="1" Content="请输入BOC扩频码速率和亚载波频率" Width="152" Canvas.Left="140" Canvas.Top="23" /-->
         <TextBox x:Name="betaTextBox" Height="23" Text="{Binding Path=Beta}" Width="75" BorderBrush="#FF21AAA6" 
-             GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Canvas.Left="184" Canvas.Top="110" />
-        <Label x:Name="betaLabel" Content="β:" Height="23" Width="26" Canvas.Left="168" Canvas.Top="110" />
+             GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Canvas.Left="186" Canvas.Top="45.24" />
+        <Label x:Name="betaLabel" Content="β:" Height="23" Width="26" Canvas.Left="155" Canvas.Top="45" />
       </Canvas>
+      <Button Content="时域波形" HorizontalAlignment="Left" Height="24" Margin="338,134.433,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource buttonStyle}"/>
+      <Button x:Name="psdButton" Content="功率谱密度" HorizontalAlignment="Left" Height="24" Margin="338,169.38,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource buttonStyle}" Click="Psd_Button_Click"/>
+      <Button Content="自相关函数" HorizontalAlignment="Left" Height="24" Margin="338,206.433,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource buttonStyle}"/>
+      <Button x:Name="viewPara" Content="查看参数" HorizontalAlignment="Left" Height="24" Margin="338,242,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource buttonStyle}" Click="ViewPara_Button_Click" />
     </Grid>
   </Grid>
 </Window>

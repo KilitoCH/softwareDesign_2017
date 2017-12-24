@@ -32,3 +32,5 @@ G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\App.bam
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\Graphic.g.cs
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\Graphic.baml
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.csprojResolveAssemblyReference.cache
+G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\ViewPara.g.cs
+G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\ViewPara.baml
