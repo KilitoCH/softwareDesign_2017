@@ -35,5 +35,4 @@ G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\BeginWi
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\DrawGraphic.baml
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\Graphic.baml
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\ViewPara.baml
-G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\bin\Debug\SoftwareDesign_2017.exe.CodeAnalysisLog.xml
-G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\bin\Debug\SoftwareDesign_2017.exe.lastcodeanalysissucceeded
+G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.csprojResolveAssemblyReference.cache
