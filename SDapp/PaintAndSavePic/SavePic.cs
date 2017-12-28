@@ -42,16 +42,16 @@ namespace SoftwareDesign_2017
         {
             try
             {
-                DrawingVisual drawingVisual = new DrawingVisual();
+                /*DrawingVisual drawingVisual = new DrawingVisual();
                 using (DrawingContext context = drawingVisual.RenderOpen())
                 {
                     VisualBrush brush = new VisualBrush(control) { Stretch = Stretch.None };
                     context.DrawRectangle(brush, null, new Rect(0, 0, control.Width, control.Height));
                     context.Close();
-                }
+                }*/
 
-                RenderTargetBitmap bmp = new RenderTargetBitmap((int)control.ActualWidth + 50, (int)control.ActualHeight + 50, 96, 96, PixelFormats.Default);
-                bmp.Render(drawingVisual);
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)control.Width, (int)control.Height, 96, 96, PixelFormats.Default);
+                bmp.Render(control);
                 BitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(bmp));
 

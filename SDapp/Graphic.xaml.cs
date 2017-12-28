@@ -19,33 +19,136 @@ namespace SoftwareDesign_2017
     public partial class Graphic : Window
     {
         private GraphicContext graphicContext = new GraphicContext();
-        private Visual visual;
+        private Dictionary<string, List<Point>> dictionary;
+        private Color color = new Color();
+        private int flag;
         private double yMax = 0;
         private double yMin = 0;
         private double xMin = 0;
         private double gapX = 0;
         private double gapY = 0;
 
-        public Graphic(List<Point> points,string yLabel)
+        public Graphic(Dictionary<string,List<Point>> dictionary,string yLabel)
         {
+            List<Visual> visualList = new List<Visual>();
+            this.dictionary = dictionary;
+            List<List<Point>> pointsList = new List<List<Point>>();
             Paint paint = new Paint();
             DataContext = graphicContext;
             InitializeComponent();
-            if(yLabel.Equals("bpskPsd") || yLabel.Equals("bocPsd"))
-                visual = paint.DrawVisual(CoordinateTransformDb(points), true, false, Type.Bezier);
-            else if(yLabel.Equals("bpskAutocorrelation") || yLabel.Equals("bocAutocorrelation"))
-                visual = paint.DrawVisual(CoordinateTransformRs(points), true, false, Type.Bezier);
-            else
-                visual = paint.DrawVisual(CoordinateTransformDb(points), true, false, Type.Bezier);
+            if (yLabel.Equals("功率谱密度"))
+            {
+                flag = 0;
+                pointsList = CoordinateTransformDb(dictionary);
+                for (int i = 0; i < pointsList.Count; i++)
+                {                    
+                    visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i],1)));
+                }
+                graphicContext.YLabel = yLabel + "(dB)";
+                graphicContext.XLabel = "频率(MHz)";
+            }
+            else if (yLabel.Equals("自相关函数"))
+            {
+                flag = 1;
+                pointsList = CoordinateTransformRs(dictionary);
+                for (int i = 0; i < pointsList.Count; i++)
+                {
+                    visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i], 1)));
+                }
+                graphicContext.YLabel = yLabel;
+                graphicContext.XLabel = "时延(microseconds)";
+            }
+            else if (yLabel.Equals("s曲线"))
+            {
+                flag = 2;
+                pointsList = CoordinateTransformError(dictionary,new Point(drawingCanvas.Width,drawingCanvas.Height / 2));
+                for (int i = 0; i < pointsList.Count; i++)
+                {
+                    visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i], 1)));
+                }
+                graphicContext.YLabel = yLabel;
+                graphicContext.XLabel = "时延(microseconds)";
+            }
+            else if (yLabel.Equals("码跟踪精度(时延)"))
+            {
+                flag = 3;
+                pointsList = CoordinateTransformRs(dictionary);
+                for (int i = 0; i < pointsList.Count; i++)
+                {
+                    visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i], 1)));
+                }
+                graphicContext.YLabel = yLabel;
+                graphicContext.XLabel = "时延(microseconds)";
+            }
+            else if (yLabel.Equals("码跟踪精度(信噪比)"))
+            {
+                flag = 4;
+                pointsList = CoordinateTransformRs(dictionary);
+                for (int i = 0; i < pointsList.Count; i++)
+                {
+                    visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i], 1)));
+                }
+                graphicContext.YLabel = yLabel;
+                graphicContext.XLabel = "信噪比(dB)";
+            }
             drawingCanvas.RemoveAll();
-            drawingCanvas.AddVisual(visual);
+            for (int i = 0; i < dictionary.Count; i++)
+            {
+                ListBoxItem listBoxItem = new ListBoxItem();
+                listBoxItem.Content = dictionary.ElementAt(i).Key;
+                listBoxItem.Foreground = color.colors[i];
+                Setter setter = new Setter(FontSizeProperty, 7, "listBoxItem");
+                listBox.Items.Add(listBoxItem);
+                
+            }
+            foreach (var visual in visualList)
+            {
+                drawingCanvas.AddVisual(visual);
+            }
+
             graphicContext.LabelX_0 = xMin;
             graphicContext.LabelX_1 = graphicContext.LabelX_0 + gapX;
             graphicContext.LabelX_2 = graphicContext.LabelX_1 + gapX;
-            graphicContext.LabelX_3 = 0;
+            graphicContext.LabelX_3 = graphicContext.LabelX_2 + gapX;
             graphicContext.LabelX_4 = graphicContext.LabelX_3 + gapX;
             graphicContext.LabelX_5 = graphicContext.LabelX_4 + gapX;
             graphicContext.LabelX_6 = graphicContext.LabelX_5 + gapX;
+        }
+
+        /// <summary>
+        /// 将真实的PsdDb点阵根据显示空间的大小调整为动态的适合窗口的点阵
+        /// </summary>
+        /// <param name="pointsReal"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        private List<List<Point>> CoordinateTransformDb(Dictionary<string, List<Point>> dictionary)
+        {
+            List<List<Point>> pointsList = new List<List<Point>>();
+            Point origin = new Point(drawingCanvas.Width / 2, drawingCanvas.Height);
+            foreach (var item in dictionary)
+            {
+                foreach (var point in item.Value)
+                {
+                    if ((point.Y + 100) > yMax)
+                        yMax = point.Y + 100;
+                }               
+            }
+            yMin = -100;
+            xMin = dictionary.First().Value[0].X / 1000000;
+            gapX = (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X) / 6000000;
+            gapY = yMax / 8;
+            double yScale = origin.Y / yMax;
+            double xScale = drawingCanvas.Width / (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X);
+            foreach (var item in dictionary)
+            {
+                List<Point> pointsTemp = new List<Point>();
+                foreach (var point in item.Value)
+                {
+                    pointsTemp.Add(new Point(point.X * xScale + origin.X, -(point.Y + 100) * yScale + origin.Y));
+                }
+                pointsList.Add(pointsTemp);
+            }
 
             graphicContext.LabelY_0 = yMin;
             graphicContext.LabelY_1 = graphicContext.LabelY_0 + gapY;
@@ -57,60 +160,92 @@ namespace SoftwareDesign_2017
             graphicContext.LabelY_7 = graphicContext.LabelY_6 + gapY;
             graphicContext.LabelY_8 = graphicContext.LabelY_7 + gapY;
 
-            graphicContext.YLabel = yLabel;
+            return pointsList;
         }
 
-        /// <summary>
-        /// 将真实的PsdDb点阵根据显示空间的大小调整为动态的适合窗口的点阵
-        /// </summary>
-        /// <param name="pointsReal"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <returns></returns>
-        private List<Point> CoordinateTransformDb(List<Point> pointsRealDb)
+        private List<List<Point>> CoordinateTransformRs(Dictionary<string, List<Point>> dictionary)
         {
-            List<Point> pointsForView = new List<Point>();
-            List<Point> pointsTemp = new List<Point>();
-            double boundWidth = 30000000;
+            List<List<Point>> pointsList = new List<List<Point>>();
             Point origin = new Point(drawingCanvas.Width / 2, drawingCanvas.Height);
-            foreach (var point in pointsRealDb)
+            foreach (var item in dictionary)
             {
-                pointsTemp.Add(new Point(point.X, point.Y + 100));
-                if ((point.Y + 100) > yMax)
-                    yMax = point.Y + 100;
+                foreach (var point in item.Value)
+                {
+                    if ((point.Y) > yMax)
+                        yMax = point.Y;
+                }
             }
-            yMin = -100;
-            xMin = pointsRealDb[0].X / 1000000;
-            gapX = (pointsRealDb[pointsRealDb.Count - 1].X - pointsRealDb[0].X) / 6000000;
+            yMin = 0;
+            xMin = dictionary.First().Value[0].X;
+            gapX = (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X) / 6;
             gapY = yMax / 8;
             double yScale = origin.Y / yMax;
-            double xScale = origin.X / (boundWidth / 2);
-            foreach (var point in pointsTemp)
+            double xScale = drawingCanvas.Width / (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X);
+            foreach (var item in dictionary)
             {
-                pointsForView.Add(new Point(point.X * xScale + origin.X, -point.Y * yScale + origin.Y));
-            }
-            return pointsForView;            
+                List<Point> pointsTemp = new List<Point>();
+                foreach (var point in item.Value)
+                {
+                    pointsTemp.Add(new Point(point.X * xScale - dictionary.First().Value[0].X * xScale, -point.Y * yScale + origin.Y));
+                }
+                pointsList.Add(pointsTemp);
+            }            
+
+            graphicContext.LabelY_0 = yMin;
+            graphicContext.LabelY_1 = graphicContext.LabelY_0 + gapY;
+            graphicContext.LabelY_2 = graphicContext.LabelY_1 + gapY;
+            graphicContext.LabelY_3 = graphicContext.LabelY_2 + gapY;
+            graphicContext.LabelY_4 = graphicContext.LabelY_3 + gapY;
+            graphicContext.LabelY_5 = graphicContext.LabelY_4 + gapY;
+            graphicContext.LabelY_6 = graphicContext.LabelY_5 + gapY;
+            graphicContext.LabelY_7 = graphicContext.LabelY_6 + gapY;
+            graphicContext.LabelY_8 = graphicContext.LabelY_7 + gapY;
+
+            return pointsList;
         }
 
-        
-        private List<Point> CoordinateTransformRs(List<Point> pointsRs)
+
+        private List<List<Point>> CoordinateTransformError(Dictionary<string, List<Point>> dictionary, Point origin)
         {
-            List<Point> pointsForView = new List<Point>();
-            double timeDomain = 0.000002;
-            Point origin = new Point(drawingCanvas.Width / 2, drawingCanvas.Height);
-            yMax = 1;
-            yMin = 0;
-            xMin = pointsRs[0].X * 1000000;
-            gapX = (pointsRs[pointsRs.Count - 1].X - pointsRs[0].X) * 1000000 / 6;
-            gapY = 0.125;
-            double yScale = origin.Y / yMax;
-            double xScale = origin.X / (timeDomain / 2);
-            foreach (var point in pointsRs)
+            List<List<Point>> pointsList = new List<List<Point>>();
+            yMax = 0;
+            foreach (var item in dictionary)
             {
-                pointsForView.Add(new Point(point.X * xScale + origin.X, -point.Y * yScale + origin.Y));
+                foreach (var point in item.Value)
+                {
+                    if (Math.Abs(point.Y) >= yMax)
+                    {
+                        yMax = Math.Abs(point.Y);
+                    }
+                }
             }
-            
-            return pointsForView;
+            yMin = 0;
+            xMin = dictionary.First().Value[0].X;
+            gapX = (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X) * 1000000 / 6;//坐标轴相关
+            gapY = yMax / 4;//坐标轴相关
+            double yScale = origin.Y / yMax;
+            double xScale = drawingCanvas.Width / (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X);            
+            foreach (var item in dictionary)
+            {
+                List<Point> pointsTemp = new List<Point>();
+                foreach (var point in item.Value)
+                {
+                    pointsTemp.Add(new Point(point.X * xScale - dictionary.First().Value[0].X * xScale, -point.Y * yScale + origin.Y));
+                }
+                pointsList.Add(pointsTemp);
+            }
+
+            graphicContext.LabelY_4 = yMin;            
+            graphicContext.LabelY_3 = graphicContext.LabelY_4 - gapY;
+            graphicContext.LabelY_2 = graphicContext.LabelY_3 - gapY;
+            graphicContext.LabelY_1 = graphicContext.LabelY_2 - gapY;
+            graphicContext.LabelY_0 = graphicContext.LabelY_1 - gapY;
+            graphicContext.LabelY_5 = graphicContext.LabelY_4 + gapY;
+            graphicContext.LabelY_6 = graphicContext.LabelY_5 + gapY;
+            graphicContext.LabelY_7 = graphicContext.LabelY_6 + gapY;
+            graphicContext.LabelY_8 = graphicContext.LabelY_7 + gapY;
+
+            return pointsList;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -125,7 +260,7 @@ namespace SoftwareDesign_2017
 
             SavePic savePic = new SavePic();
             var control = test as Control;
-            savePic.SaveVisual(control, url);            
+            savePic.SaveVisual(control, url);
         }
     }
 }

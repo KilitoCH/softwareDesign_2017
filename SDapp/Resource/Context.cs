@@ -16,31 +16,22 @@ namespace SoftwareDesign_2017
     {
 #region 字段
         public List<Point> points = new List<Point>();//BpskPSD点阵
+        public Dictionary<string, List<Point>> dictionaryBpskBoc = new Dictionary<string, List<Point>>();
+        public Dictionary<string, List<Point>> dictionaryError = new Dictionary<string, List<Point>>();
 
-        public Visual visualForBpsk;//选项卡1的图片的Visual格式字段
-        public Visual visualForBoc;//选项卡2的图片的Visual格式字段
-
-        private int frequenceUnit = 2;
         private double frequenceBpsk = 0;
         private bool whichMode = true;
+        private bool whichMode_2 = true;
         private int alpha = 0;
         private int beta = 0;
+
         private bool timeDomain = false;
         private bool psd = true;
         private bool autocorrelation = false;
 
-        public int FrequenceUnit
-        {
-            get
-            {
-                return frequenceUnit;
-            }
-            set
-            {
-                frequenceUnit = value;
-                OnPropertyChanged("FrequenceUnit");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
-            }
-        }
+        private bool sLine = true;
+        private bool delay = false;
+        private bool cN = false;
 
         public double FrequenceBpsk
         {
@@ -94,6 +85,19 @@ namespace SoftwareDesign_2017
             }
         }
 
+        public bool WhichMode_2
+        {
+            get
+            {
+                return whichMode_2;
+            }
+            set
+            {
+                whichMode_2 = value;
+                OnPropertyChanged("WhichMode_2");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
         public bool TimeDomain
         {
             get
@@ -133,6 +137,44 @@ namespace SoftwareDesign_2017
             }
         }
 
+        public bool SLine
+        {
+            get
+            {
+                return sLine;
+            }
+            set
+            {
+                sLine = value;
+                OnPropertyChanged("SLine");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool Delay
+        {
+            get
+            {
+                return delay;
+            }
+            set
+            {
+                delay = value;
+                OnPropertyChanged("Delay");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool CN
+        {
+            get
+            {
+                return cN;
+            }
+            set
+            {
+                cN = value;
+                OnPropertyChanged("CN");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
         #endregion
         #region 方法
         public event PropertyChangedEventHandler PropertyChanged;

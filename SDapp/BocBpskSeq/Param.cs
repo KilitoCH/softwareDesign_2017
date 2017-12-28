@@ -11,28 +11,35 @@ namespace SoftwareDesign_2017
     {
         private string name;
         private double frequenceDelta;
+        private double psdMax = 0;
         private double lambda;
+        private double nintyPercentBW;
+        private double waste;
         private double betaSq;
         private double betaRect;
         private double klsWithSelf;
         private double klsWithBpsk;
         private double klsWithBoc;
+        private int delay;
+        private double peakCompare;
 
         private int stepLength = 10000;
 
 
-        public Param(string name,List<Point> signalPoints)
+        public Param(string name,List<Point> psdSequence,List<Point> autoCorrelationSequence)
         {
-            BPSK_Sequence_Generate bpsk = new BPSK_Sequence_Generate(1.023, 2);
+            BPSK_Sequence_Generate bpsk = new BPSK_Sequence_Generate(1.023);
             BOC_Sequence_Generate boc = new BOC_Sequence_Generate(10, 5);
-            frequenceDelta = GetFrequenceDelta(signalPoints);
-            lambda = LambdaGet(signalPoints);
-            betaSq = RMS(signalPoints);
-            betaRect = Bandwidth(signalPoints);
-            klsWithSelf = KLS(signalPoints,signalPoints);
-            klsWithBpsk = KLS(signalPoints, bpsk.GetPsdSequenceReal);
-            klsWithBoc = KLS(signalPoints, boc.GetPsdSequenceReal);
-
+            frequenceDelta = GetFrequenceDelta(psdSequence);
+            lambda = LambdaGet(psdSequence);
+            nintyPercentBW = GetNintypercentBW(psdSequence);
+            waste = GetWaste(psdSequence);
+            betaSq = RMS(psdSequence);
+            betaRect = Bandwidth(psdSequence);
+            klsWithSelf = KLS(psdSequence,psdSequence);
+            klsWithBpsk = KLS(psdSequence, bpsk.GetPsdSequenceReal);
+            klsWithBoc = KLS(psdSequence, boc.GetPsdSequenceReal);
+            delay = GetDelay(autoCorrelationSequence);
             this.name = name;
         }
 
@@ -52,6 +59,7 @@ namespace SoftwareDesign_2017
                     lambda += point.Y * stepLength;
                 }
             }
+            Console.WriteLine(lambda);
             return lambda;
         }
 
@@ -60,7 +68,7 @@ namespace SoftwareDesign_2017
         /// </summary>
         /// <param name="points">BPSK或BOC信号的功率谱密度采样点集合</param>
         /// <param name="lambda">信号的带限后的信号剩余功率部分λ</param>
-        /// <returns="w2">带限信号的均方根带宽</returns>
+        /// <returns="w2">带限信号的均方根带宽</returns>r
         private Double RMS(List<Point> points)
         {
             double G = 0;//表示G杠,归一化
@@ -137,6 +145,68 @@ namespace SoftwareDesign_2017
             return Pl;
         }
 
+        private double GetFrequenceDelta(List<Point> points)
+        {
+            double delta = 0;
+            foreach (var point in points)
+            {
+                if (point.Y > psdMax)
+                {
+                    delta = point.X;
+                    psdMax = point.Y;
+                }
+            }
+            return Math.Abs(delta) / 1000000;
+        }
+
+        private double GetNintypercentBW(List<Point> points)
+        {
+            double power = 0;//功率临时变量
+            int i;
+            for (i = points.Count / 2; i < points.Count ; i++)
+            {
+                power += points[i].Y * 2 * stepLength;
+                if (power >= (lambda * 0.9))
+                    break;
+            }
+            return 2 * points[i].X / 1000000;
+        }
+        
+        private double GetWaste(List<Point> points)
+        {
+            double power = 0;//功率临时变量
+            foreach (var point in points)
+            {
+                power += point.Y * stepLength;
+            }
+            return 10 * Math.Log10(power/lambda);
+        }
+
+        private int GetDelay(List<Point> acPoints)
+        {
+            int i;
+            double ySecondMax = 0;
+            double delay = 0;
+            if (acPoints != null)
+            {
+                for (i = acPoints.Count / 2; i < acPoints.Count; i++)
+                {
+                    if (acPoints[i].Y < 0.05)
+                        break;
+                }
+                for (; i < acPoints.Count; i++)
+                {
+                    if (acPoints[i].Y >= ySecondMax)
+                    {
+                        ySecondMax = acPoints[i].Y;
+                        delay = acPoints[i].X;
+                    }
+                }
+            }
+            peakCompare = Math.Pow(ySecondMax, 2);
+            return (int)(delay * 1000000000);
+        }
+
         public double Lambda
         {
             get { return lambda;}
@@ -179,16 +249,29 @@ namespace SoftwareDesign_2017
             get { return frequenceDelta; }
         }
 
-        private double GetFrequenceDelta(List<Point> points)
+        public double PsdMax
         {
-            double yMax = 0;
-            double delta = 0;
-            foreach (var point in points)
-            {
-                if (point.Y >= yMax)
-                    delta = point.X;
-            }
-            return Math.Abs(delta);
+            get { return 10 * Math.Log10(psdMax); }
+        }
+
+        public double NintyPercentBW
+        {
+            get { return nintyPercentBW; }
+        }
+
+        public double Waste
+        {
+            get { return waste; }
+        }
+
+        public int Delay
+        {
+            get { return delay; }
+        }
+        
+        public double PeakCompare
+        {
+            get { return peakCompare; }
         }
     }
 }

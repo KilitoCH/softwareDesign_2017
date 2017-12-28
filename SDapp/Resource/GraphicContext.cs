@@ -241,7 +241,7 @@ namespace SoftwareDesign_2017
             }
             set
             {
-                xLabel  = value;
+                xLabel = value;
                 OnPropertyChanged("xLabel");
             }
         }

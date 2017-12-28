@@ -37,8 +37,8 @@ namespace SoftwareDesign_2017
                 }
                 else
                 {
-                    BPSK_Sequence_Generate bpskSequenceGenerate = new BPSK_Sequence_Generate(Convert.ToDouble(context.FrequenceBpsk), 2);//利用TextBox中输入的参数获取一个序列
-                    paramList.Add(new Param(name, bpskSequenceGenerate.GetPsdSequenceReal));
+                    BPSK_Sequence_Generate bpskSequenceGenerate = new BPSK_Sequence_Generate(Convert.ToDouble(context.FrequenceBpsk));//利用TextBox中输入的参数获取一个序列
+                    paramList.Add(new Param(name, bpskSequenceGenerate.GetPsdSequenceReal,null));
                     context.nameList.Add(name);
                 }
             }
@@ -52,7 +52,7 @@ namespace SoftwareDesign_2017
                 else
                 {
                     BOC_Sequence_Generate bocSequenceGenerate = new BOC_Sequence_Generate(Convert.ToInt32(context.Alpha), Convert.ToInt32(context.Beta));//利用TextBox中输入的参数获取一个序列
-                    paramList.Add(new Param(name, bocSequenceGenerate.GetPsdSequenceReal));
+                    paramList.Add(new Param(name, bocSequenceGenerate.GetPsdSequenceReal,bocSequenceGenerate.GetAutocorrelationSequence));
                     context.nameList.Add(name);
                 }
             }

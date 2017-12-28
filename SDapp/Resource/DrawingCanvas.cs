@@ -45,6 +45,13 @@ namespace SoftwareDesign_2017
                 _visuals.RemoveAt(0);
             }
         }
+
+        public void RemoveAt(int index)
+        {
+            base.RemoveLogicalChild(_visuals[index]);
+            base.RemoveVisualChild(_visuals[index]);
+            _visuals.RemoveAt(index);
+        }
         
         #endregion
 

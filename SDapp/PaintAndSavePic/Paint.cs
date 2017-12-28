@@ -12,7 +12,7 @@ namespace SoftwareDesign_2017
     /// <summary>
     /// 用于指定使用直线或者贝塞尔曲线对样本点进行连接
     /// </summary>
-    public enum Type
+    public enum LineType
     {
         Line,
         Bezier
@@ -22,11 +22,11 @@ namespace SoftwareDesign_2017
         /// <summary>
         /// 绘图函数绘出图像如果过于折现化说明样本点密度过低，请改用bezier函数连接以改善图形
         /// </summary>
-        /// <param name="values">样本序列</param>
+        /// <param name="points">样本序列</param>
         /// <param name="isFilled"></param>
         /// <param name="isClosed">是否闭合</param>
         /// <returns></returns>
-        private Geometry DrawGeometry(List<Point> values, bool isFilled, bool isClosed,Type type)
+        private Geometry DrawGeometry(List<Point> points, bool isFilled, bool isClosed,LineType type)
         {
             try
             {
@@ -34,23 +34,23 @@ namespace SoftwareDesign_2017
 
                 using (StreamGeometryContext ctx = geometry.Open())
                 {
-                    ctx.BeginFigure(values[0], isFilled /* is filled */, isClosed /* is closed */);
+                    ctx.BeginFigure(points[0], isFilled /* is filled */, isClosed /* is closed */);
 
                     //画出一系列线段并且连接成曲线
-                    if (type == Type.Line)
+                    if (type == LineType.Line)
                     {
-                        for (int i = 1; i < values.Count && values[i].X <= 480; i++)
+                        for (int i = 1; i < points.Count && points[i].X <= 480; i++)
                         {
-                            ctx.LineTo(values[i], true, false);
+                            ctx.LineTo(points[i], true, false);
                         }
                     }
                     //使用bezier曲线进行连接
-                    else if (type == Type.Bezier)
+                    else if (type == LineType.Bezier)
                     {
-                        Bezier bezier = new Bezier(values, 0.7);
-                        for (int i = 1; i < values.Count; i++)
+                        Bezier bezier = new Bezier(points, 0.7);
+                        for (int i = 1; i < points.Count; i++)
                         {
-                            ctx.BezierTo(bezier.controlPointCollection[2 * i - 2], bezier.controlPointCollection[2 * i - 1], values[i], true, false);
+                            ctx.BezierTo(bezier.controlPointCollection[2 * i - 2], bezier.controlPointCollection[2 * i - 1], points[i], true, false);
                         }
                     }
                 }
@@ -68,19 +68,19 @@ namespace SoftwareDesign_2017
         /// <summary>
         /// 绘图函数绘出图像如果过于折线化说明样本点密度过低，请改用bezier函数连接以改善图形
         /// </summary>
-        /// <param name="values"></param>
+        /// <param name="points"></param>
         /// <param name="isFilled"></param>
         /// <param name="isClosed"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Visual DrawVisual(List<Point> values, bool isFilled, bool isClosed, Type type)
+        public Visual DrawVisual(List<Point> points, bool isFilled, bool isClosed, LineType type,Pen pen)
         {
             DrawingVisual drawingVisual = new DrawingVisual();
-            var geometry = DrawGeometry(values, isFilled, isClosed, type);
+            var geometry = DrawGeometry(points, isFilled, isClosed, type);
 
             using (var pic = drawingVisual.RenderOpen())
             {
-                pic.DrawGeometry(Brushes.Black, new Pen(Brushes.Green, 1.2), geometry);
+                pic.DrawGeometry(null, pen, geometry);
             }
 
             return drawingVisual;

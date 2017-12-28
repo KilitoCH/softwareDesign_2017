@@ -13,69 +13,26 @@ namespace SoftwareDesign_2017
         private const int boundWidth = 30000000;//接收机的前端带宽
         private List<Point> psdSequenceReal;
         private List<Point> psdSequenceRealDb;
-        private List<Point> psdSequenceForView;
         private List<Point> autocorrelationSequence;
 
         private int stepLength = 10000;
         #endregion
-        #region 构造函数
-        /// <summary>
-        /// 输入参数frequence,frequenceUnit，画布大小以获取用来绘图的序列
-        /// </summary>
-        /// <param name="frequence">扩频码速率</param>
-        /// <param name="frequenceUnit">扩频码速率的单位</param>
-        /// <param name="width">画布高</param>
-        /// <param name="height">画布宽</param>
-        public BPSK_Sequence_Generate(double frequence, int frequenceUnit, double width, double height)
-        {
-            if(frequence != 0)
-            {
-                switch (frequenceUnit)
-                {
-                    case 2:
-                        frequence *= 1000000;
-                        break;
-                    case 1:
-                        frequence *= 1000;
-                        break;
-                    case 0:
-                        frequence *= 1;
-                        break;
-                    default:
-                        frequence *= 1;
-                        break;
-                }
-                psdSequenceReal = BPSKPSDGenerate(frequence);
-                psdSequenceForView = CoordinateTransform(psdSequenceReal, width, height);
-            }            
-        }
+        #region 构造函数        
         /// <summary>
         /// 当输入参数不包含窗口的大小时根据输入的扩频码速率获取一个PSD序列
         /// </summary>
         /// <param name="frequence">扩频码速率</param>
         /// <param name="frequenceUnit">扩频码速率的单位</param>
-        public BPSK_Sequence_Generate(double frequence, int frequenceUnit)
+        public BPSK_Sequence_Generate(double frequence)
         {
-            if(frequence != 0)
+            if (frequence != 0)
             {
-                switch (frequenceUnit)
-                {
-                    case 2:
-                        frequence *= 1000000;
-                        break;
-                    case 1:
-                        frequence *= 1000;
-                        break;
-                    case 0:
-                        frequence *= 1;
-                        break;
-                    default:
-                        frequence *= 1;
-                        break;
-                }
+                frequence *= 1000000;
                 psdSequenceReal = BPSKPSDGenerate(frequence);
                 psdSequenceRealDb = ChangeToDb(psdSequenceReal);
-            }            
+            }
+            else
+                throw (new Exception("请先输入参数"));
         }
         #endregion
         #region 方法
@@ -113,36 +70,7 @@ namespace SoftwareDesign_2017
             }
             return points;
         }
-
-        /// <summary>
-        /// 将真实的PSD点阵根据显示空间的大小调整为动态的适合窗口的点阵
-        /// </summary>
-        /// <param name="pointsReal"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <returns></returns>
-        private List<Point> CoordinateTransform(List<Point> pointsReal, double width, double height)
-        {
-            List<Point> pointsForView = new List<Point>();
-            List<Point> pointsTemp = new List<Point>();
-            List<Point> pointsRealDb = ChangeToDb(pointsReal);
-            Point origin = new Point(width / 2, height);
-            double yMax = 0;
-            foreach (var point in pointsRealDb)
-            {
-                pointsTemp.Add(new Point(point.X, point.Y + 100));
-                if ((point.Y + 100) > yMax)
-                    yMax = point.Y + 100;
-            }
-            double yScale = origin.Y / yMax;
-            double xScale = origin.X / (boundWidth / 2);
-            foreach (var point in pointsTemp)
-            {
-                pointsForView.Add(new Point(point.X * xScale + origin.X, -point.Y * yScale + origin.Y));
-            }
-            return pointsForView;
-        }
-
+        
         /// <summary>
         /// 从原始的psd数据得到直接变换后的db数据，并进行了将小于-100db的数据全部截取为-100db的处理
         /// </summary>
@@ -164,6 +92,11 @@ namespace SoftwareDesign_2017
             return pointsRealDb;
         }
 
+        /// <summary>
+        /// 自相关函数序列
+        /// </summary>
+        /// <param name="psdSequence">原始的PSD序列</param>
+        /// <returns>自相关函数序列</returns>
         private List<Point> AutocorrelationSequenceGenerate(List<Point> psdSequence)
         {
             double lambda = 0;
@@ -189,7 +122,7 @@ namespace SoftwareDesign_2017
                     tempVal2 += psdSequence[j].Y * Math.Sin(2 * Math.PI * psdSequence[j].X * i) * stepLength;
                 }
                 tempVal3 = Math.Sqrt(Math.Pow(tempVal1, 2) + Math.Pow(tempVal2, 2)) / lambda;
-                rs.Add(new Point(i, tempVal3));
+                rs.Add(new Point(i * 1000000, tempVal3));
             }
             return rs;
         }
@@ -223,14 +156,6 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceRealDb
         {
             get { return psdSequenceRealDb; }
-        }
-
-        /// <summary>
-        /// 获取一个坐标变换后，适合画布大小的BPSK信号的功率谱密度点序列
-        /// </summary>
-        public List<Point> GetPsdSequenceForView
-        {
-            get { return psdSequenceForView; }
         }
         #endregion
     }
