@@ -111,7 +111,7 @@ namespace SoftwareDesign_2017
                 ///四部分总公式求得方差
                 //vapoint.X = delta * 1000000000; //x
                 vapoint.X = cNDb;
-                vapoint.Y = sigma * 3 * Math.Pow(10, 8);//y
+                vapoint.Y = Math.Sqrt(sigma) * 3 * Math.Pow(10, 8);//y
                 vapoints.Add(vapoint);
             }
             return vapoints;
@@ -182,10 +182,86 @@ namespace SoftwareDesign_2017
                     sigma = part1 * (1 + part3 / part4) / part2;
                 ///四部分总公式求得方差
                 vapoint.X = delta * 1000000000; //x
-                vapoint.Y = sigma * 3 * Math.Pow(10, 8);//y
+                vapoint.Y = Math.Sqrt(sigma) * 3 * Math.Pow(10, 8);//y
                 vapoints.Add(vapoint);
             }
             return vapoints;
+        }
+
+        /// <summary>
+        /// 计算镜像多径效应引起的偏移误差
+        /// </summary>
+        /// <param name="psdPoints">要计算的信号的功率谱密度</param>
+        /// <param name="points_1">当多径反射信号相对于直达信号相位为2π偶数倍时得到的结果</param>
+        /// <param name="points_2">当多径反射信号相对于直达信号相位为2π奇数倍时得到的结果</param>
+        /// <param name="name">信号的类型</param>
+        /// <returns></returns>
+        public bool MultiPathSequenceGenerate(List<Point> psdPoints,out List<Point> points_1,out List<Point> points_2,string name)
+        {
+            try
+            {
+                double delta;
+                int d;//多径时延
+                points_1 = new List<Point>();
+                points_2 = new List<Point>();
+                switch (name)
+                {
+                    case "BPSK":
+                        delta = 48.876 * Math.Pow(10, -9);
+                        break;
+                    case "BOC(5,2)":
+                        delta = 80 * Math.Pow(10, -9);
+                        break;
+                    case "BOC(8,4)":
+                        delta = 50 * Math.Pow(10, -9);
+                        break;
+                    case "BOC(10,5)":
+                        delta = 40 * Math.Pow(10, -9);
+                        break;
+                    default:
+                        delta = 80 * Math.Pow(10, -9);
+                        break;
+                }
+                for (d = 0; d <= 250; d += 10)
+                {
+                    double tempVal1 = 0, tempVal2_1 = 0, tempVal2_2 = 0;
+                    double part1, part2_1, part2_2;
+                    double r = Math.Pow(10, -0.6);//镜像反射的幅度
+                    foreach (var point in psdPoints)
+                    {
+                        if (point.X >= -12000000 && point.X <= 12000000) ///带宽β选择24MHz
+                        {
+                            tempVal1 += point.Y * Math.Sin(Math.PI * point.X * delta) * Math.Sin(2 * Math.PI * point.X * d / 1000000000) * stepLength;
+                        }
+                    }
+                    part1 = r * tempVal1;
+                    foreach (var point in psdPoints)
+                    {
+                        if (point.X >= -12000000 && point.X <= 12000000) ///带宽β选择24MHz
+                        {
+                            tempVal2_1 += point.X * point.Y * Math.Sin(Math.PI * point.X * delta) * (1 + r * Math.Cos(2 * Math.PI * point.X * d / 1000000000)) * stepLength;
+                        }
+                    }
+                    part2_1 = 2 * Math.PI * tempVal2_1;
+                    foreach (var point in psdPoints)
+                    {
+                        if (point.X >= -12000000 && point.X <= 12000000) ///带宽β选择24MHz
+                        {
+                            tempVal2_2 += point.X * point.Y * Math.Sin(Math.PI * point.X * delta) * (1 - r * Math.Cos(2 * Math.PI * point.X * d / 1000000000)) * stepLength;
+                        }
+                    }
+                    part2_2 = 2 * Math.PI * tempVal2_2;
+                    points_1.Add(new Point(d, part1 / part2_1));
+                    points_2.Add(new Point(d, -part1 / part2_2));
+                }
+                return true;
+            }
+            catch
+            {
+                points_1 = null;
+                points_2 = null;
+                return false;
+            }
         }
     }
 }

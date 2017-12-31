@@ -20,6 +20,8 @@ namespace SoftwareDesign_2017
     {
         private GraphicContext graphicContext = new GraphicContext();
         private Dictionary<string, List<Point>> dictionary;
+        private List<List<Point>> pointsList = new List<List<Point>>();
+        private List<Visual> visualList = new List<Visual>();
         private Color color = new Color();
         private int flag;
         private double yMax = 0;
@@ -29,16 +31,14 @@ namespace SoftwareDesign_2017
         private double gapY = 0;
 
         public Graphic(Dictionary<string,List<Point>> dictionary,string yLabel)
-        {
-            List<Visual> visualList = new List<Visual>();
-            this.dictionary = dictionary;
-            List<List<Point>> pointsList = new List<List<Point>>();
+        {            
+            this.dictionary = dictionary;            
             Paint paint = new Paint();
             DataContext = graphicContext;
             InitializeComponent();
             if (yLabel.Equals("功率谱密度"))
             {
-                flag = 0;
+                flag = 1;
                 pointsList = CoordinateTransformDb(dictionary);
                 for (int i = 0; i < pointsList.Count; i++)
                 {                    
@@ -49,7 +49,7 @@ namespace SoftwareDesign_2017
             }
             else if (yLabel.Equals("自相关函数"))
             {
-                flag = 1;
+                flag = 2;
                 pointsList = CoordinateTransformRs(dictionary);
                 for (int i = 0; i < pointsList.Count; i++)
                 {
@@ -60,8 +60,8 @@ namespace SoftwareDesign_2017
             }
             else if (yLabel.Equals("s曲线"))
             {
-                flag = 2;
-                pointsList = CoordinateTransformError(dictionary,new Point(drawingCanvas.Width,drawingCanvas.Height / 2));
+                flag = 3;
+                pointsList = CoordinateTransformError(dictionary);
                 for (int i = 0; i < pointsList.Count; i++)
                 {
                     visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i], 1)));
@@ -71,7 +71,7 @@ namespace SoftwareDesign_2017
             }
             else if (yLabel.Equals("码跟踪精度(时延)"))
             {
-                flag = 3;
+                flag = 4;
                 pointsList = CoordinateTransformRs(dictionary);
                 for (int i = 0; i < pointsList.Count; i++)
                 {
@@ -82,7 +82,7 @@ namespace SoftwareDesign_2017
             }
             else if (yLabel.Equals("码跟踪精度(信噪比)"))
             {
-                flag = 4;
+                flag = 5;
                 pointsList = CoordinateTransformRs(dictionary);
                 for (int i = 0; i < pointsList.Count; i++)
                 {
@@ -91,12 +91,28 @@ namespace SoftwareDesign_2017
                 graphicContext.YLabel = yLabel;
                 graphicContext.XLabel = "信噪比(dB)";
             }
+            else if (yLabel.Equals("镜像多径引起的偏移误差"))
+            {
+                flag = 6;
+                pointsList = CoordinateTransformError(dictionary);
+                for (int i = 0; i < pointsList.Count; i++)
+                {
+                    visualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Bezier, new Pen(color.colors[i / 2], 1)));
+                }
+                graphicContext.YLabel = yLabel;
+                graphicContext.XLabel = "多径时延(ns)";
+            }
             drawingCanvas.RemoveAll();
             for (int i = 0; i < dictionary.Count; i++)
             {
                 ListBoxItem listBoxItem = new ListBoxItem();
                 listBoxItem.Content = dictionary.ElementAt(i).Key;
-                listBoxItem.Foreground = color.colors[i];
+                if (flag != 6)
+                {
+                    listBoxItem.Foreground = color.colors[i];
+                }
+                else
+                    listBoxItem.Foreground = color.colors[i / 2];
                 Setter setter = new Setter(FontSizeProperty, 7, "listBoxItem");
                 listBox.Items.Add(listBoxItem);
                 
@@ -167,14 +183,19 @@ namespace SoftwareDesign_2017
         {
             List<List<Point>> pointsList = new List<List<Point>>();
             Point origin = new Point(drawingCanvas.Width / 2, drawingCanvas.Height);
-            foreach (var item in dictionary)
+            if(flag != 4)
             {
-                foreach (var point in item.Value)
+                foreach (var item in dictionary)
                 {
-                    if ((point.Y) > yMax)
-                        yMax = point.Y;
+                    foreach (var point in item.Value)
+                    {
+                        if ((point.Y) > yMax)
+                            yMax = point.Y;
+                    }
                 }
             }
+            else
+                yMax = 0;
             yMin = 0;
             xMin = dictionary.First().Value[0].X;
             gapX = (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X) / 6;
@@ -205,9 +226,10 @@ namespace SoftwareDesign_2017
         }
 
 
-        private List<List<Point>> CoordinateTransformError(Dictionary<string, List<Point>> dictionary, Point origin)
+        private List<List<Point>> CoordinateTransformError(Dictionary<string, List<Point>> dictionary)
         {
             List<List<Point>> pointsList = new List<List<Point>>();
+            Point origin = new Point(drawingCanvas.Width, drawingCanvas.Height / 2);
             yMax = 0;
             foreach (var item in dictionary)
             {
@@ -221,7 +243,7 @@ namespace SoftwareDesign_2017
             }
             yMin = 0;
             xMin = dictionary.First().Value[0].X;
-            gapX = (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X) * 1000000 / 6;//坐标轴相关
+            gapX = (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X) / 6;//坐标轴相关
             gapY = yMax / 4;//坐标轴相关
             double yScale = origin.Y / yMax;
             double xScale = drawingCanvas.Width / (dictionary.First().Value[dictionary.First().Value.Count - 1].X - dictionary.First().Value[0].X);            
@@ -261,6 +283,42 @@ namespace SoftwareDesign_2017
             SavePic savePic = new SavePic();
             var control = test as Control;
             savePic.SaveVisual(control, url);
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<Point> tempPoints = dictionary.ElementAt(listBox.SelectedIndex).Value;
+            List<Visual> tempVisualList = new List<Visual>();
+            Paint paint = new Paint();
+            if (flag != 6)
+            {
+                for (int i = 0; i < visualList.Count; i++)
+                {
+                    if (i != listBox.SelectedIndex)
+                    {
+                        tempVisualList.Add(visualList[i]);
+                    }
+                    else
+                        tempVisualList.Add(paint.DrawVisual(pointsList[listBox.SelectedIndex], true, false, LineType.Bezier, new Pen(color.colors[i], 2)));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < visualList.Count; i++)
+                {
+                    if (i != listBox.SelectedIndex)
+                    {
+                        tempVisualList.Add(visualList[i]);
+                    }
+                    else
+                        tempVisualList.Add(paint.DrawVisual(pointsList[listBox.SelectedIndex], true, false, LineType.Bezier, new Pen(color.colors[i / 2], 2)));
+                }
+            }
+            drawingCanvas.RemoveAll();
+            foreach (var item in tempVisualList)
+            {
+                drawingCanvas.AddVisual(item);
+            }
         }
     }
 }

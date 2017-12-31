@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoftwareDesign_2017"
         mc:Ignorable="d"
-        Title="GNSS信号BPSK、BOC调制性能分析" Height="320" Width="450" ResizeMode="CanMinimize">
+        Title="GNSS信号BPSK、BOC调制性能分析" Height="320" Width="450" ResizeMode="CanMinimize" >
   <Window.Resources>
-    
+
   </Window.Resources>
   <Grid x:Name="mainGrid">
     <Rectangle x:Name="backgroundField" VerticalAlignment="Top" Height="160" Fill="{StaticResource linearBrushBlue}" />
     <Image x:Name="icon" VerticalAlignment="Top" HorizontalAlignment="Center" Source="Images/icon1.png" Margin="0" Width="130"/>
     <Image x:Name="image" Height="100" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Source="Images/hui.jpg"/>
-    <Button Content="开始使用" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,35"  Width="120" Height="30" Click="Button_Click" IsDefault="True">
+    <Button Content="开始使用" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,35"  Width="120" Height="30" Click="Begin_Button_Click" IsDefault="True">
       <Button.Style>
         <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}">
           <!--定义触发器-->
@@ -38,8 +38,8 @@
     </Button>
     <!--" Label Content="GNSS信号BPSK、BOC调制性能分析" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontFamily="KaiTi" FontSize="20" Foreground="White"/-->
     <Grid x:Name="controlGrid" Opacity="0">
-      <Button x:Name="submmitButton" Content="画图" Width="80" Height="24" Style="{StaticResource buttonStyle}" Click="PaintButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,198,275,0"/>
-      <Button x:Name="viewPara" Content="查看参数" HorizontalAlignment="Left" Height="24" Margin="276,198,0,0" VerticalAlignment="Top" Width="80" Style="{StaticResource buttonStyle}" Click="ViewPara_Button_Click" />
+      <Button x:Name="submmitButton" Content="画图" Width="88" Height="63" Style="{StaticResource buttonStyle}" Click="PaintButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,198,282,0"/>
+      <Button x:Name="viewPara" Content="查看参数" HorizontalAlignment="Left" Height="63" Margin="283,198,0,0" VerticalAlignment="Top" Width="84" Style="{StaticResource buttonStyle}" Click="ViewPara_Button_Click" />
     </Grid>
   </Grid>
 </Window>

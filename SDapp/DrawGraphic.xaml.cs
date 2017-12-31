@@ -355,7 +355,7 @@ namespace SoftwareDesign_2017
                             throw new IndexOutOfRangeException("最多添加五项！");
                     }
                 }
-                else
+                else if(context.CN)
                 {
                     BPSK_Sequence_Generate bpsk_Sequence_Generate;
                     BOC_Sequence_Generate boc_Sequence_Generate;
@@ -409,6 +409,73 @@ namespace SoftwareDesign_2017
                     else
                         throw new IndexOutOfRangeException("最多添加五项！");
                 }
+                else if (context.MultiPath)
+                {
+                    BPSK_Sequence_Generate bpsk_Sequence_Generate;
+                    BOC_Sequence_Generate boc_Sequence_Generate;
+                    Error error = new Error();
+                    List<Point> tempPoints_1 = new List<Point>();
+                    List<Point> tempPoints_2 = new List<Point>();
+
+                    switch (comboBox_MultiPath.SelectedIndex)
+                    {
+                        case 0:
+                            bpsk_Sequence_Generate = new BPSK_Sequence_Generate(1.023);
+                            name = "1.023MHz" + "PSK-R";
+                            if(error.MultiPathSequenceGenerate(bpsk_Sequence_Generate.GetPsdSequenceReal,out tempPoints_1,out tempPoints_2, "BPSK"))
+                                break;
+                            else
+                                throw new Exception("Error");
+                        case 1:
+                            bpsk_Sequence_Generate = new BPSK_Sequence_Generate(10.23);
+                            name = "10.23MHz" + "PSK-R";
+                            if (error.MultiPathSequenceGenerate(bpsk_Sequence_Generate.GetPsdSequenceReal, out tempPoints_1, out tempPoints_2, "BPSK"))
+                                break;
+                            else
+                                throw new Exception("Error");
+                        case 2:
+                            boc_Sequence_Generate = new BOC_Sequence_Generate(5, 2);
+                            name = "BOC" + "(5,2)";
+                            if (error.MultiPathSequenceGenerate(boc_Sequence_Generate.GetPsdSequenceReal, out tempPoints_1, out tempPoints_2, "BPSK"))
+                                break;
+                            else
+                                throw new Exception("Error");
+                        case 3:
+                            boc_Sequence_Generate = new BOC_Sequence_Generate(8, 4);
+                            name = "BOC" + "(8,4)";
+                            if (error.MultiPathSequenceGenerate(boc_Sequence_Generate.GetPsdSequenceReal, out tempPoints_1, out tempPoints_2, "BPSK"))
+                                break;
+                            else
+                                throw new Exception("Error");
+                        case 4:
+                            boc_Sequence_Generate = new BOC_Sequence_Generate(10, 5);
+                            name = "BOC" + "(10,5)";
+                            if (error.MultiPathSequenceGenerate(boc_Sequence_Generate.GetPsdSequenceReal, out tempPoints_1, out tempPoints_2, "BPSK"))
+                                break;
+                            else
+                                throw new Exception("Error");
+                    }
+                    if (context.dictionaryError.Count == 0)
+                    {
+                        flagTab2 = 3;
+                        context.dictionaryError.Add(name + "Even", tempPoints_1);
+                        context.dictionaryError.Add(name + "Odd", tempPoints_2);
+                        listBox_Tab2.Items.Add(name);
+                    }
+                    else if (context.dictionaryError.Count < 10)
+                    {
+                        if (flagTab2 == 3)
+                        {
+                            context.dictionaryError.Add(name + "Even", tempPoints_1);
+                            context.dictionaryError.Add(name + "Odd", tempPoints_2);
+                            listBox_Tab2.Items.Add(name);
+                        }
+                        else
+                            throw new FormatException("请选择和第一次相同类别的波形！");
+                    }
+                    else
+                        throw new IndexOutOfRangeException("最多添加五项！");
+                }
             }
             catch (ArgumentException)
             {
@@ -443,6 +510,9 @@ namespace SoftwareDesign_2017
                         break;
                     case 2:
                         newThread.WhichMode = "码跟踪精度(信噪比)";
+                        break;
+                    case 3:
+                        newThread.WhichMode = "镜像多径引起的偏移误差";
                         break;
                 }
                 foreach (var item in context.dictionaryError)

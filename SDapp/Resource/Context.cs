@@ -32,6 +32,7 @@ namespace SoftwareDesign_2017
         private bool sLine = true;
         private bool delay = false;
         private bool cN = false;
+        private bool multiPath = false;
 
         public double FrequenceBpsk
         {
@@ -173,6 +174,19 @@ namespace SoftwareDesign_2017
             {
                 cN = value;
                 OnPropertyChanged("CN");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
+            }
+        }
+
+        public bool MultiPath
+        {
+            get
+            {
+                return multiPath;
+            }
+            set
+            {
+                multiPath = value;
+                OnPropertyChanged("MultiPath");//订阅这个事件可以向WPF发出通知我这个属性的值有更改
             }
         }
         #endregion

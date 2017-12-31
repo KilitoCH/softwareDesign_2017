@@ -27,7 +27,7 @@ namespace SoftwareDesign_2017
             InitializeAnimation();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Begin_Button_Click(object sender, RoutedEventArgs e)
         {            
             storyboard.Begin(this);
         }
