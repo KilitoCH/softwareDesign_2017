@@ -1,0 +1,44 @@
+﻿<Window x:Class="SoftwareDesign_2017.ViewPara"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SoftwareDesign_2017"
+        mc:Ignorable="d"
+        Title="参数表格" Height="500" Width="800" Background="#FFBF2626" BorderBrush="#FF9B0F0F">
+  <Grid Background="#FFEDEEEC">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="89*"/>
+      <RowDefinition Height="381*"/>
+    </Grid.RowDefinitions>
+    <TextBox HorizontalAlignment="Left" Height="22" Margin="170,18,0,0" TextWrapping="Wrap" Text="{Binding Path=FrequenceBpsk}" VerticalAlignment="Top" Width="120" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+    <TextBox HorizontalAlignment="Left" Height="22" Margin="170,46,0,0" TextWrapping="Wrap" Text="{Binding Path=Alpha}" VerticalAlignment="Top" Width="120" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+    <TextBox HorizontalAlignment="Left" Height="22" Margin="438,48,0,0" TextWrapping="Wrap" Text="{Binding Path=Beta}" VerticalAlignment="Top" Width="122" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+    <Button x:Name="addButton" Content="添加" HorizontalAlignment="Left" Margin="664,16,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource buttonStyle}" Click="AddButton_Click" IsDefault="True"/>
+    <ListView x:Name="listView" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Margin="0" Background="#FF73D4D8">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn Header="信号类型" Width="60" DisplayMemberBinding="{Binding Path=Name}"/>
+          <GridViewColumn Header="主瓣中心频偏(MHz)" Width="60" DisplayMemberBinding="{Binding Path=FrequenceDelta}"/>
+          <GridViewColumn Header="主瓣最大谱密度(dBW/Hz)" Width="60" DisplayMemberBinding="{Binding Path=PsdMax}"/>
+          <GridViewColumn Header="90%功率的带宽(MHz)" Width="60" DisplayMemberBinding="{Binding Path=NintyPercentBW}"/>
+          <GridViewColumn Header="带外的损失(dB)" Width="60" DisplayMemberBinding="{Binding Path=Waste}"/>
+          <GridViewColumn Header="RMS带宽(MHz)" Width="60" DisplayMemberBinding="{Binding Path=BetaSq}"/>
+          <GridViewColumn Header="等效矩形带宽(MHz)" Width="100" DisplayMemberBinding="{Binding Path=BetaRect}"/>
+          <GridViewColumn Header="kls自身" Width="100" DisplayMemberBinding="{Binding Path=KlsWithSelf}"/>
+          <GridViewColumn Header="kls与1.023MHzBPSK" Width="100" DisplayMemberBinding="{Binding Path=KlsWithBpsk}"/>
+          <GridViewColumn Header="kls与BOC(10,5)" Width="100" DisplayMemberBinding="{Binding Path=KlsWithBoc}"/>
+          <GridViewColumn Header="自相关函数主峰与第一副峰间时延(ns)" Width="100" DisplayMemberBinding="{Binding Path=Delay}"/>
+          <GridViewColumn Header="自相关函数主峰与第一副峰幅度平方比" Width="100" DisplayMemberBinding="{Binding Path=PeakCompare}"/>
+        </GridView>
+      </ListView.View>
+    </ListView>
+    <Button x:Name="saveButton" Content="保存" HorizontalAlignment="Left" Margin="664,64,0,0" VerticalAlignment="Top" Width="118" Style="{StaticResource buttonStyle}" Click="Save_Button_Click"/>
+    <Label Content="BPSK参数扩频码速率f:" HorizontalAlignment="Left" Height="26" Margin="37,18,0,0" VerticalAlignment="Top" Width="133"/>
+    <Label Content="BOC参数扩频码速率α:" HorizontalAlignment="Left" Height="26" Margin="38,44,0,0" VerticalAlignment="Top" Width="132"/>
+    <Label Content="BOC参数亚载波速率β:" HorizontalAlignment="Left" Height="26" Margin="307,46,0,0" VerticalAlignment="Top" Width="131"/>
+        <TextBlock HorizontalAlignment="Left" Height="38" Margin="307,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" Foreground="#FFAE1212"><Run Text="温馨提示"/><Run Text=""/><Run Text="：请输入参数后再点击添加按钮。每次可同时添加BPSK和BOC参数。由于自相关函数计算较缓慢，请耐心等待。"/></TextBlock>
+        <Button x:Name="removeButton" Content="删除" HorizontalAlignment="Left" Margin="730,16,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource buttonStyle}" Click="Remove_Button_Click" IsDefault="True"/>
+    <Button x:Name="removeAllButton" Content="全部清除" HorizontalAlignment="Left" Margin="664,41,0,0" VerticalAlignment="Top" Width="118" Style="{StaticResource buttonStyle}" Click="RemoveAll_Button_Click" Background="#FFCF2F2F"/>
+  </Grid>
+</Window>

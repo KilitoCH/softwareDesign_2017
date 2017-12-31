@@ -1,0 +1,94 @@
+﻿<Window x:Class="SoftwareDesign_2017.DrawGraphic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SoftwareDesign_2017"
+        mc:Ignorable="d"
+        Title="DrawGraphic" Height="345" Width="488" ResizeMode="NoResize" Background="#FF63CAD1">
+    <Grid Background="#FFF1FBFB">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="242*"/>
+        </Grid.RowDefinitions>
+        <TabControl SelectionChanged="TabControl_SelectionChanged" Grid.RowSpan="2" FontStyle="Italic" Margin="0,10,0,-10" >
+            <TabControl.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFEFFFE" Offset="0.117"/>
+                    <GradientStop Color="#FF77797A" Offset="1"/>
+                </LinearGradientBrush>
+            </TabControl.Background>
+            <TabItem Header="BPSK/BOC" Background="#FFDFE2E2" Margin="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="23*"/>
+                        <ColumnDefinition Width="215*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle HorizontalAlignment="Left" Height="167" Margin="125,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="118" Panel.ZIndex="-1" Fill="#FFF9F8F8" Grid.Column="1"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="17,69,0,0" TextWrapping="NoWrap" Text="{Binding Path=FrequenceBpsk}" VerticalAlignment="Top" Width="54" IsEnabled="{Binding ElementName=bpskRD,Path=IsChecked}" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Grid.Column="1"/>
+                    <Button Content="全部清除" HorizontalAlignment="Left" Height="21" Margin="271,231,0,0" VerticalAlignment="Top" Width="141" Click="RemoveAll_Button_Click" Style="{StaticResource buttonStyle}" Background="#FFF6FF9F" Grid.Column="1"/>
+                    <Label Content="类别" HorizontalAlignment="Left" Margin="174,15,0,0" VerticalAlignment="Top" Background="#FFDCD8D8" HorizontalContentAlignment="Center" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="167" Margin="34,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="123" Panel.ZIndex="-1" Fill="#FFF9F8F8" Grid.ColumnSpan="2"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="17,136,0,0" TextWrapping="NoWrap" Text="{Binding Path=Alpha}" VerticalAlignment="Top" Width="74" IsEnabled="{Binding ElementName=bocRD,Path=IsChecked}" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Grid.Column="1"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="17,165,0,0" TextWrapping="NoWrap" Text="{Binding Path=Beta}" VerticalAlignment="Top" Width="74" IsEnabled="{Binding ElementName=bocRD,Path=IsChecked}" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" Grid.Column="1"/>
+                    <Label Content="参数" HorizontalAlignment="Left" Height="25" Margin="29,15,0,0" VerticalAlignment="Top" Width="42" Background="#FFDCD8D8" HorizontalContentAlignment="Center" Grid.Column="1"/>
+                    <Label Content="f:" HorizontalAlignment="Left" Height="23" Margin="39,69,0,0" VerticalAlignment="Top" Width="24" Grid.ColumnSpan="2"/>
+                    <Label Content="MHz" HorizontalAlignment="Left" Height="23" Margin="71,70,0,0" VerticalAlignment="Top" Width="40" Grid.Column="1"/>
+                    <Label Content="α:" HorizontalAlignment="Left" Height="24" Margin="39,136,0,0" VerticalAlignment="Top" Width="24" Grid.ColumnSpan="2"/>
+                    <Label Content="β:" HorizontalAlignment="Left" Height="24" Margin="39,165,0,0" VerticalAlignment="Top" Width="24" Grid.ColumnSpan="2"/>
+                    <RadioButton x:Name="bpskRD" GroupName="mode_Tab1" Content="BPSK" HorizontalAlignment="Left" Height="24" Margin="2,41,0,0" VerticalAlignment="Top" Width="98" IsThreeState="False" IsChecked="{Binding Path=WhichMode}" Grid.Column="1"/>
+                    <RadioButton x:Name="bocRD" GroupName="mode_Tab1" Content="BOC" HorizontalAlignment="Left" Height="23" Margin="2,112,0,0" VerticalAlignment="Top" Width="98" IsThreeState="False" Grid.Column="1"/>
+                    <RadioButton GroupName="type_Tab1" Content="时域波形" HorizontalAlignment="Left" Height="22" Margin="149,53,0,0" VerticalAlignment="Top" Width="94" IsThreeState="False" IsChecked="{Binding Path=TimeDomain}" Grid.Column="1"/>
+                    <RadioButton GroupName="type_Tab1" Content="功率谱密度" HorizontalAlignment="Left" Height="22" Margin="149,101,0,0" VerticalAlignment="Top" Width="94" IsThreeState="False" IsChecked="{Binding Path=Psd}" Grid.Column="1"/>
+                    <RadioButton GroupName="type_Tab1" Content="自相关函数" HorizontalAlignment="Left" Height="22" Margin="149,142,0,0" VerticalAlignment="Top" Width="94" IsThreeState="False" IsChecked="{Binding Path=Autocorrelation}" Grid.Column="1"/>
+                    <ListBox x:Name="listBox_Tab1" HorizontalAlignment="Left" Height="167" Margin="265,27,0,0" VerticalAlignment="Top" Width="147" Background="Black" Grid.Column="1"/>
+                    <Button Content="添加" HorizontalAlignment="Left" Height="22" Margin="271,204,0,0" VerticalAlignment="Top" Width="62" Style="{StaticResource buttonStyle}" Click="Add_Button_Click" Background="#FFECD6E9" Grid.Column="1"/>
+                    <Button Content="删除" HorizontalAlignment="Left" Height="22" Margin="350,204,0,0" VerticalAlignment="Top" Width="62" Click="Remove_Button_Click" Style="{StaticResource buttonStyle}" Background="#FFECD6E9" Grid.Column="1"/>
+                    <Button Content="画图" HorizontalAlignment="Left" Height="21" Margin="271,258,0,0" VerticalAlignment="Top" Width="141" Click="Submmit_Button_Click" Style="{StaticResource buttonStyle}" Background="#FFF6FF9F" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Error" Background="#FFDEDEDE">
+                <Grid Margin="0,0,-7,12">
+                    <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="179" Margin="169,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="132" Panel.ZIndex="-1"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="58,68,0,0" TextWrapping="NoWrap" Text="{Binding Path=FrequenceBpsk}" VerticalAlignment="Top" Width="54" IsEnabled="{Binding ElementName=bpskRD_2,Path=IsChecked}" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" RenderTransformOrigin="0.37,0.5"/>
+                    <Button Content="全部清除" HorizontalAlignment="Left" Height="21" Margin="252,249,0,0" VerticalAlignment="Top" Width="141" Click="RemoveAll2_Button_Click" Style="{StaticResource buttonStyle}" Background="#FFF7E5CB"/>
+                    <Label Content="类别" HorizontalAlignment="Left" Margin="220,15.201,0,0" VerticalAlignment="Top" Background="#FFDADADA" HorizontalContentAlignment="Center"/>
+                    <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="179" Margin="34,27,0,0" Stroke="Black" VerticalAlignment="Top" Width="123" Panel.ZIndex="-1"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="58,136,0,0" TextWrapping="NoWrap" Text="{Binding Path=Alpha}" VerticalAlignment="Top" Width="74" IsEnabled="{Binding ElementName=bocRD_2,Path=IsChecked}" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown" RenderTransformOrigin="0.419,0.542"/>
+                    <TextBox HorizontalAlignment="Left" Height="24" Margin="58,165,0,0" TextWrapping="NoWrap" Text="{Binding Path=Beta}" VerticalAlignment="Top" Width="74" IsEnabled="{Binding ElementName=bocRD_2,Path=IsChecked}" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+                    <Label Content="参数" HorizontalAlignment="Left" Height="25.24" Margin="75,15.201,0,0" VerticalAlignment="Top" Width="42" Background="#FFDADADA" HorizontalContentAlignment="Center"/>
+                    <Label Content="f:" HorizontalAlignment="Left" Height="23.38" Margin="39,69,0,0" VerticalAlignment="Top" Width="24"/>
+                    <Label Content="MHz" HorizontalAlignment="Left" Height="22" Margin="112,69,0,0" VerticalAlignment="Top" Width="40" Background="White"/>
+                    <Label Content="α:" HorizontalAlignment="Left" Height="24" Margin="39,136,0,0" VerticalAlignment="Top" Width="24"/>
+                    <Label Content="β:" HorizontalAlignment="Left" Height="24" Margin="39,165,0,0" VerticalAlignment="Top" Width="24"/>
+                    <RadioButton x:Name="bpskRD_2" GroupName="mode_Tab2" Content="BPSK" HorizontalAlignment="Left" Height="23.653" Margin="48,40.967,0,0" VerticalAlignment="Top" Width="98" IsThreeState="False" IsChecked="{Binding Path=WhichMode_2}" Background="#FFFDFDFD" Foreground="#FF342323" />
+                    <RadioButton x:Name="bocRD_2" GroupName="mode_Tab2" Content="BOC" HorizontalAlignment="Left" Height="23.653" Margin="48,111.813,0,0" VerticalAlignment="Top" Width="98" IsThreeState="False" />
+                    <RadioButton x:Name="sLineRD" GroupName="type_Tab2" Content="s曲线" HorizontalAlignment="Left" Height="22" Margin="190,43,0,0" VerticalAlignment="Top" Width="94" IsThreeState="False" IsChecked="{Binding Path=SLine}" RenderTransformOrigin="0.532,-0.182"/>
+                    <RadioButton GroupName="type_Tab2" Content="自变量为时延" HorizontalAlignment="Left" Height="22" Margin="190,101,0,0" VerticalAlignment="Top" Width="94" IsThreeState="False" IsChecked="{Binding Path=Delay}" Background="White"/>
+                    <RadioButton x:Name="dBRD" GroupName="type_Tab2" Content="自变量为信噪比" HorizontalAlignment="Left" Height="22" Margin="187,145,0,0" VerticalAlignment="Top" Width="111" IsThreeState="False" IsChecked="{Binding Path=CN}"/>
+                    <ListBox x:Name="listBox_Tab2" HorizontalAlignment="Left" Height="179" Margin="317,27,0,0" VerticalAlignment="Top" Width="141" BorderBrush="Black" Background="#FF131212" Foreground="#FFEC0F0F"/>
+                    <Button Content="添加" HorizontalAlignment="Left" Height="22" Margin="322,216,0,0" VerticalAlignment="Top" Width="62" Style="{StaticResource buttonStyle}" Click="Add2_Button_Click" BorderBrush="#FFC97676" Background="#FFAFF3F3" RenderTransformOrigin="0.532,0.818"/>
+                    <Button Content="删除" HorizontalAlignment="Left" Height="22" Margin="396,216,0,0" VerticalAlignment="Top" Width="62" Click="Remove2_Button_Click" Style="{StaticResource buttonStyle}" Background="#FFAFF3F3"/>
+                    <Button Content="画图" HorizontalAlignment="Left" Height="21" Margin="89,249,0,0" VerticalAlignment="Top" Width="141" Click="Submmit2_Button_Click" Style="{StaticResource buttonStyle}" Background="#FFF7E5CB"/>
+                    <ComboBox x:Name="comboBox_SLine" HorizontalAlignment="Left" Height="22" Margin="190,65,0,0" VerticalAlignment="Top" Width="94" SelectedIndex="0" IsEnabled="{Binding ElementName=sLineRD,Path=IsChecked}">
+                        <ComboBoxItem>20</ComboBoxItem>
+                        <ComboBoxItem>30</ComboBoxItem>
+                        <ComboBoxItem>40</ComboBoxItem>
+                        <ComboBoxItem>50</ComboBoxItem>
+                        <ComboBoxItem>60</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox x:Name="comboBox_DB" HorizontalAlignment="Left" Height="22" Margin="190,167,0,0" VerticalAlignment="Top" Width="108" SelectedIndex="0" FontSize="10" IsEnabled="{Binding ElementName=dBRD,Path=IsChecked}">
+                        <ComboBoxItem Content="1.023MHz PSK-R"/>
+                        <ComboBoxItem Content="10.23MHz PSK-R"/>
+                        <ComboBoxItem Content="BOC(5,2)"/>
+                        <ComboBoxItem Content="BOC(8,4)"/>
+                        <ComboBoxItem Content="BOC(10,5)"/>
+                    </ComboBox>
+                    <Label Content="温馨提示：请注意同一个图只能添加同一种类型的波形" HorizontalAlignment="Left" Height="26" Margin="10,215,0,0" VerticalAlignment="Top" Width="307" Foreground="#FFFEFEFF" FontWeight="Bold" FontStyle="Italic" Visibility="{Binding ElementName=dBRD,Path=IsChecked}" FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"/>
+                </Grid>
+            </TabItem>
+            <Image Height="32" Source="20120611095445966.png" Stretch="Fill" Width="32"/>
+            <Image Height="32" Source="20120611095445966.png" Stretch="Fill" Width="32"/>
+        </TabControl>
+    </Grid>
+</Window>
