@@ -28,7 +28,9 @@ namespace SoftwareDesign_2017
         private double labelY_8 = 0;
 
         private string xLabel;
-        private string yLabel;
+        private string yLabel;        
+
+        private string position;
 
 
         public double LabelX_0
@@ -258,6 +260,19 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("YLabel");
             }
         }
+
+        public string Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+                OnPropertyChanged("Position");
+            }
+        }        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

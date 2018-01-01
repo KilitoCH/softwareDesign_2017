@@ -6,15 +6,17 @@
         xmlns:local="clr-namespace:SoftwareDesign_2017"
         mc:Ignorable="d"
         Title="Graphic" Height="300" Width="484" ResizeMode="CanResize">
-  <Grid>    
+  <Grid>
     <Viewbox x:Name="viewBox" Stretch="Fill">
       <Grid>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0" Width="30" Height="20" Content="save" Background="AliceBlue" Foreground="Black" Panel.ZIndex="1" Click="Button_Click" Style="{StaticResource buttonStyle}" />
-        <Label x:Name="test" Padding="0" >
-          <Grid Background="Black" x:Name="graphic">
+        <Button HorizontalAlignment="Right" Margin="0,28,493,244" Width="27" Content="save" Background="AliceBlue" Foreground="Black" Panel.ZIndex="1" Click="Save_Button_Click" />
+        <ToggleButton x:Name="zoomIn" HorizontalAlignment="Left" VerticalAlignment="Top" Content="ZoomIn" Background="Blue" Foreground="Red" Panel.ZIndex="1" Height="28" Width="27"/>
+        <Label x:Name="screenShot" Padding="0" >
+          <Grid Background="Black" x:Name="graphic">            
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" Height="255" BorderBrush="White" BorderThickness="1" Margin="40,5,10,35" Padding="0,5,0,0" Panel.ZIndex="-1">
-              <local:DrawingCanvas x:Name="drawingCanvas" Width="428" Height="248" Background="Black"/>
+              <local:DrawingCanvas x:Name="drawingCanvas" Width="428" Height="248" Background="Black" MouseMove="DrawingCanvas_MouseMove" MouseLeave="DrawingCanvas_MouseLeave" MouseDown="DrawingCanvas_MouseDown"/>
             </Border>
+
             <ListBox x:Name="listBox" Canvas.Left="313" Canvas.Top="11" Margin="353,5,30,215" Panel.ZIndex="-1" Background="{x:Null}" SelectionChanged="ListBox_SelectionChanged"/>
             <Label Content="{Binding Path=LabelX_0}" Foreground="White" HorizontalAlignment="Left" Margin="40,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelX_1}" Foreground="White" HorizontalAlignment="Left" Margin="105,255,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
@@ -42,6 +44,7 @@
                 </TransformGroup>
               </Label.RenderTransform>
             </Label>
+            <TextBlock x:Name="posTextBlock" HorizontalAlignment="Left" Height="30" Margin="353,80,0,0" TextWrapping="Wrap" Text="{Binding Position}" VerticalAlignment="Top" Width="124" Foreground="Red"/>
           </Grid>
         </Label>
       </Grid>
