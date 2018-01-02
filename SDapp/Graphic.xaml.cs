@@ -92,15 +92,15 @@ namespace SoftwareDesign_2017
                 pointsList.Add(pointsTemp);
             }
 
-            graphicContext.LabelY_0 = yMin;
-            graphicContext.LabelY_1 = graphicContext.LabelY_0 + gapY;
-            graphicContext.LabelY_2 = graphicContext.LabelY_1 + gapY;
-            graphicContext.LabelY_3 = graphicContext.LabelY_2 + gapY;
-            graphicContext.LabelY_4 = graphicContext.LabelY_3 + gapY;
-            graphicContext.LabelY_5 = graphicContext.LabelY_4 + gapY;
-            graphicContext.LabelY_6 = graphicContext.LabelY_5 + gapY;
-            graphicContext.LabelY_7 = graphicContext.LabelY_6 + gapY;
-            graphicContext.LabelY_8 = graphicContext.LabelY_7 + gapY;
+            graphicContext.LabelY_0 = yMin.ToString("f");
+            graphicContext.LabelY_1 = (yMin + gapY).ToString("f");
+            graphicContext.LabelY_2 = (yMin + 2 * gapY).ToString("f");
+            graphicContext.LabelY_3 = (yMin + 3 * gapY).ToString("f");
+            graphicContext.LabelY_4 = (yMin + 4 * gapY).ToString("f");
+            graphicContext.LabelY_5 = (yMin + 5 * gapY).ToString("f");
+            graphicContext.LabelY_6 = (yMin + 6 * gapY).ToString("f");
+            graphicContext.LabelY_7 = (yMin + 7 * gapY).ToString("f");
+            graphicContext.LabelY_8 = (yMin + 8 * gapY).ToString("f");
 
             return pointsList;
         }
@@ -136,17 +136,17 @@ namespace SoftwareDesign_2017
                     pointsTemp.Add(new Point(point.X * xScale - list.First()[0].X * xScale, -point.Y * yScale + origin.Y));
                 }
                 pointsList.Add(pointsTemp);
-            }            
+            }
 
-            graphicContext.LabelY_0 = yMin;
-            graphicContext.LabelY_1 = graphicContext.LabelY_0 + gapY;
-            graphicContext.LabelY_2 = graphicContext.LabelY_1 + gapY;
-            graphicContext.LabelY_3 = graphicContext.LabelY_2 + gapY;
-            graphicContext.LabelY_4 = graphicContext.LabelY_3 + gapY;
-            graphicContext.LabelY_5 = graphicContext.LabelY_4 + gapY;
-            graphicContext.LabelY_6 = graphicContext.LabelY_5 + gapY;
-            graphicContext.LabelY_7 = graphicContext.LabelY_6 + gapY;
-            graphicContext.LabelY_8 = graphicContext.LabelY_7 + gapY;
+            graphicContext.LabelY_0 = yMin.ToString("f");
+            graphicContext.LabelY_1 = (yMin + gapY).ToString("f");
+            graphicContext.LabelY_2 = (yMin + 2 * gapY).ToString("f");
+            graphicContext.LabelY_3 = (yMin + 3 * gapY).ToString("f");
+            graphicContext.LabelY_4 = (yMin + 4 * gapY).ToString("f");
+            graphicContext.LabelY_5 = (yMin + 5 * gapY).ToString("f");
+            graphicContext.LabelY_6 = (yMin + 6 * gapY).ToString("f");
+            graphicContext.LabelY_7 = (yMin + 7 * gapY).ToString("f");
+            graphicContext.LabelY_8 = (yMin + 8 * gapY).ToString("f");
 
             return pointsList;
         }
@@ -182,15 +182,15 @@ namespace SoftwareDesign_2017
                 pointsList.Add(pointsTemp);
             }
 
-            graphicContext.LabelY_4 = yMin;            
-            graphicContext.LabelY_3 = graphicContext.LabelY_4 - gapY;
-            graphicContext.LabelY_2 = graphicContext.LabelY_3 - gapY;
-            graphicContext.LabelY_1 = graphicContext.LabelY_2 - gapY;
-            graphicContext.LabelY_0 = graphicContext.LabelY_1 - gapY;
-            graphicContext.LabelY_5 = graphicContext.LabelY_4 + gapY;
-            graphicContext.LabelY_6 = graphicContext.LabelY_5 + gapY;
-            graphicContext.LabelY_7 = graphicContext.LabelY_6 + gapY;
-            graphicContext.LabelY_8 = graphicContext.LabelY_7 + gapY;
+            graphicContext.LabelY_4 = yMin.ToString("f");            
+            graphicContext.LabelY_3 = (yMin - gapY).ToString("f");
+            graphicContext.LabelY_2 = (yMin - 2 * gapY).ToString("f");
+            graphicContext.LabelY_1 = (yMin - 3 * gapY).ToString("f");
+            graphicContext.LabelY_0 = (yMin - 4 * gapY).ToString("f");
+            graphicContext.LabelY_5 = (yMin + gapY).ToString("f");
+            graphicContext.LabelY_6 = (yMin + 2 * gapY).ToString("f");
+            graphicContext.LabelY_7 = (yMin + 3 * gapY).ToString("f");
+            graphicContext.LabelY_8 = (yMin + 4 * gapY).ToString("f");
 
             return pointsList;
         }
@@ -364,13 +364,13 @@ namespace SoftwareDesign_2017
                 listBox.Items.Add(listBoxItem);
             }            
 
-            graphicContext.LabelX_0 = xMin;
-            graphicContext.LabelX_1 = graphicContext.LabelX_0 + gapX;
-            graphicContext.LabelX_2 = graphicContext.LabelX_1 + gapX;
-            graphicContext.LabelX_3 = graphicContext.LabelX_2 + gapX;
-            graphicContext.LabelX_4 = graphicContext.LabelX_3 + gapX;
-            graphicContext.LabelX_5 = graphicContext.LabelX_4 + gapX;
-            graphicContext.LabelX_6 = graphicContext.LabelX_5 + gapX;
+            graphicContext.LabelX_0 = xMin.ToString("f"); ;
+            graphicContext.LabelX_1 = (xMin + gapX).ToString("f");
+            graphicContext.LabelX_2 = (xMin + 2 * gapX).ToString("f");
+            graphicContext.LabelX_3 = (xMin + 3 * gapX).ToString("f");
+            graphicContext.LabelX_4 = (xMin + 4 * gapX).ToString("f");
+            graphicContext.LabelX_5 = (xMin + 5 * gapX).ToString("f");
+            graphicContext.LabelX_6 = (xMin + 6 * gapX).ToString("f");
 
             return true;
         }
@@ -442,13 +442,13 @@ namespace SoftwareDesign_2017
             }
             RuntimeVisualList = tempVisualList;
 
-            graphicContext.LabelX_0 = xMin;
-            graphicContext.LabelX_1 = graphicContext.LabelX_0 + gapX;
-            graphicContext.LabelX_2 = graphicContext.LabelX_1 + gapX;
-            graphicContext.LabelX_3 = graphicContext.LabelX_2 + gapX;
-            graphicContext.LabelX_4 = graphicContext.LabelX_3 + gapX;
-            graphicContext.LabelX_5 = graphicContext.LabelX_4 + gapX;
-            graphicContext.LabelX_6 = graphicContext.LabelX_5 + gapX;
+            graphicContext.LabelX_0 = xMin.ToString("f");//只保留小数点后两位
+            graphicContext.LabelX_1 = (xMin + gapX).ToString("f");
+            graphicContext.LabelX_2 = (xMin + 2 * gapX).ToString("f");
+            graphicContext.LabelX_3 = (xMin + 3 * gapX).ToString("f");
+            graphicContext.LabelX_4 = (xMin + 4 * gapX).ToString("f");
+            graphicContext.LabelX_5 = (xMin + 5 * gapX).ToString("f");
+            graphicContext.LabelX_6 = (xMin + 6 * gapX).ToString("f");
 
             return true;
         }
@@ -489,7 +489,7 @@ namespace SoftwareDesign_2017
             }
             if (index != null)
             {
-                graphicContext.Position = PosMapping(posWithCanvas).ToString();
+                graphicContext.Position = "(" + PosMapping(posWithCanvas).X.ToString("f") + "," + PosMapping(posWithCanvas).X.ToString("f") + ")";//只保留小数点后两位
                 //Bold((int)index);这本来应该是鼠标放到线上就加粗的功能，由于暂时没法解决和listBox的冲突停用
             }
             else

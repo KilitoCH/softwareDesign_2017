@@ -207,35 +207,35 @@ namespace SoftwareDesign_2017
             return (int)(delay * 1000000000);
         }
 
-        public double Lambda
+        public string Lambda
         {
-            get { return lambda;}
+            get { return lambda.ToString("f");}
         }
 
-        public double BetaRect
+        public string BetaRect
         {
-            get { return betaRect;}
+            get { return betaRect.ToString("f"); }
         }
 
 
-        public double BetaSq
+        public string BetaSq
         {
-            get { return betaSq;}
+            get { return betaSq.ToString("f"); }
         }
 
-        public double KlsWithSelf
+        public string KlsWithSelf
         {
-            get { return klsWithSelf; }
+            get { return klsWithSelf.ToString("f"); }
         }
 
-        public double KlsWithBpsk
+        public string KlsWithBpsk
         {
-            get { return klsWithBpsk; }
+            get { return klsWithBpsk.ToString("f"); }
         }
         
-        public double KlsWithBoc
+        public string KlsWithBoc
         {
-            get { return klsWithBoc; }
+            get { return klsWithBoc.ToString("f"); }
         }
         
         public string Name
@@ -244,24 +244,24 @@ namespace SoftwareDesign_2017
             set { name = value; }
         }
 
-        public double FrequenceDelta
+        public string FrequenceDelta
         {
-            get { return frequenceDelta; }
+            get { return frequenceDelta.ToString("f"); }
         }
 
-        public double PsdMax
+        public string PsdMax
         {
-            get { return 10 * Math.Log10(psdMax); }
+            get { return (10 * Math.Log10(psdMax)).ToString("f"); }
         }
 
-        public double NintyPercentBW
+        public string NintyPercentBW
         {
-            get { return nintyPercentBW; }
+            get { return nintyPercentBW.ToString("f"); }
         }
 
-        public double Waste
+        public string Waste
         {
-            get { return waste; }
+            get { return waste.ToString("f"); }
         }
 
         public int Delay
@@ -269,9 +269,9 @@ namespace SoftwareDesign_2017
             get { return delay; }
         }
         
-        public double PeakCompare
+        public string PeakCompare
         {
-            get { return peakCompare; }
+            get { return peakCompare.ToString("f"); }
         }
     }
 }

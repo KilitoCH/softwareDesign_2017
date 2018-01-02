@@ -9,23 +9,23 @@ namespace SoftwareDesign_2017
 {
     class GraphicContext:INotifyPropertyChanged
     {
-        private double labelX_0 = 0;
-        private double labelX_1 = 0;
-        private double labelX_2 = 0;
-        private double labelX_3 = 0;
-        private double labelX_4 = 0;
-        private double labelX_5 = 0;
-        private double labelX_6 = 0;
+        private string labelX_0;
+        private string labelX_1;
+        private string labelX_2;
+        private string labelX_3;
+        private string labelX_4;
+        private string labelX_5;
+        private string labelX_6;
 
-        private double labelY_0 = 0;
-        private double labelY_1 = 0;
-        private double labelY_2 = 0;
-        private double labelY_3 = 0;
-        private double labelY_4 = 0;
-        private double labelY_5 = 0;
-        private double labelY_6 = 0;
-        private double labelY_7 = 0;
-        private double labelY_8 = 0;
+        private string labelY_0;
+        private string labelY_1;
+        private string labelY_2;
+        private string labelY_3;
+        private string labelY_4;
+        private string labelY_5;
+        private string labelY_6;
+        private string labelY_7;
+        private string labelY_8;
 
         private string xLabel;
         private string yLabel;        
@@ -33,7 +33,7 @@ namespace SoftwareDesign_2017
         private string position;
 
 
-        public double LabelX_0
+        public string LabelX_0
         {
             get
             {
@@ -45,7 +45,7 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("LabelX_0");
             }
         }
-        public double LabelX_1
+        public string LabelX_1
         {
             get
             {
@@ -57,7 +57,7 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("LabelX_1");
             }
         }
-        public double LabelX_2
+        public string LabelX_2
         {
             get
             {
@@ -69,7 +69,7 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("LabelX_2");
             }
         }
-        public double LabelX_3
+        public string LabelX_3
         {
             get
             {
@@ -81,7 +81,7 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("LabelX_3");
             }
         }
-        public double LabelX_4
+        public string LabelX_4
         {
             get
             {
@@ -93,7 +93,7 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("LabelX_4");
             }
         }
-        public double LabelX_5
+        public string LabelX_5
         {
             get
             {
@@ -105,7 +105,7 @@ namespace SoftwareDesign_2017
                 OnPropertyChanged("LabelX_5");
             }
         }
-        public double LabelX_6
+        public string LabelX_6
         {
             get
             {
@@ -118,7 +118,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_0
+        public string LabelY_0
         {
             get
             {
@@ -131,7 +131,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_1
+        public string LabelY_1
         {
             get
             {
@@ -144,7 +144,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_2
+        public string LabelY_2
         {
             get
             {
@@ -157,7 +157,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_3
+        public string LabelY_3
         {
             get
             {
@@ -170,7 +170,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_4
+        public string LabelY_4
         {
             get
             {
@@ -183,7 +183,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_5
+        public string LabelY_5
         {
             get
             {
@@ -196,7 +196,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_6
+        public string LabelY_6
         {
             get
             {
@@ -209,7 +209,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_7
+        public string LabelY_7
         {
             get
             {
@@ -222,7 +222,7 @@ namespace SoftwareDesign_2017
             }
         }
 
-        public double LabelY_8
+        public string LabelY_8
         {
             get
             {
