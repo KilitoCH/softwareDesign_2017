@@ -192,5 +192,26 @@
   <ItemGroup>
     <Resource Include="Images\icon1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\dengpao2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\graphic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\para.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\paidaxing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\download.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\zoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\zoom_2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

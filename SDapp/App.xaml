@@ -10,6 +10,7 @@
       <GradientStop Color="#FF4FE1FF" Offset="0.5"/>
       <GradientStop Color="#FFAAA3FD" Offset="1"/>
     </LinearGradientBrush>
+    <SolidColorBrush x:Key="blueS" Color="#FF58DEC0" />
     <Style TargetType="Button" x:Key="buttonStyle">
       <Setter Property="Background" Value="#FF58DEC0"/>
       <Setter Property="Foreground" Value="Black"/>

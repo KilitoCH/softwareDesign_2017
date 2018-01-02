@@ -11,6 +11,7 @@ namespace SoftwareDesign_2017
     {
 #region 字段
         private const int boundWidth = 30000000;//接收机的前端带宽
+        private List<Point> bocSequence;
         private List<Point> psdSequenceReal;
         private List<Point> psdSequenceRealDb;
         private List<Point> autocorrelationSequence;
@@ -27,26 +28,43 @@ namespace SoftwareDesign_2017
         {
             if ((alpha != 0) && (beta != 0))
             {
-                psdSequenceReal = BOCPSDGenerate(alpha, beta);
-                psdSequenceRealDb = ChangeToDb(psdSequenceReal);
+                if (((2 * (double)alpha) / beta) == (int)((2 * (double)alpha) / beta))
+                {
+                    bocSequence = BOCSequenceGenerate(alpha);
+                    psdSequenceReal = BOCPSDGenerate(alpha, beta);
+                    psdSequenceRealDb = ChangeToDb(psdSequenceReal);
+                }
+                else
+                    throw new Exception("2α/β必须为整数");
             }
             else
-                throw (new Exception("请先输入参数"));
+                throw new Exception("请先输入参数");
         }
         #endregion
 #region 方法
         /// <summary>
-        /// 返回一个双极性NRZ调制信号,注：这个函数尚未完成修改
+        /// 返回一个双极性NRZ调制信号
         /// </summary>
-        /// <param name="frequence"></param>
+        /// <param name="alpha"></param>
         /// <returns></returns>
-        private List<Point> BOC_Sequence(Double frequence)
+        private List<Point> BOCSequenceGenerate(int alpha)
         {
             List<Point> points = new List<Point>();
-            for (int i = -15000000; i <= (boundWidth / 2); i+= stepLength)
+            Random random = new Random();
+            double frequence = alpha * 1.023;
+            for (int i = 0; i < 20; i++)
             {
-                points.Add(new Point(10 + i * 10 * frequence, i % 2 * 20 + 100));
-                points.Add(new Point(10 + (i + 1) * 10 * frequence, i % 2 * 20 + 100));
+                double ak = random.NextDouble();
+                if (ak >= 0.5)
+                {
+                    points.Add(new Point(i / frequence, 1));
+                    points.Add(new Point((i + 1) / frequence, 1));
+                }
+                else
+                {
+                    points.Add(new Point(i / frequence, -1));
+                    points.Add(new Point((i + 1) / frequence, -1));
+                }
             }
             return points;
         }
@@ -63,7 +81,7 @@ namespace SoftwareDesign_2017
             Point point = new Point();//用于添加新点的临时变量
             if(((2 * alpha / beta) % 2) == 0)//若2*alpha/beta等于偶数
             {
-                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += stepLength)
+                for (int deltaI/*deltaI是为了避免零除点*/, i = -(boundWidth / 2); i <= (boundWidth / 2); i += stepLength)
                 {
                     deltaI = i + 1;
                     point.X = i;
@@ -73,7 +91,7 @@ namespace SoftwareDesign_2017
             }
             else//若2*alpha/beta等于奇数
             {
-                for (int deltaI/*deltaI是为了避免零除点*/, i = -15000000; i <= (boundWidth / 2); i += stepLength)
+                for (int deltaI/*deltaI是为了避免零除点*/, i = -(boundWidth / 2); i <= (boundWidth / 2); i += stepLength)
                 {
                     deltaI = i + 1;
                     point.X = i;
@@ -164,7 +182,15 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceRealDb
         {
             get { return psdSequenceRealDb; }
-        }       
+        }
+
+        /// <summary>
+        /// 获取一个双极性非归零码
+        /// </summary>
+        public List<Point> GetBocSequence
+        {
+            get { return bocSequence; }
+        }
         #endregion
     }
 }

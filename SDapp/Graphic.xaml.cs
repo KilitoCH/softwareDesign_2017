@@ -229,7 +229,7 @@ namespace SoftwareDesign_2017
                         tempVisualList.Add(InitialVisualList[i]);
                     }
                     else
-                        tempVisualList.Add(paint.DrawVisual(pointsList[index], true, false, LineType.Bezier, new Pen(color.colors[i], 2.2)));
+                        tempVisualList.Add(paint.DrawVisual(pointsList[index], true, false, LineType.Line, new Pen(color.colors[i], 2.2)));
                 }
             }
             else
@@ -241,7 +241,7 @@ namespace SoftwareDesign_2017
                         tempVisualList.Add(InitialVisualList[i]);
                     }
                     else
-                        tempVisualList.Add(paint.DrawVisual(pointsList[index], true, false, LineType.Bezier, new Pen(color.colors[i / 2], 2.2)));
+                        tempVisualList.Add(paint.DrawVisual(pointsList[index], true, false, LineType.Line, new Pen(color.colors[i / 2], 2.2)));
                 }
             }
             drawingCanvas.RemoveAll();
@@ -265,8 +265,18 @@ namespace SoftwareDesign_2017
             {
                 formerList.Add(item.Value);
             }
-
-            if (yLabel.Equals("功率谱密度"))
+            if (yLabel.Equals("时域波形"))
+            {
+                flag = 0;
+                pointsList = CoordinateTransformError(formerList);
+                for (int i = 0; i < pointsList.Count; i++)
+                {
+                    InitialVisualList.Add(paint.DrawVisual(pointsList[i], true, false, LineType.Line, new Pen(color.colors[i], 1.3)));
+                }
+                graphicContext.YLabel = yLabel;
+                graphicContext.XLabel = "时间(ns)";
+            }
+            else if (yLabel.Equals("功率谱密度"))
             {
                 flag = 1;
                 pointsList = CoordinateTransformDb(formerList);

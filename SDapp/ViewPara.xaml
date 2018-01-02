@@ -11,10 +11,19 @@
       <RowDefinition Height="89*"/>
       <RowDefinition Height="381*"/>
     </Grid.RowDefinitions>
-    <TextBox HorizontalAlignment="Left" Height="22" Margin="170,18,0,0" TextWrapping="Wrap" Text="{Binding Path=FrequenceBpsk}" VerticalAlignment="Top" Width="120" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
-    <TextBox HorizontalAlignment="Left" Height="22" Margin="170,46,0,0" TextWrapping="Wrap" Text="{Binding Path=Alpha}" VerticalAlignment="Top" Width="120" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
-    <TextBox HorizontalAlignment="Left" Height="22" Margin="438,48,0,0" TextWrapping="Wrap" Text="{Binding Path=Beta}" VerticalAlignment="Top" Width="122" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
-    <Button x:Name="addButton" Content="添加" HorizontalAlignment="Left" Margin="664,16,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource buttonStyle}" Click="AddButton_Click" IsDefault="True"/>
+    <Grid Grid.Row="0" Background="#FFF4F4F5">
+      <TextBox HorizontalAlignment="Left" Height="22" Margin="170,18,0,0" TextWrapping="Wrap" Text="{Binding Path=FrequenceBpsk}" VerticalAlignment="Top" Width="120" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+      <TextBox HorizontalAlignment="Left" Height="22" Margin="170,46,0,0" TextWrapping="Wrap" Text="{Binding Path=Alpha}" VerticalAlignment="Top" Width="120" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+      <TextBox HorizontalAlignment="Left" Height="22" Margin="438,48,0,0" TextWrapping="Wrap" Text="{Binding Path=Beta}" VerticalAlignment="Top" Width="122" GotFocus="TextBox_GotFocus" PreviewMouseLeftButtonDown="TextBox_PreviewMouseLeftButtonDown"/>
+      <Button x:Name="addButton" Content="添加" HorizontalAlignment="Left" Margin="664,16,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource buttonStyle}" Click="AddButton_Click" IsDefault="True"/>
+      <Button x:Name="saveButton" Content="保存" HorizontalAlignment="Left" Margin="664,64,0,0" VerticalAlignment="Top" Width="118" Style="{StaticResource buttonStyle}" Click="Save_Button_Click"/>
+      <Label Content="BPSK参数扩频码速率f:" HorizontalAlignment="Left" Height="26" Margin="37,18,0,0" VerticalAlignment="Top" Width="133"/>
+      <Label Content="BOC参数扩频码速率α:" HorizontalAlignment="Left" Height="26" Margin="38,44,0,0" VerticalAlignment="Top" Width="132"/>
+      <Label Content="BOC参数亚载波速率β:" HorizontalAlignment="Left" Height="26" Margin="307,46,0,0" VerticalAlignment="Top" Width="131"/>
+      <TextBlock HorizontalAlignment="Left" Height="38" Margin="307,10,0,0" TextWrapping="Wrap" Text="说明：请输入参数后再点击添加按钮。每次可同时添加BPSK和BOC参数。由于自相关函数计算较缓慢，请耐心等待。" VerticalAlignment="Top" Width="340" Foreground="#FFAE1212"/>
+      <Button x:Name="removeButton" Content="删除" HorizontalAlignment="Left" Margin="730,16,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource buttonStyle}" Click="Remove_Button_Click" IsDefault="True"/>
+      <Button x:Name="removeAllButton" Content="全部清除" HorizontalAlignment="Left" Margin="664,41,0,0" VerticalAlignment="Top" Width="118" Style="{StaticResource buttonStyle}" Click="RemoveAll_Button_Click" Background="#FFCF2F2F"/>
+    </Grid>
     <ListView x:Name="listView" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Margin="0">
       <ListView.View>
         <GridView>
@@ -33,12 +42,5 @@
         </GridView>
       </ListView.View>
     </ListView>
-    <Button x:Name="saveButton" Content="保存" HorizontalAlignment="Left" Margin="664,64,0,0" VerticalAlignment="Top" Width="118" Style="{StaticResource buttonStyle}" Click="Save_Button_Click"/>
-    <Label Content="BPSK参数扩频码速率f:" HorizontalAlignment="Left" Height="26" Margin="37,18,0,0" VerticalAlignment="Top" Width="133"/>
-    <Label Content="BOC参数扩频码速率α:" HorizontalAlignment="Left" Height="26" Margin="38,44,0,0" VerticalAlignment="Top" Width="132"/>
-    <Label Content="BOC参数亚载波速率β:" HorizontalAlignment="Left" Height="26" Margin="307,46,0,0" VerticalAlignment="Top" Width="131"/>
-    <TextBlock HorizontalAlignment="Left" Height="38" Margin="307,10,0,0" TextWrapping="Wrap" Text="说明：请输入参数后再点击添加按钮。每次可同时添加BPSK和BOC参数。由于自相关函数计算较缓慢，请耐心等待。" VerticalAlignment="Top" Width="340" Foreground="#FFAE1212"/>
-    <Button x:Name="removeButton" Content="删除" HorizontalAlignment="Left" Margin="730,16,0,0" VerticalAlignment="Top" Width="52" Style="{StaticResource buttonStyle}" Click="Remove_Button_Click" IsDefault="True"/>
-    <Button x:Name="removeAllButton" Content="全部清除" HorizontalAlignment="Left" Margin="664,41,0,0" VerticalAlignment="Top" Width="118" Style="{StaticResource buttonStyle}" Click="RemoveAll_Button_Click" Background="#FFCF2F2F"/>
   </Grid>
 </Window>

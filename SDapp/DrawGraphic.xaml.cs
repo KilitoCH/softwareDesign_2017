@@ -92,8 +92,8 @@ namespace SoftwareDesign_2017
                         if (context.TimeDomain)
                         {
                             flagTab1 = 0;
-                            name = "timeDomain";
-                            //添加序列
+                            name = context.FrequenceBpsk + "MHz" + "BPSK" + "时域波形";
+                            context.dictionaryBpskBoc.Add(name, bpsk_Sequence_Generate.GetBpskSequence);
                         }
                         else if (context.Psd)
                         {
@@ -114,9 +114,7 @@ namespace SoftwareDesign_2017
                         BPSK_Sequence_Generate bpsk_Sequence_Generate = new BPSK_Sequence_Generate(Convert.ToDouble(context.FrequenceBpsk));
                         if (context.TimeDomain && (flagTab1 == 0))
                         {
-                            name = "timeDomain";
-                            //添加序列
-                            listBox_Tab1.Items.Add(name);
+                            throw new Exception("观察时域波形时只可添加一个");
                         }
                         else if (context.Psd && (flagTab1 == 1))
                         {
@@ -144,7 +142,8 @@ namespace SoftwareDesign_2017
                         if (context.TimeDomain)
                         {
                             flagTab1 = 0;
-                            name = "timeDomain";
+                            name = "BOC" + "(" + context.Alpha + "," + context.Beta + ")" + "时域波形";
+                            context.dictionaryBpskBoc.Add(name, boc_Sequence_Generate.GetBocSequence);
                             //添加序列
                         }
                         else if (context.Psd)
@@ -166,9 +165,7 @@ namespace SoftwareDesign_2017
                         BOC_Sequence_Generate boc_Sequence_Generate = new BOC_Sequence_Generate(Convert.ToInt32(context.Alpha), Convert.ToInt32(context.Beta));
                         if (context.TimeDomain && (flagTab1 == 0))
                         {
-                            name = "timeDomain";
-                            //添加序列
-                            listBox_Tab1.Items.Add(name);
+                            throw new Exception("观察时域波形时只可添加一个");
                         }
                         else if (context.Psd && (flagTab1 == 1))
                         {

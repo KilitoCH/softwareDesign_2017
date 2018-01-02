@@ -50,7 +50,7 @@ namespace SoftwareDesign_2017
                     context.Close();
                 }
 
-                RenderTargetBitmap bmp = new RenderTargetBitmap((int)control.ActualWidth, (int)control.ActualHeight, 256, 256, PixelFormats.Prgba64);
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)control.ActualWidth, (int)control.ActualHeight, 96, 96, PixelFormats.Default);
                 bmp.Render(drawingVisual);
                 BitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(bmp));

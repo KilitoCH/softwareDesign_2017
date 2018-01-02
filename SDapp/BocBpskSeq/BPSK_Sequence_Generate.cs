@@ -11,6 +11,7 @@ namespace SoftwareDesign_2017
     {
 #region 字段
         private const int boundWidth = 30000000;//接收机的前端带宽
+        private List<Point> bpskSequence;
         private List<Point> psdSequenceReal;
         private List<Point> psdSequenceRealDb;
         private List<Point> autocorrelationSequence;
@@ -28,6 +29,7 @@ namespace SoftwareDesign_2017
             if (frequence != 0)
             {
                 frequence *= 1000000;
+                bpskSequence = BPSKSequenceGenerate(frequence);
                 psdSequenceReal = BPSKPSDGenerate(frequence);
                 psdSequenceRealDb = ChangeToDb(psdSequenceReal);
             }
@@ -41,13 +43,24 @@ namespace SoftwareDesign_2017
         /// </summary>
         /// <param name="frequence"></param>
         /// <returns></returns>
-        public List<Point> BPSK_Sequence(Double frequence)
+        public List<Point> BPSKSequenceGenerate(Double frequence)
         {
             List<Point> points = new List<Point>();
-            for (int i = 0; i < 100; i++)
+            Random random = new Random();
+            frequence /= 1000000;
+            for (int i = 0; i < 20; i++)
             {
-                points.Add(new Point(10 + i * 10 * frequence,i % 2 * 20 + 100));
-                points.Add(new Point(10 + (i + 1) * 10 * frequence, i % 2 * 20 + 100));
+                double ak = random.NextDouble();
+                if (ak >= 0.5)
+                {
+                    points.Add(new Point(i / frequence, 1));
+                    points.Add(new Point((i + 1) / frequence, 1));
+                }
+                else
+                {
+                    points.Add(new Point(i / frequence, -1));
+                    points.Add(new Point((i + 1) / frequence, -1));
+                }
             }
             return points;
         }
@@ -156,6 +169,14 @@ namespace SoftwareDesign_2017
         public List<Point> GetPsdSequenceRealDb
         {
             get { return psdSequenceRealDb; }
+        }
+
+        /// <summary>
+        /// 获取一个双极性非归零码序列
+        /// </summary>
+        public List<Point> GetBpskSequence
+        {
+            get { return bpskSequence; }
         }
         #endregion
     }

@@ -11,8 +11,8 @@
   </Window.Resources>
   <Grid x:Name="mainGrid">
     <Rectangle x:Name="backgroundField" VerticalAlignment="Top" Height="160" Fill="{StaticResource linearBrushBlue}" />
-    <Image x:Name="icon" VerticalAlignment="Top" HorizontalAlignment="Center" Source="Images/icon1.png" Margin="0" Width="130"/>
-    <Image x:Name="image" Height="100" Margin="0,110,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Source="Images/hui.jpg"/>
+    <Image x:Name="image"  Margin="10,122,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Source="Images/dengpao2.png" Height="60" Width="434"/>
+    <Image Margin="83,11,103,0" HorizontalAlignment="Center" VerticalAlignment="Top" Source="Images/paidaxing.png" />
     <Button Content="开始使用" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,35"  Width="120" Height="30" Click="Begin_Button_Click" IsDefault="True">
       <Button.Style>
         <Style TargetType="Button" BasedOn="{StaticResource buttonStyle}">
@@ -40,6 +40,8 @@
     <Grid x:Name="controlGrid" Opacity="0">
       <Button x:Name="submmitButton" Content="画图" Width="88" Height="63" Style="{StaticResource buttonStyle}" Click="PaintButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,198,282,0"/>
       <Button x:Name="viewPara" Content="查看参数" HorizontalAlignment="Left" Height="63" Margin="283,198,0,0" VerticalAlignment="Top" Width="84" Style="{StaticResource buttonStyle}" Click="ViewPara_Button_Click" />
+      <Image Source="Images/para.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="283,118,0,0" Height="80" Width="89" />
+      <Image Source="Images/graphic.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="74,118,0,0" Height="80" Width="89" />
     </Grid>
   </Grid>
 </Window>
