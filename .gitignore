@@ -11,3 +11,5 @@
 /.vs/SoftwareDesign_2017/v15/sqlite3/storage.ide-shm
 /.vs/SoftwareDesign_2017/v15/sqlite3/storage.ide-wal
 /.vs/SoftwareDesign_2017/v15/.suo
+/SDapp/obj/Release
+/SDapp/bin/Release

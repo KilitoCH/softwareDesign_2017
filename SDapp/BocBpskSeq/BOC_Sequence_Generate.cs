@@ -30,7 +30,7 @@ namespace SoftwareDesign_2017
             {
                 if (((2 * (double)alpha) / beta) == (int)((2 * (double)alpha) / beta))
                 {
-                    bocSequence = BOCSequenceGenerate(alpha);
+                    bocSequence = BOCSequenceGenerate(alpha,beta);
                     psdSequenceReal = BOCPSDGenerate(alpha, beta);
                     psdSequenceRealDb = ChangeToDb(psdSequenceReal);
                 }
@@ -47,23 +47,46 @@ namespace SoftwareDesign_2017
         /// </summary>
         /// <param name="alpha"></param>
         /// <returns></returns>
-        private List<Point> BOCSequenceGenerate(int alpha)
+        private List<Point> BOCSequenceGenerate(int alpha,int beta)
         {
             List<Point> points = new List<Point>();
+            int n = 2 * alpha / beta;//表示一个扩频码码元周期内的亚载波码元数目
             Random random = new Random();
-            double frequence = alpha * 1.023;
-            for (int i = 0; i < 20; i++)
+            double frequenceC = beta * 1.023;//扩频码的频率
+            for (int i = 0; i < 4; i++)
             {
                 double ak = random.NextDouble();
                 if (ak >= 0.5)
                 {
-                    points.Add(new Point(i / frequence, 1));
-                    points.Add(new Point((i + 1) / frequence, 1));
+                    for (int j = 1; j <= n; j++)
+                    {
+                        if ((j % 2) != 0)
+                        {
+                            points.Add(new Point(i / frequenceC + (j - 1) / (n * frequenceC), 1));//每次都以Ts/2为标准画出一段
+                            points.Add(new Point(i / frequenceC + j / (n * frequenceC), 1));
+                        }
+                        else
+                        {
+                            points.Add(new Point(i / frequenceC + (j - 1) / (n * frequenceC), -1));
+                            points.Add(new Point(i / frequenceC + j / (n * frequenceC), -1));
+                        }                        
+                    }                    
                 }
                 else
                 {
-                    points.Add(new Point(i / frequence, -1));
-                    points.Add(new Point((i + 1) / frequence, -1));
+                    for (int j = 1; j <= n; j++)
+                    {
+                        if ((j % 2) != 0)
+                        {
+                            points.Add(new Point(i / frequenceC + (j - 1) / (n * frequenceC), -1));
+                            points.Add(new Point(i / frequenceC + j / (n * frequenceC), -1));
+                        }
+                        else
+                        {
+                            points.Add(new Point(i / frequenceC + (j - 1) / (n * frequenceC), 1));
+                            points.Add(new Point(i / frequenceC + j / (n * frequenceC), 1));
+                        }
+                    }
                 }
             }
             return points;
