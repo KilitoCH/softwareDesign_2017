@@ -489,7 +489,7 @@ namespace SoftwareDesign_2017
             }
             if (index != null)
             {
-                graphicContext.Position = "(" + PosMapping(posWithCanvas).X.ToString("f") + "," + PosMapping(posWithCanvas).X.ToString("f") + ")";//只保留小数点后两位
+                graphicContext.Position = "(" + PosMapping(posWithCanvas).X.ToString("f") + "," + PosMapping(posWithCanvas).Y.ToString("f") + ")";//只保留小数点后两位
                 //Bold((int)index);这本来应该是鼠标放到线上就加粗的功能，由于暂时没法解决和listBox的冲突停用
             }
             else

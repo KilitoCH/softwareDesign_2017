@@ -61,7 +61,7 @@ namespace SoftwareDesign_2017
             Point vapoint = new Point();
             for (int cNDb = 20; cNDb <= 40; cNDb++)
             {
-                cN = 10 * Math.Log10(cNDb);
+                cN = Math.Pow(10, 0.1 * cNDb);
                 double tempVal1 = 0, tempVal2 = 0, tempVal3 = 0;//这三个变量用于存储三个积分
                 double part1, part2, part3 = 0, part4;//这四个临时变量用于存储计算式的四个部分
                 double deltaI = delta + 0.000000000001;//避免出现零除而对自变量加上少量偏移
