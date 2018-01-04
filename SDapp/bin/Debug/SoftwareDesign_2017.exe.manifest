@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SoftwareDesign_2017.exe" size="560064">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SoftwareDesign_2017.exe" size="560576">
       <assemblyIdentity name="SoftwareDesign_2017" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2yhSoMDFYIBqw4BeRa4UUJqBUVmMqR069wfJAezjLSg=</dsig:DigestValue>
+        <dsig:DigestValue>aRszGOEAUkI/e9tMCiEvYITVyBH7m5AVsJS6aqitW7Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
