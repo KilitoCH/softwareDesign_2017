@@ -9,7 +9,7 @@ using System.Windows.Media;
 namespace SoftwareDesign_2017
 {
     /// <summary>
-    /// 此类引用自https://www.yuanmas.com/info/n4Ob3vvLzw.html，感谢博主
+    /// 此类的实现参考https://www.yuanmas.com/info/n4Ob3vvLzw.html，感谢博主
     /// </summary>
     class DrawingCanvas : Canvas
     {

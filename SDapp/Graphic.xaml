@@ -6,17 +6,36 @@
         xmlns:local="clr-namespace:SoftwareDesign_2017"
         mc:Ignorable="d"
         Title="Graphic" Height="300" Width="484" ResizeMode="CanResize">
+  <Window.Resources>
+    <DrawingBrush x:Key="Grid" Viewport="0,0,.1,.1" TileMode="Tile">
+      <DrawingBrush.Drawing>
+        <GeometryDrawing>
+          <GeometryDrawing.Geometry>
+            <GeometryGroup>
+              <RectangleGeometry Rect="0,0,50,40" />
+            </GeometryGroup>
+          </GeometryDrawing.Geometry>
+          <GeometryDrawing.Pen>
+            <Pen Thickness="0.4" Brush="White" />
+          </GeometryDrawing.Pen>
+        </GeometryDrawing>
+      </DrawingBrush.Drawing>
+    </DrawingBrush>
+  </Window.Resources>
   <Grid>
     <Viewbox x:Name="viewBox" Stretch="Fill">
       <Grid>
-        <Button HorizontalAlignment="Right" Margin="0,28,493,244" Width="27" Height="28" Background="#FFF2F8FB" Foreground="Black" Panel.ZIndex="1" Click="Save_Button_Click" >
+        <Button HorizontalAlignment="Right" Margin="0,28,493,244" Width="27" Height="28" Background="#FFF2F8FB" Panel.ZIndex="1" Click="Save_Button_Click" >
           <Image Source="Images/download.png" />
         </Button>
-        <ToggleButton x:Name="zoomIn" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF2F8FB" Foreground="Red" Panel.ZIndex="1" Height="28" Width="27">
+        <ToggleButton x:Name="zoomIn" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF2F8FB" Panel.ZIndex="1" Height="28" Width="27" Margin="0,0,0,0">
           <Image Source="Images/zoom_2.png" />
         </ToggleButton>
+        <ToggleButton x:Name="Grid" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFF2F8FB" Panel.ZIndex="1" Height="28" Width="27" Margin="0,56,0,0">
+          <Image Source="Images/Grid.png" />
+        </ToggleButton>
         <Label x:Name="screenShot" Padding="0" >
-          <Grid Background="Black" x:Name="graphic">            
+          <Grid Background="Black" x:Name="graphic">
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="430" Height="255" BorderBrush="White" BorderThickness="1" Margin="40,5,10,35" Padding="0,5,0,5" Panel.ZIndex="-1">
               <local:DrawingCanvas x:Name="drawingCanvas" Width="428" Height="243" Background="Black" MouseMove="DrawingCanvas_MouseMove" MouseLeave="DrawingCanvas_MouseLeave" MouseDown="DrawingCanvas_MouseDown"/>
             </Border>
@@ -36,7 +55,7 @@
             <Label Content="{Binding Path=LabelY_3}" Foreground="White" HorizontalAlignment="Left" Margin="16,151,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_4}" Foreground="White" HorizontalAlignment="Left" Margin="16,120,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_5}" Foreground="White" HorizontalAlignment="Left" Margin="16,89,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-            <Label Content="{Binding Path=LabelY_6}" Foreground="White" HorizontalAlignment="Left" Margin="16,60,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+            <Label Content="{Binding Path=LabelY_6}" Foreground="White" HorizontalAlignment="Left" Margin="25,60,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_7}" Foreground="White" HorizontalAlignment="Left" Margin="21,28,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_8}" Foreground="White" HorizontalAlignment="Left" Margin="22,-2,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
 
@@ -49,6 +68,7 @@
               </Label.RenderTransform>
             </Label>
             <TextBlock x:Name="posTextBlock" HorizontalAlignment="Left" Height="30" Margin="353,151,0,0" TextWrapping="Wrap" Text="{Binding Position}" VerticalAlignment="Top" Width="124" Foreground="Red"/>
+            <Rectangle Fill="{StaticResource Grid}" HorizontalAlignment="Left" Height="253" Margin="61,8,0,0" Stroke="Black" VerticalAlignment="Top" Width="427" Opacity="{Binding ElementName=Grid,Path=IsChecked}"/>
           </Grid>
         </Label>
       </Grid>

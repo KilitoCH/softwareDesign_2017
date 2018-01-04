@@ -14,7 +14,7 @@ namespace SoftwareDesign_2017
         private int boundWidth;//发射带宽
         private int foreBW;//接收机的前端带宽
         private int stepLength;//发射带宽量化步长
-        private int AcPointCount;//自相关序列的点数
+        private int acCount;//自相关序列的点数
 
         private List<Point> bpskSequence;//BPSK时序列点集合
         private List<Point> psdSequenceReal;//原BPSK功率谱密度点集合
@@ -29,13 +29,13 @@ namespace SoftwareDesign_2017
         /// <param name="frequence">伪随机码的速率</param>
         public BPSK_Sequence_Generate(double frequence)
         {
-            FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);
-            StreamReader streamReader = new StreamReader(fileStream);
-            string[] str = streamReader.ReadLine().Split(',');
-            boundWidth = Convert.ToInt32(str[0]);
+            FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);//打开参数存储文件并写入文件流
+            StreamReader streamReader = new StreamReader(fileStream);//创建文件流写入类
+            string[] str = streamReader.ReadLine().Split(',');//从文件中读取字符串，并以','为间隔提取出参数
+            boundWidth = Convert.ToInt32(str[0]);//如下四行为将参数存储到本类的私有字段中
             foreBW = Convert.ToInt32(str[1]);
             stepLength = boundWidth / Convert.ToInt32(str[2]);
-            AcPointCount = Convert.ToInt32(str[3]);
+            acCount = Convert.ToInt32(str[3]);
 
             if (frequence != 0)///随机码的速率不能为零
             {
@@ -135,7 +135,7 @@ namespace SoftwareDesign_2017
                     lambda += point.Y * stepLength;///用极小分段累加近似代替积分，stepLength为步长（步长取10000.一共取2401个点）
                 }
             }
-            for (double i = -0.000001; i <= 0.000001001; i += 0.000002 / AcPointCount)///i为时间t，单位为s，点数可以设定。但是范围为-1ns到1ns。
+            for (double i = -0.000001; i <= 0.000001001; i += 0.000002 / acCount)///i为时间t，单位为s，点数可以设定。但是范围为-1ns到1ns。
             {
                 double tempVal1 = 0;///实部
                 double tempVal2 = 0;///虚部

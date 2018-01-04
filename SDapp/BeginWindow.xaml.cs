@@ -19,7 +19,7 @@ namespace SoftwareDesign_2017
         public BeginWindow()
         {
             DataContext = context;
-            if (!File.Exists(@"../../bandWidth.txt"))
+            if (!File.Exists(@"../../bandWidth.txt"))//打开程序之后，检查是否已有参数文件，若无则创建并初始化
             {
                 FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Create, FileAccess.Write);
                 StreamWriter streamWriter = new StreamWriter(fileStream);
@@ -59,9 +59,9 @@ namespace SoftwareDesign_2017
         private void InitializeAnimation()
         {
             //背景的动画，高度逐渐减少
-            DoubleAnimation animationBackground = new DoubleAnimation(80, new Duration(TimeSpan.FromSeconds(1)));
-            Storyboard.SetTargetName(animationBackground, backgroundField.Name);
-            Storyboard.SetTargetProperty(animationBackground, new PropertyPath(HeightProperty));
+            DoubleAnimation animationBackground = new DoubleAnimation(80, new Duration(TimeSpan.FromSeconds(1)));//创建新的线性动画，以下相同
+            Storyboard.SetTargetName(animationBackground, backgroundField.Name);//设定动画的作用对象，以下相同
+            Storyboard.SetTargetProperty(animationBackground, new PropertyPath(HeightProperty));//设定动画的作用属性
             //图片的动画，缓慢消失
             DoubleAnimation animationImage = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(1)));
             Storyboard.SetTargetName(animationImage, image.Name);
@@ -72,7 +72,7 @@ namespace SoftwareDesign_2017
             Storyboard.SetTargetName(aniBpskGrid, controlGrid.Name);
             Storyboard.SetTargetProperty(aniBpskGrid, new PropertyPath(OpacityProperty));
 
-            storyboard.Children.Add(animationBackground);
+            storyboard.Children.Add(animationBackground);//将动画添加到故事板
             storyboard.Children.Add(animationImage);
             storyboard.Children.Add(aniBpskGrid);
         }
@@ -84,9 +84,9 @@ namespace SoftwareDesign_2017
         /// <param name="e"></param>
         private void ViewPara_Button_Click(object sender, RoutedEventArgs e)
         {
-            var thread = new Thread(ViewParathreadStart);
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
+            var thread = new Thread(ViewParathreadStart);//创建新的线程
+            thread.SetApartmentState(ApartmentState.STA);//设定线程的状态参数
+            thread.Start();//启动新的线程
         }
 
         /// <summary>

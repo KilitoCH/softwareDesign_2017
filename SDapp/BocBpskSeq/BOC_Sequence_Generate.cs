@@ -28,10 +28,10 @@ namespace SoftwareDesign_2017
         public BOC_Sequence_Generate(int alpha, int beta)
         {
             //从文件中读取预设参数
-            FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);
-            StreamReader streamReader = new StreamReader(fileStream);
-            string[] str = streamReader.ReadLine().Split(',');
-            boundWidth = Convert.ToInt32(str[0]);
+            FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);//打开参数存储文件并写入文件流
+            StreamReader streamReader = new StreamReader(fileStream);//创建文件流写入类
+            string[] str = streamReader.ReadLine().Split(',');//从文件中读取字符串，并以','为间隔提取出参数
+            boundWidth = Convert.ToInt32(str[0]);//如下四行为将参数存储到本类的私有字段中
             foreBW = Convert.ToInt32(str[1]);
             stepLength = boundWidth / Convert.ToInt32(str[2]);
             acCount = Convert.ToInt32(str[3]);

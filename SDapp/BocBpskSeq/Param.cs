@@ -11,7 +11,7 @@ namespace SoftwareDesign_2017
         private int boundWidth;//发射带宽
         private int foreBW;//接收机的前端带宽
         private int stepLength;//发送带宽的量化步进
-        private int AcPointCount;//自相关序列的量化步进
+        private int acCount;//自相关序列的量化步进
         private int val;//谱密度序列中取前端带宽的最左一个点
 
         private string name;///波形类型
@@ -39,13 +39,13 @@ namespace SoftwareDesign_2017
         public Param(string name, List<Point> psdSequence, List<Point> autoCorrelationSequence)
         {
             //从文件中读取初始化参数
-            FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);
-            StreamReader streamReader = new StreamReader(fileStream);
-            string[] str = streamReader.ReadLine().Split(',');
-            boundWidth = Convert.ToInt32(str[0]);
+            FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);//打开参数存储文件并写入文件流
+            StreamReader streamReader = new StreamReader(fileStream);//创建文件流写入类
+            string[] str = streamReader.ReadLine().Split(',');//从文件中读取字符串，并以','为间隔提取出参数
+            boundWidth = Convert.ToInt32(str[0]);//如下四行为将参数存储到本类的私有字段中
             foreBW = Convert.ToInt32(str[1]);
             stepLength = boundWidth / Convert.ToInt32(str[2]);
-            AcPointCount = Convert.ToInt32(str[3]);
+            acCount = Convert.ToInt32(str[3]);
             val = (boundWidth - foreBW) / (2 * stepLength);
 
             BPSK_Sequence_Generate bpsk = new BPSK_Sequence_Generate(1.023);///实例化1.023MHzBPSK 
