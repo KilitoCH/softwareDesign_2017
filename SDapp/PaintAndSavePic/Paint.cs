@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls;
 using System.Windows.Shapes;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace SoftwareDesign_2017
@@ -14,29 +11,29 @@ namespace SoftwareDesign_2017
     /// </summary>
     public enum LineType
     {
-        Line,
-        Bezier
+        Line,//使用直线
+        Bezier//使用bessel曲线
     }
     class Paint
     {
         /// <summary>
-        /// 绘图函数绘出图像如果过于折现化说明样本点密度过低，请改用bezier函数连接以改善图形
+        /// 使用原始序列和指定的连接方式绘制几何图形
         /// </summary>
         /// <param name="points">样本序列</param>
-        /// <param name="isFilled"></param>
+        /// <param name="isFilled">是否填充</param>
         /// <param name="isClosed">是否闭合</param>
-        /// <returns></returns>
+        /// <returns>连接得到的几何图形</returns>
         private Geometry DrawGeometry(List<Point> points, bool isFilled, bool isClosed,LineType type)
         {
-            try
+            if (points != null)
             {
                 StreamGeometry geometry = new StreamGeometry();
 
-                using (StreamGeometryContext ctx = geometry.Open())
+                using (StreamGeometryContext ctx = geometry.Open())//打开一个画板
                 {
-                    ctx.BeginFigure(points[0], isFilled /* is filled */, isClosed /* is closed */);
+                    ctx.BeginFigure(points[0], isFilled /* is filled */, isClosed /* is closed */);//设定画图的起始点
 
-                    //画出一系列线段并且连接成曲线
+                    //画出一系列线段并且以折线的形式顺次连接
                     if (type == LineType.Line)
                     {
                         for (int i = 1; i < points.Count && points[i].X <= 480; i++)
@@ -54,25 +51,20 @@ namespace SoftwareDesign_2017
                         }
                     }
                 }
-
-                return geometry;
+                return geometry;//返回得到的点列
             }
-            catch (Exception)
-            {
-                MessageBox.Show("请先输入频率");
-                return null;
-            }
-            
+            else
+                throw new Exception("请先输入参数");
         }
 
         /// <summary>
         /// 绘图函数绘出图像如果过于折线化说明样本点密度过低，请改用bezier函数连接以改善图形
         /// </summary>
-        /// <param name="points"></param>
-        /// <param name="isFilled"></param>
-        /// <param name="isClosed"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <param name="points">原始的点序列</param>
+        /// <param name="isFilled">是否填充</param>
+        /// <param name="isClosed">是否闭合，即将第一个点和最后一个点进行连接</param>
+        /// <param name="type">指定连接方式</param>
+        /// <returns>连接得到的visual对象</returns>
         public Visual DrawVisual(List<Point> points, bool isFilled, bool isClosed, LineType type,Pen pen)
         {
             DrawingVisual drawingVisual = new DrawingVisual();
@@ -80,62 +72,10 @@ namespace SoftwareDesign_2017
 
             using (var pic = drawingVisual.RenderOpen())
             {
-                pic.DrawGeometry(null, pen, geometry);
+                pic.DrawGeometry(null, pen, geometry);//使用指定的画笔将geometry对象绘制为visual对象
             }
 
             return drawingVisual;
         }
-
-#region 测试用代码        
-        private Path DrawLine(Point startPoint, Point endPoint)
-        {
-            LineGeometry lineGeometry = new LineGeometry();
-            lineGeometry.StartPoint = startPoint;
-            lineGeometry.EndPoint = endPoint;
-
-
-            Path myPath = new Path();
-            myPath.Stroke = Brushes.Black;
-            myPath.StrokeThickness = 1;
-            myPath.Data = lineGeometry;
-
-            return myPath;
-        }
-
-        private PathFigure GenerateLine(Point startPoint, Point endPoint)
-        {
-            PathFigure myPathFigure = new PathFigure();
-            myPathFigure.StartPoint = startPoint;
-
-            LineSegment myLineSegment = new LineSegment();
-            myLineSegment.Point = endPoint;
-
-            PathSegmentCollection myPathSegmentCollection = new PathSegmentCollection();
-            myPathSegmentCollection.Add(myLineSegment);
-
-            myPathFigure.Segments = myPathSegmentCollection;
-
-            return myPathFigure;
-        }
-
-
-        private Path DrawCoordinate(Point originPoint, Point endPoint_x, Point endPoint_y)
-        {
-            PathFigureCollection myPathFigureCollection = new PathFigureCollection();
-            myPathFigureCollection.Add(GenerateLine(originPoint, endPoint_y));
-            myPathFigureCollection.Add(GenerateLine(originPoint, endPoint_x));
-
-            PathGeometry myPathGeometry = new PathGeometry();
-            myPathGeometry.Figures = myPathFigureCollection;
-
-
-            Path myPath = new Path();
-            myPath.Stroke = Brushes.Black;
-            myPath.StrokeThickness = 1;
-            myPath.Data = myPathGeometry;
-
-            return myPath;
-        }
-        #endregion
     }
 }

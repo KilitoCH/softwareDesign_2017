@@ -7,6 +7,9 @@ using System.ComponentModel;
 
 namespace SoftwareDesign_2017
 {
+    /// <summary>
+    /// 用来和参数表格进行数据绑定的类
+    /// </summary>
     class ViewParaContext : INotifyPropertyChanged
     {
         private double frequenceBpsk = 0;
@@ -45,11 +48,11 @@ namespace SoftwareDesign_2017
 
 
         #region 方法
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;//创建属性更改事件
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));//订阅方法
         }
         #endregion
 

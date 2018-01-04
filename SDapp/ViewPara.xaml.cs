@@ -113,5 +113,11 @@ namespace SoftwareDesign_2017
             Keyboard.Focus(control);
             e.Handled = true;
         }
+
+        private void Advance_Click(object sender, RoutedEventArgs e)
+        {
+            Advance advance = new Advance();
+            advance.ShowDialog();
+        }
     }
 }

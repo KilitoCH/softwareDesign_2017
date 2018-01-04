@@ -90,5 +90,6 @@
         </Grid>
       </TabItem>
     </TabControl>
+    <Button Grid.Row="0" Width="40" HorizontalAlignment="Left" Content="首选项" Background="White" Click="Advance_Button_Click" BorderBrush="{x:Null}"/>
   </Grid>
 </Window>

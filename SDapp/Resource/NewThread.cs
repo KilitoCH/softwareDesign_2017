@@ -18,8 +18,8 @@ namespace SoftwareDesign_2017
             graphic.ShowDialog();
         }
 
-        public Dictionary<string, List<Point>> dictionary = new Dictionary<string, List<Point>>(); 
+        public Dictionary<string, List<Point>> dictionary = new Dictionary<string, List<Point>>();//为方便在画图时知道曲线的名字创建的字典
         
-        public string WhichMode { set; get; }
+        public string WhichMode { set; get; }//指示所画图形为bpsk还是boc
     }
 }

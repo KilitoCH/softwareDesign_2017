@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.IO;
 
 namespace SoftwareDesign_2017
 {
@@ -20,15 +14,20 @@ namespace SoftwareDesign_2017
     public partial class DrawGraphic : Window
     {
         private Context context = new Context();
-        private int? flagTab1;
-        private int? flagTab2;
+        private int? flagTab1 = null;//在tab1即bpsk\boc图形中指示本次绘制了哪种图形
+        private int? flagTab2 = null;//在tab2即查看误差中指示本次绘制了哪种图形
 
         public DrawGraphic()
         {
-            DataContext = context;
+            DataContext = context;            
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 添加要画的图形的按钮的事件处理程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Submmit_Button_Click(object sender, RoutedEventArgs e)
         {
             if (context.dictionaryBpskBoc.Count != 0)
@@ -560,6 +559,12 @@ namespace SoftwareDesign_2017
                 return;
             Keyboard.Focus(control);
             e.Handled = true;
+        }
+
+        private void Advance_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Advance advance = new Advance();
+            advance.ShowDialog();
         }
     }
 }

@@ -37,7 +37,7 @@
             <Label Content="{Binding Path=LabelY_4}" Foreground="White" HorizontalAlignment="Left" Margin="16,120,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_5}" Foreground="White" HorizontalAlignment="Left" Margin="16,89,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_6}" Foreground="White" HorizontalAlignment="Left" Margin="16,60,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
-            <Label Content="{Binding Path=LabelY_7}" Foreground="White" HorizontalAlignment="Left" Margin="16,28,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
+            <Label Content="{Binding Path=LabelY_7}" Foreground="White" HorizontalAlignment="Left" Margin="21,28,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
             <Label Content="{Binding Path=LabelY_8}" Foreground="White" HorizontalAlignment="Left" Margin="22,-2,0,0" VerticalAlignment="Top" Height="30" Width="45"/>
 
             <Label x:Name="xLabel" Content="{Binding Path=XLabel}" HorizontalAlignment="Left" Height="30" Margin="155,264,0,-4" VerticalAlignment="Top" Width="228" Foreground="#FF51C44A" HorizontalContentAlignment="Center" FontSize="14"/>

@@ -20,11 +20,12 @@ namespace SoftwareDesign_2017
         public Dictionary<string, List<Point>> dictionaryError = new Dictionary<string, List<Point>>();
 
         private double frequenceBpsk = 0;
-        private bool whichMode = true;
-        private bool whichMode_2 = true;
-        private int alpha = 0;
-        private int beta = 0;
+        private bool whichMode = true;//在作bpsk\boc图时，标志选择了bpsk还是boc
+        private bool whichMode_2 = true;//在作误差分析时，标志选择了bpsk还是boc
+        private int alpha = 0;//boc的参数α
+        private int beta = 0;//bpsk的参数β
 
+        //这7个是绑定到radioButton组的参数
         private bool timeDomain = false;
         private bool psd = true;
         private bool autocorrelation = false;
@@ -191,11 +192,11 @@ namespace SoftwareDesign_2017
         }
         #endregion
         #region 方法
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;//创建属性更改事件
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));//订阅方法
         }
 #endregion
     }

@@ -7,8 +7,12 @@ using System.ComponentModel;
 
 namespace SoftwareDesign_2017
 {
+    /// <summary>
+    /// 用于和graphic类进行数据绑定的类
+    /// </summary>
     class GraphicContext:INotifyPropertyChanged
     {
+        //以下都是坐标系的内容
         private string labelX_0;
         private string labelX_1;
         private string labelX_2;
@@ -30,6 +34,7 @@ namespace SoftwareDesign_2017
         private string xLabel;
         private string yLabel;        
 
+        //鼠标相对于drawingCanvas控件的位置
         private string position;
 
 

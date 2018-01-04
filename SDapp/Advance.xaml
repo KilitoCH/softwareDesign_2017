@@ -1,0 +1,22 @@
+﻿<Window x:Class="SoftwareDesign_2017.Advance"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SoftwareDesign_2017"
+        mc:Ignorable="d"
+        Title="Advance" Height="275" Width="268">
+  <Grid>
+    <TextBlock HorizontalAlignment="Left" Height="17" Margin="68,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60"><Run Text="发射带宽"/><Run Text="："/></TextBlock>
+    <TextBox x:Name="bW" HorizontalAlignment="Left" Height="18" Margin="129,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
+    <TextBlock HorizontalAlignment="Left" Height="17" Margin="33,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"><Run Text="接收机前端带宽"/><Run Text="："/></TextBlock>
+    <TextBox x:Name="foreBW" HorizontalAlignment="Left" Height="18" Margin="129,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
+    <TextBlock HorizontalAlignment="Left" Height="17" Margin="57,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="72"><Run Text="功率谱点数"/><Run Text="："/></TextBlock>
+    <TextBox x:Name="psdCount" HorizontalAlignment="Left" Height="18" Margin="129,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
+    <TextBlock HorizontalAlignment="Left" Height="17" Margin="33,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"><Run Text="自相关函数点数"/><Run Text="："/></TextBlock>
+    <TextBox x:Name="acCount" HorizontalAlignment="Left" Height="18" Margin="129,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82"/>
+    <Button x:Name="submmit" Content="提交" HorizontalAlignment="Left" Height="23" Margin="33,200,0,0" VerticalAlignment="Top" Width="61" Style="{StaticResource buttonStyle}" Click="Submmit_Click"/>
+    <Button x:Name="reset" Content="重置" HorizontalAlignment="Left" Height="23" Margin="150,200,0,0" VerticalAlignment="Top" Width="61" Style="{StaticResource buttonStyle}" Click="Reset_Click"/>
+    <TextBlock HorizontalAlignment="Left" Height="17" Margin="33,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Text="注：提交后需重新绘图方可生效" Foreground="#FFE62828"/>
+  </Grid>
+</Window>

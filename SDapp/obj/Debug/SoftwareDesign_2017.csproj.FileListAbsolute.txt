@@ -40,3 +40,5 @@ G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\bin\Debug\Softwar
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\bin\Debug\SoftwareDesign_2017.application
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.exe.manifest
 G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\SoftwareDesign_2017.application
+G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\Advance.g.cs
+G:\grade3\2017软件课设\programme\softwareDesign_2017\SDapp\obj\Debug\Advance.baml
