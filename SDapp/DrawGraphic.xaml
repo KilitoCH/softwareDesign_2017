@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoftwareDesign_2017"
         mc:Ignorable="d"
-        Title="DrawGraphic" Height="345" Width="488" ResizeMode="NoResize">
+        Title="设定画图参数" Height="345" Width="488" ResizeMode="CanMinimize">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="21*"/>
@@ -85,8 +85,8 @@
             <ComboBoxItem Content="BOC(8,4)"/>
             <ComboBoxItem Content="BOC(10,5)"/>
           </ComboBox>
-          <Label Content="画图列表" HorizontalAlignment="Left" Margin="357,12,0,0" VerticalAlignment="Top" Background="White" HorizontalContentAlignment="Center" Width="58" Panel.ZIndex="1"/>
-          <Rectangle Fill="White" Height="12" Stroke="{x:Null}" Width="59" Margin="356,22,61,223" />
+          <Label Content="画图列表" HorizontalAlignment="Left" Margin="357,13,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="58" Panel.ZIndex="1" Background="{x:Null}"/>
+          <Rectangle Fill="White" Height="12" Stroke="{x:Null}" Width="59" Margin="356,19,61,237" />
         </Grid>
       </TabItem>
     </TabControl>

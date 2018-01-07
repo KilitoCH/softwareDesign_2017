@@ -47,6 +47,9 @@ namespace SoftwareDesign_2017
             stepLength = boundWidth / Convert.ToInt32(str[2]);
             acCount = Convert.ToInt32(str[3]);
             val = (boundWidth - foreBW) / (2 * stepLength);
+            //关闭文件流
+            streamReader.Close();
+            fileStream.Close();
 
             BPSK_Sequence_Generate bpsk = new BPSK_Sequence_Generate(1.023);///实例化1.023MHzBPSK 
             BOC_Sequence_Generate boc = new BOC_Sequence_Generate(10, 5);///实例化BOC（10,5）

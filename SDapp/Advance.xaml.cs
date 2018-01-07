@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.IO;
 
 namespace SoftwareDesign_2017
@@ -29,7 +18,10 @@ namespace SoftwareDesign_2017
             FileStream fileStream = new FileStream(@"../../bandWidth.txt", FileMode.Open, FileAccess.Read);//打开参数文件并将其读入文件流
             StreamReader streamReader = new StreamReader(fileStream);//创建新的流读取实例
             string[] str = streamReader.ReadLine().Split(',');//读取文件内容并按照','分隔以获取参数
-            
+            //关闭文件流
+            streamReader.Close();
+            fileStream.Close();
+
             InitializeComponent();
 
             bW.Text = str[0];//以下四行为将参数读取到本类的私有字段中
@@ -51,11 +43,12 @@ namespace SoftwareDesign_2017
                 StreamWriter streamWriter = new StreamWriter(fileStream);//创建新的流写入实例
                 streamWriter.Write(bW.Text + ',' + foreBW.Text + ',' + psdCount.Text + ',' + acCount.Text);//将参数格式化为字符串后写入
                 streamWriter.Close();//关闭写入流以保存
+                fileStream.Close();//关闭文件流
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }            
+            }
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
@@ -66,6 +59,7 @@ namespace SoftwareDesign_2017
                 StreamWriter streamWriter = new StreamWriter(fileStream);//创建新的流写入实例
                 streamWriter.Write("30000000,24000000,3000,2000");//按照预设参数重置文件内容
                 streamWriter.Close();//关闭写入流以保存
+                fileStream.Close();//关闭文件流
                 bW.Text = "30000000";//以下四行为根据预设内容刷新窗口上的显示值
                 foreBW.Text = "24000000";
                 psdCount.Text = "3000";

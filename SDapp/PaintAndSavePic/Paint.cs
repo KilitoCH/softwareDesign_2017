@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Collections.Generic;
 
 namespace SoftwareDesign_2017

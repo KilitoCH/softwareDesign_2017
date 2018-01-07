@@ -35,6 +35,9 @@ namespace SoftwareDesign_2017
             foreBW = Convert.ToInt32(str[1]);
             stepLength = boundWidth / Convert.ToInt32(str[2]);
             acCount = Convert.ToInt32(str[3]);
+            //关闭文件流
+            streamReader.Close();
+            fileStream.Close();
 
             if ((alpha != 0) && (beta != 0))///输入的alpha和beta不能为零
             {

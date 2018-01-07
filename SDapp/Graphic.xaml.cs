@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Win32;
@@ -170,7 +166,6 @@ namespace SoftwareDesign_2017
         {
             List<List<Point>> pointsList = new List<List<Point>>();//所有用法同上
             Point origin = new Point(drawingCanvas.Width, drawingCanvas.Height / 2);
-            yMax = 0;
             foreach (var item in list)
             {
                 foreach (var point in item)
@@ -519,18 +514,20 @@ namespace SoftwareDesign_2017
             }
             if (index != null)
             {
-                graphicContext.Position = "(" + PosMapping(posWithCanvas).X.ToString("f") + "," + PosMapping(posWithCanvas).Y.ToString("f") + ")";//在坐标映射后显示鼠标位置曲线的坐标。只保留小数点后两位。
-                //Bold((int)index);这本来应该是鼠标放到线上就加粗的功能，由于暂时没法解决和listBox的冲突停用
+                if (flag == 0)
+                {
+                    graphicContext.Position = "在时域图形中不支持坐标显示";//在时域图形中不支持坐标显示
+                }
+                else
+                    graphicContext.Position = "(" + PosMapping(posWithCanvas).X.ToString("f") + "," + PosMapping(posWithCanvas).Y.ToString("f") + ")";//在坐标映射后显示鼠标位置曲线的坐标。只保留小数点后两位。
+                Point posWithTextBlock = Mouse.GetPosition(posTextBlock);//控制文本框显示在鼠标右下角
+                translateTransform.X += posWithTextBlock.X + 10;
+                translateTransform.Y += posWithTextBlock.Y + 10;
             }
             else
             {
                 graphicContext.Position = null;
-                //ReplotNormal();
-            }                
-
-            Point posWithTextBlock = Mouse.GetPosition(posTextBlock);//控制文本框显示在鼠标右下角
-            translateTransform.X += posWithTextBlock.X + 10;
-            translateTransform.Y += posWithTextBlock.Y + 10;
+            }            
         }
 
         /// <summary>
@@ -573,6 +570,11 @@ namespace SoftwareDesign_2017
         /// <param name="e"></param>
         private void DrawingCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (flag == 0)
+            {
+                MessageBox.Show("时域图形中不支持放大","提示");
+                return;
+            }
             List<List<Point>> tempPointsList = new List<List<Point>>();
             List<List<Point>> pointsList = new List<List<Point>>();//此处的指代真实值
 

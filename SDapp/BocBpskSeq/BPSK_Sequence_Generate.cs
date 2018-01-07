@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.IO;
 
@@ -36,6 +33,9 @@ namespace SoftwareDesign_2017
             foreBW = Convert.ToInt32(str[1]);
             stepLength = boundWidth / Convert.ToInt32(str[2]);
             acCount = Convert.ToInt32(str[3]);
+            //关闭文件流
+            streamReader.Close();
+            fileStream.Close();
 
             if (frequence != 0)///随机码的速率不能为零
             {

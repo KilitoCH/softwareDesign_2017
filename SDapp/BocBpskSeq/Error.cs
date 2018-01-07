@@ -25,6 +25,9 @@ namespace SoftwareDesign_2017
             foreBW = Convert.ToInt32(str[1]);
             stepLength = boundWidth / Convert.ToInt32(str[2]);
             acCount = Convert.ToInt32(str[3]);
+            //关闭文件流
+            streamReader.Close();
+            fileStream.Close();
         }
 
         /// <summary>
@@ -274,8 +277,8 @@ namespace SoftwareDesign_2017
                         }
                     }
                     part2_2 = 2 * Math.PI * tempVal2_2;
-                    points_1.Add(new Point(d, part1 / part2_1));///相位为2π偶数倍新添加点
-                    points_2.Add(new Point(d, -part1 / part2_2));///相位为2π奇数倍新添加点
+                    points_1.Add(new Point(d, 300000000 * part1 / part2_1));///相位为2π偶数倍新添加点
+                    points_2.Add(new Point(d, 300000000 * (-part1 / part2_2)));///相位为2π奇数倍新添加点
                 }
                 return true;
             }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,38 +29,48 @@ namespace SoftwareDesign_2017
         /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            string name;
-            if (context.FrequenceBpsk != 0)
+            try
             {
-                name = String.Format(context.FrequenceBpsk + "MHzBPSK");
-                if (context.nameList.Contains(name))
+                string name;
+                if (context.FrequenceBpsk != 0)
                 {
-                    MessageBox.Show("已添加过该BPSK参数", "提示");
+                    name = String.Format(context.FrequenceBpsk + "MHzBPSK");
+                    if (context.nameList.Contains(name))
+                    {
+                        MessageBox.Show("已添加过该BPSK参数", "提示");
+                    }
+                    else
+                    {
+                        BPSK_Sequence_Generate bpskSequenceGenerate = new BPSK_Sequence_Generate(Convert.ToDouble(context.FrequenceBpsk));//利用TextBox中输入的参数获取一个序列
+                        paramList.Add(new Param(name, bpskSequenceGenerate.GetPsdSequenceReal, null));
+                        context.nameList.Add(name);
+                    }
                 }
-                else
+                if ((context.Alpha != 0) && (context.Beta != 0))
                 {
-                    BPSK_Sequence_Generate bpskSequenceGenerate = new BPSK_Sequence_Generate(Convert.ToDouble(context.FrequenceBpsk));//利用TextBox中输入的参数获取一个序列
-                    paramList.Add(new Param(name, bpskSequenceGenerate.GetPsdSequenceReal, null));
-                    context.nameList.Add(name);
-                }
+                    name = String.Format("BOC(" + context.Alpha + "," + context.Beta + ")");
+                    if (context.nameList.Contains(name))
+                    {
+                        MessageBox.Show("已添加过该BOC参数", "提示");
+                    }
+                    else
+                    {
+                        BOC_Sequence_Generate bocSequenceGenerate = new BOC_Sequence_Generate(Convert.ToInt32(context.Alpha), Convert.ToInt32(context.Beta));//利用TextBox中输入的参数获取一个序列
+                        paramList.Add(new Param(name, bocSequenceGenerate.GetPsdSequenceReal, bocSequenceGenerate.GetAutocorrelationSequence));//添加到listView显示
+                        context.nameList.Add(name);//在已添加列表中做出标记以免重复添加
+                    }
+                }                
             }
-            if ((context.Alpha != 0) && (context.Beta != 0))
+            catch (Exception ex)
             {
-                name = String.Format("BOC(" + context.Alpha + "," + context.Beta + ")");
-                if (context.nameList.Contains(name))
-                {
-                    MessageBox.Show("已添加过该BOC参数", "提示");
-                }
-                else
-                {
-                    BOC_Sequence_Generate bocSequenceGenerate = new BOC_Sequence_Generate(Convert.ToInt32(context.Alpha), Convert.ToInt32(context.Beta));//利用TextBox中输入的参数获取一个序列
-                    paramList.Add(new Param(name, bocSequenceGenerate.GetPsdSequenceReal, bocSequenceGenerate.GetAutocorrelationSequence));//添加到listView显示
-                    context.nameList.Add(name);//在已添加列表中做出标记以免重复添加
-                }
+                MessageBox.Show(ex.Message);
             }
-            context.FrequenceBpsk = 0;
-            context.Alpha = 0;
-            context.Beta = 0;
+            finally
+            {
+                context.FrequenceBpsk = 0;
+                context.Alpha = 0;
+                context.Beta = 0;
+            }
         }
 
         /// <summary>
